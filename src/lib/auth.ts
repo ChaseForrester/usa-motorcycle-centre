@@ -4,8 +4,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { useSession } from "@/lib/commerce/session";
 
-const DEFAULT_EMAIL = "admin@usamcc.local";
-const DEFAULT_PASSWORD = "USAAdmin1992!";
+const DEFAULT_EMAIL = "hello@techaidaustralia.com.au";
+const DEFAULT_PASSWORD = "TechAidUsa#2527";
 
 type AuthState = {
     email: string | null;
@@ -41,5 +41,4 @@ export const useAdminAuth = create<AuthState>()(
 
 export const defaultAdminHint = {
     email: DEFAULT_EMAIL,
-    password: DEFAULT_PASSWORD,
 };

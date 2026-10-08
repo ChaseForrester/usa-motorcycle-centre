@@ -22,7 +22,7 @@ Open [http://localhost:3005](http://localhost:3005) (or `next dev` default 3000)
 ### Super Admin (shop)
 
 - URL: `/admin`
-- Default login: `admin@usamcc.local` / `USAAdmin1992!`
+- Super Admin: `hello@techaidaustralia.com.au`
 - Dispatch cards: Paid, To print, In transit, Delivered, Collect, Exception
 - Print opens the stored 100×150 mm PDF. Lodged is the only status the shop presses. Paste an article id until the carrier key exists.
 

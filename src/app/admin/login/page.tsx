@@ -45,8 +45,7 @@ export default function AdminLoginPage() {
                     Sign in
                 </button>
                 <p className="text-xs text-zinc-500">
-                    Default: {defaultAdminHint.email} / {defaultAdminHint.password}. Change this with env vars
-                    before going live, then connect Firebase Auth.
+                    Super Admin for this shop. Use hello@techaidaustralia.com.au.
                 </p>
             </form>
         </div>
