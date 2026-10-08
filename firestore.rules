@@ -1,0 +1,114 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function token() {
+      return request.auth.token;
+    }
+
+    function isPlatform() {
+      return signedIn() && token().role == 'platform';
+    }
+
+    function isSuperAdmin(tenantId) {
+      return signedIn()
+        && token().role == 'superadmin'
+        && token().tenantId == tenantId;
+    }
+
+    function isBuyer(tenantId, buyerId) {
+      return signedIn()
+        && token().role == 'buyer'
+        && token().tenantId == tenantId
+        && token().buyerId == buyerId;
+    }
+
+    function isSuperAdminAny() {
+      return signedIn() && token().role == 'superadmin';
+    }
+
+    // Public tenant records. API keys live in Firebase secret config, not here.
+    match /tenants/{tenantId} {
+      allow read: if true;
+      allow create, update, delete: if isPlatform();
+    }
+
+    match /orders/{id} {
+      allow read: if isPlatform()
+        || isSuperAdmin(resource.data.tenantId)
+        || isBuyer(resource.data.tenantId, resource.data.buyerId);
+
+      allow create: if signedIn()
+        && token().role == 'buyer'
+        && request.resource.data.tenantId == token().tenantId
+        && request.resource.data.buyerId == token().buyerId
+        && request.resource.data.method in ['ship', 'collect']
+        && request.resource.data.fulfilment == 'paid';
+
+      allow update: if isPlatform()
+        || isSuperAdmin(resource.data.tenantId);
+
+      allow delete: if false;
+    }
+
+    match /shipments/{id} {
+      allow read: if isPlatform()
+        || isSuperAdmin(resource.data.tenantId)
+        || (
+          signedIn()
+          && token().role == 'buyer'
+          && token().tenantId == resource.data.tenantId
+          && exists(/databases/$(database)/documents/orders/$(resource.data.orderId))
+          && get(/databases/$(database)/documents/orders/$(resource.data.orderId)).data.buyerId == token().buyerId
+        );
+
+      allow create: if false;
+      allow update: if isSuperAdmin(resource.data.tenantId);
+      allow delete: if false;
+    }
+
+    match /settings/{doc} {
+      allow read: if true;
+      allow write: if isSuperAdminAny() || isPlatform();
+    }
+    match /products/{id} {
+      allow read: if true;
+      allow write: if isSuperAdminAny();
+    }
+    match /services/{id} {
+      allow read: if true;
+      allow write: if isSuperAdminAny();
+    }
+    match /events/{id} {
+      allow read: if true;
+      allow write: if isSuperAdminAny();
+    }
+    match /reviews/{id} {
+      allow read: if true;
+      allow write: if isSuperAdminAny();
+    }
+    match /discounts/{id} {
+      allow read: if true;
+      allow write: if isSuperAdminAny();
+    }
+    match /bookings/{id} {
+      allow create: if true;
+      allow read, update: if isSuperAdminAny();
+    }
+    match /messages/{id} {
+      allow create: if true;
+      allow read: if isSuperAdminAny();
+    }
+    match /newsletter/{id} {
+      allow create: if true;
+      allow read: if isSuperAdminAny();
+    }
+
+    match /secrets/{doc} {
+      allow read, write: if false;
+    }
+  }
+}
