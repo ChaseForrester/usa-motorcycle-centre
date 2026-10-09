@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Calendar, CircleDot, Cog, Shield, Shirt, Wrench, Zap } from "lucide-react";
+import { ArrowRight, Calendar, CircleDot, Cog, Shirt, Wrench, Zap } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { FlameMark } from "@/components/FlameMark";
 import { ProductCard } from "@/components/ProductCard";
@@ -57,6 +57,8 @@ export default function HomePage() {
     { src: "/workshop/pirelli-rack.jpg", alt: "Pirelli Night Dragon rack" },
     { src: "/workshop/dunlop-rack.jpg", alt: "Dunlop tyre racks" },
   ];
+
+  const harley = brands.find((brand) => brand.name === "Harley-Davidson");
 
   useEffect(() => {
     document.documentElement.classList.add("home-snap");
@@ -525,12 +527,12 @@ export default function HomePage() {
               </a>
             </div>
             <p className="mt-4 flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-steel lg:hidden">
-              <Shield className="h-4 w-4 shrink-0 text-flame" />
+              {harley && <BrandMark brand={harley} className="h-7" />}
               Independent <span className="text-white">Harley® specialist</span>
             </p>
           </div>
           <div className="absolute bottom-8 right-8 hidden items-center gap-3 rounded-sm border border-white/15 bg-ink/70 px-5 py-4 lg:flex">
-            <Shield className="h-8 w-8 text-flame" />
+            {harley && <BrandMark brand={harley} className="h-12" />}
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-steel">Independent</p>
               <p className="font-display text-xl uppercase text-white">Harley® specialist</p>
