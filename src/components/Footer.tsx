@@ -46,7 +46,7 @@ export function Footer() {
     return (
         <footer className="site-footer flex flex-col border-t border-white/10 bg-coal lg:mt-24 lg:block">
             <div className="container-page grid min-h-0 flex-1 content-center gap-4 py-5 lg:grid-cols-4 lg:content-start lg:gap-12 lg:py-16">
-                <div className="min-w-0">
+                <div className="footer-col min-w-0">
                     <div className="flex items-center gap-3">
                         <Image
                             src={settings.brand.logo}
@@ -95,7 +95,7 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="min-w-0">
+                <div className="footer-col min-w-0">
                     <p className="label">Workshop</p>
                     <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-chrome lg:mt-4 lg:block lg:space-y-2">
                         {workshopLinks.map((link) => (
@@ -108,7 +108,7 @@ export function Footer() {
                     </ul>
                 </div>
 
-                <div className="min-w-0">
+                <div className="footer-col min-w-0">
                     <p className="label">Find us</p>
                     <a
                         href={settings.contact.mapsUrl}
@@ -143,7 +143,7 @@ export function Footer() {
                     </ul>
                 </div>
 
-                <div className="min-w-0">
+                <div className="footer-col min-w-0">
                     <p className="label">The workshop list</p>
                     <p className="mt-4 hidden text-sm text-steel lg:block">
                         Specials, Saturday hours and when the next catch-up is on. No spam — just the shop.

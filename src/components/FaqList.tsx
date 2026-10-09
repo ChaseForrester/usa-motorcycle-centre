@@ -8,7 +8,7 @@ export function FaqList({ limit, dense = false }: { limit?: number; dense?: bool
     return (
         <dl className="divide-y divide-white/10 border-y border-white/10">
             {items.map((item) => (
-                <div key={item.q} className={dense ? "py-3" : "py-6"}>
+                <div key={item.q} className={dense ? "reveal-item py-3" : "reveal-item py-6"}>
                     <dt className={dense ? "text-base font-semibold leading-snug text-white" : "display text-xl text-white sm:text-2xl"}>
                         {item.q}
                     </dt>

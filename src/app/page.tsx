@@ -76,7 +76,7 @@ export default function HomePage() {
           alt=""
           fill
           priority
-          className="object-cover object-[78%_center]"
+          className="hero-photo object-cover object-[78%_center]"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/88 to-ink/25" />
         <div className="relative px-5">

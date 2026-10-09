@@ -144,7 +144,7 @@ export function AnnouncementBar() {
     const settings = useCms((s) => s.settings);
     if (!settings.homepage.announcement) return null;
     return (
-        <div className="bg-flame text-ink">
+        <div className="announce-bar bg-flame text-ink">
             <div className="container-page flex items-center justify-center gap-3 py-1.5 text-center text-[10px] font-semibold uppercase leading-snug tracking-normal lg:py-2 lg:text-[11px] lg:tracking-[0.18em]">
                 <Linkified text={settings.homepage.announcement} linkClassName="contact-link-bar" />
             </div>

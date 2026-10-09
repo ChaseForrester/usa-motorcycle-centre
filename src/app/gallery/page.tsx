@@ -22,7 +22,7 @@ export default function GalleryPage() {
             <h1 className="display mt-2 text-5xl text-white">The shop, the gear, the road.</h1>
             <div className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3">
                 {shots.map((s) => (
-                    <div key={s.src} className="mb-4 break-inside-avoid overflow-hidden rounded-sm">
+                    <div key={s.src} className="shot mb-4 break-inside-avoid overflow-hidden rounded-sm">
                         <Image
                             src={s.src}
                             alt={s.alt}
