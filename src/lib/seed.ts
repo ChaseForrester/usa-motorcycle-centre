@@ -331,7 +331,7 @@ export type BrandLogo = {
 };
 
 export const brands: BrandLogo[] = [
-  { name: "Harley-Davidson", src: "/brands/harley-davidson.svg", width: 348, height: 282, invert: true, tall: true },
+  { name: "Harley-Davidson", src: "/brands/harley-davidson.png", width: 182, height: 142, tall: true },
   { name: "AMSOIL", src: "/brands/amsoil.png", width: 117, height: 40 },
   { name: "Penrite", src: "/brands/penrite.png", width: 900, height: 142 },
   { name: "Avon", src: "/brands/avon.svg", width: 176, height: 32 },
