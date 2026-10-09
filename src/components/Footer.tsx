@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
+import { TechAidBadge, TechAidCredit } from "@/components/TechAidBrand";
 import { useCms } from "@/lib/cms-store";
 import { submitInbox } from "@/lib/inbox-client";
 import { cn, hoursList, mailHref, telHref } from "@/lib/utils";
@@ -235,13 +236,17 @@ export function Footer() {
                     </div>
                 </div>
             </div>
+            <div className="container-page flex justify-center px-4 pb-2 pt-1">
+                <TechAidBadge />
+            </div>
             <div className="border-t border-white/10">
-                <div className="container-page flex flex-col items-start justify-between gap-2 py-3 text-[11px] leading-snug text-steel sm:flex-row sm:items-center lg:py-5 lg:text-xs">
+                <div className="container-page flex flex-col items-start justify-between gap-3 py-3 text-[11px] leading-snug text-steel sm:flex-row sm:items-center lg:py-5 lg:text-xs">
                     <p className="max-w-3xl">
                         © {new Date().getFullYear()} {settings.brand.legalName}. Harley-Davidson® is a
                         registered trademark of H-D U.S.A., LLC. Independent specialist — not an authorised
                         Harley-Davidson dealer.
                     </p>
+                    <TechAidCredit />
                     <div className="flex shrink-0 gap-4">
                         <Link href="/privacy" className="hover:text-white">Privacy</Link>
                         <Link href="/terms" className="hover:text-white">Terms</Link>
