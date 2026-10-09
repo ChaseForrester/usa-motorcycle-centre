@@ -2,6 +2,8 @@ export async function sendWorkshopEmail(opts: {
     to: string;
     subject: string;
     text: string;
+    html?: string;
+    replyTo?: string;
 }): Promise<{ sent: boolean; error?: string }> {
     const to = opts.to.trim();
     if (!to.includes("@")) return { sent: false, error: "No email on this record." };
@@ -26,9 +28,10 @@ export async function sendWorkshopEmail(opts: {
         body: JSON.stringify({
             from,
             to,
-            reply_to: "usa_motorcycle_centre@yahoo.com.au",
+            reply_to: opts.replyTo || "usa_motorcycle_centre@yahoo.com.au",
             subject: opts.subject,
             text: opts.text,
+            html: opts.html,
         }),
     });
     if (!res.ok) {

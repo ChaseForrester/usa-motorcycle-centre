@@ -385,12 +385,12 @@ export default function HomePage() {
       <section className="m-panel bg-ink px-5 text-left lg:hidden" aria-label="Brands">
         <p className="label">On the rack</p>
         <h2 className="display mt-2 text-3xl text-white">Names we fit.</h2>
-        <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4">
+        <ul className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-5">
           {brands.map((brand) => (
-            <li key={brand.name}>
+            <li key={brand.name} className="flex h-12 items-center">
               <BrandMark
                 brand={brand}
-                className={brand.tall ? "h-11 max-w-[42vw]" : "h-7 max-w-[42vw]"}
+                className={brand.tall ? "h-11 max-w-[34vw]" : "h-7 max-w-[40vw]"}
               />
             </li>
           ))}
@@ -400,12 +400,12 @@ export default function HomePage() {
       <section className="hidden overflow-hidden border-y border-white/10 py-8 lg:block" aria-label="Brands we fit">
         <div className="marquee flex w-max items-center">
           {[...brands, ...brands].map((brand, i) => (
-            <span key={`${brand.name}-${i}`} className="flex items-center" aria-hidden={i >= brands.length || undefined}>
+            <span key={`${brand.name}-${i}`} className="flex h-16 items-center" aria-hidden={i >= brands.length || undefined}>
               <BrandMark
                 brand={brand}
-                className={brand.tall ? "h-14" : "h-9"}
+                className={brand.tall ? "h-14" : "h-8"}
               />
-              <span className="mx-8 font-display text-3xl text-flame" aria-hidden="true">/</span>
+              <span className="mx-8 flex h-8 items-center font-display text-3xl leading-none text-flame" aria-hidden="true">/</span>
             </span>
           ))}
         </div>

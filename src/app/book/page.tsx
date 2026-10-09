@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useCms } from "@/lib/cms-store";
+import { AreaField, FormLockup, FormNote, TextField } from "@/components/FormLockup";
 import { submitInbox } from "@/lib/inbox-client";
 import { telHref } from "@/lib/utils";
 
@@ -11,6 +12,8 @@ export default function BookPage() {
     const settings = useCms((s) => s.settings);
     const addBooking = useCms((s) => s.addBooking);
     const [done, setDone] = useState(false);
+    const [sending, setSending] = useState(false);
+    const [error, setError] = useState("");
     const [form, setForm] = useState({
         name: "",
         email: "",
@@ -23,9 +26,9 @@ export default function BookPage() {
 
     if (done) {
         return (
-            <div className="container-page py-24">
-                <p className="label">Booked in</p>
-                <h1 className="display mt-2 text-5xl text-white">We will confirm the lift.</h1>
+            <div className="container-page py-24" role="status">
+                <FormLockup title="We will confirm the lift." hint="Booked in" />
+                <h1 className="sr-only">We will confirm the lift.</h1>
                 <p className="mt-4 max-w-lg text-chrome">
                     The workshop has your request and an email is on its way. Laurie or Mick will confirm
                     the lift. If a job gets thrown off course we will email you that we will be in touch.
@@ -61,13 +64,15 @@ export default function BookPage() {
                 className="card space-y-4 p-6"
                 onSubmit={async (e) => {
                     e.preventDefault();
+                    setSending(true);
+                    setError("");
                     const svc = services.find((s) => s.id === form.serviceId);
                     const serviceName = svc?.name ?? "Service";
                     addBooking({
                         ...form,
                         serviceName,
                     });
-                    await submitInbox({
+                    const result = await submitInbox({
                         kind: "booking",
                         name: form.name,
                         email: form.email,
@@ -80,63 +85,92 @@ export default function BookPage() {
                             preferredDate: form.preferredDate,
                         },
                     });
+                    setSending(false);
+                    if (!result.ok) {
+                        setError(result.error || "Could not send. Call the workshop.");
+                        return;
+                    }
                     setDone(true);
                 }}
             >
-                <input
-                    className="input"
+                <FormLockup title="Your details" hint="We email you and the workshop." />
+                <TextField
+                    id="book-name"
+                    label="Name"
                     required
+                    autoComplete="name"
                     placeholder="Your name"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
-                <input
-                    className="input"
+                <TextField
+                    id="book-email"
+                    label="Email"
                     required
                     type="email"
-                    placeholder="Email"
+                    autoComplete="email"
+                    inputMode="email"
+                    spellCheck={false}
+                    placeholder="you@email.com"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
-                <input
-                    className="input"
+                <TextField
+                    id="book-phone"
+                    label="Phone"
                     required
-                    placeholder="Phone"
+                    type="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    placeholder="04xx xxx xxx"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 />
-                <select
-                    className="input"
-                    value={form.serviceId}
-                    onChange={(e) => setForm({ ...form, serviceId: e.target.value })}
-                >
-                    {services.map((s) => (
-                        <option key={s.id} value={s.id}>
-                            {s.name}
-                        </option>
-                    ))}
-                </select>
-                <input
-                    className="input"
+                <div>
+                    <label htmlFor="book-service" className="mb-1.5 block text-[11px] uppercase tracking-[0.16em] text-steel">
+                        Service
+                    </label>
+                    <select
+                        id="book-service"
+                        className="input"
+                        value={form.serviceId}
+                        onChange={(e) => setForm({ ...form, serviceId: e.target.value })}
+                    >
+                        {services.map((s) => (
+                            <option key={s.id} value={s.id}>
+                                {s.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <TextField
+                    id="book-bike"
+                    label="Bike"
                     required
-                    placeholder="Bike — year, make, model"
+                    autoComplete="off"
+                    placeholder="Year, make, model"
                     value={form.bike}
                     onChange={(e) => setForm({ ...form, bike: e.target.value })}
                 />
-                <input
-                    className="input"
-                    type="date"
+                <TextField
+                    id="book-date"
+                    label="Preferred day"
                     required
+                    type="date"
                     value={form.preferredDate}
                     onChange={(e) => setForm({ ...form, preferredDate: e.target.value })}
                 />
-                <textarea
-                    className="input min-h-28"
+                <AreaField
+                    id="book-notes"
+                    label="Notes"
                     placeholder="What is it doing? Insurance job? Photos welcome in person."
                     value={form.notes}
                     onChange={(e) => setForm({ ...form, notes: e.target.value })}
                 />
-                <button className="btn-flame w-full">Send booking request</button>
+                {error ? <FormNote live>{error}</FormNote> : null}
+                <button className="btn-flame w-full" type="submit" disabled={sending} aria-busy={sending}>
+                    {sending ? "Sending…" : "Send booking request"}
+                </button>
             </form>
         </div>
     );

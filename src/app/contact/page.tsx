@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { useCms } from "@/lib/cms-store";
+import { AreaField, FormLockup, FormNote, TextField } from "@/components/FormLockup";
 import { submitInbox } from "@/lib/inbox-client";
 import { fullAddress, hoursList, mailHref, telHref } from "@/lib/utils";
 
@@ -12,6 +13,8 @@ export default function ContactPage() {
     const settings = useCms((s) => s.settings);
     const addMessage = useCms((s) => s.addMessage);
     const [done, setDone] = useState(false);
+    const [sending, setSending] = useState(false);
+    const [error, setError] = useState("");
     const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
     const hours = hoursList(settings);
 
@@ -87,55 +90,80 @@ export default function ContactPage() {
                 </div>
             </div>
             {done ? (
-                <div className="card p-8">
-                    <h2 className="display text-3xl text-white">Got it.</h2>
-                    <p className="mt-3 text-chrome">We will get back to you from the workshop.</p>
+                <div className="card p-8" role="status">
+                    <FormLockup title="Got it." hint="We will get back to you from the workshop." />
+                    <a href={telHref(settings.contact.phone)} className="btn-ghost mt-2 inline-flex">
+                        Call {settings.contact.phone}
+                    </a>
                 </div>
             ) : (
                 <form
                     className="card space-y-4 p-6"
+                    noValidate={false}
                     onSubmit={async (e) => {
                         e.preventDefault();
+                        setSending(true);
+                        setError("");
                         addMessage(form);
-                        await submitInbox({
+                        const result = await submitInbox({
                             kind: "contact",
                             name: form.name,
                             email: form.email,
                             phone: form.phone,
                             message: form.message,
                         });
+                        setSending(false);
+                        if (!result.ok) {
+                            setError(result.error || "Could not send. Call the workshop.");
+                            return;
+                        }
                         setDone(true);
                     }}
                 >
-                    <input
-                        className="input"
+                    <FormLockup title="Write to the shop" hint="Laurie or Mick read these." />
+                    <TextField
+                        id="contact-name"
+                        label="Name"
                         required
-                        placeholder="Name"
+                        autoComplete="name"
+                        placeholder="Your name"
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                     />
-                    <input
-                        className="input"
+                    <TextField
+                        id="contact-email"
+                        label="Email"
                         required
                         type="email"
-                        placeholder="Email"
+                        autoComplete="email"
+                        inputMode="email"
+                        spellCheck={false}
+                        placeholder="you@email.com"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                     />
-                    <input
-                        className="input"
-                        placeholder="Phone"
+                    <TextField
+                        id="contact-phone"
+                        label="Phone"
+                        type="tel"
+                        autoComplete="tel"
+                        inputMode="tel"
+                        placeholder="04xx xxx xxx"
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
                     />
-                    <textarea
-                        className="input min-h-32"
+                    <AreaField
+                        id="contact-message"
+                        label="Message"
                         required
                         placeholder="What do you need?"
                         value={form.message}
                         onChange={(e) => setForm({ ...form, message: e.target.value })}
                     />
-                    <button className="btn-flame w-full">Send</button>
+                    {error ? <FormNote live>{error}</FormNote> : null}
+                    <button className="btn-flame w-full" type="submit" disabled={sending} aria-busy={sending}>
+                        {sending ? "Sending…" : "Send"}
+                    </button>
                 </form>
             )}
         </div>

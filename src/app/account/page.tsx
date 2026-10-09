@@ -7,6 +7,7 @@ import { useSession } from "@/lib/commerce/session";
 import { useTenant } from "@/lib/commerce/tenant-context";
 import { buyerShipCopy } from "@/lib/commerce/dispatch";
 import { money } from "@/lib/utils";
+import { FormLockup, FormNote, TextField } from "@/components/FormLockup";
 export default function AccountPage() {
     const tenant = useTenant();
     const claims = useSession((s) => s.claims);
@@ -28,22 +29,26 @@ export default function AccountPage() {
                 <h1 className="display mt-2 text-4xl text-white">Your order</h1>
                 <p className="mt-4 text-chrome">Use the email on the order. You only see that order.</p>
                 <form
-                    className="mt-8 space-y-4"
+                    className="card mt-8 space-y-4 p-6"
                     onSubmit={(e) => {
                         e.preventDefault();
                         const r = signInBuyer(email);
                         if (!r.ok) setError(r.error || "Could not sign in.");
                     }}
                 >
-                    <input
-                        className="input"
+                    <FormLockup title="Open your order" hint="Use the email on the order." />
+                    <TextField
+                        id="account-email"
+                        label="Email"
                         type="email"
                         required
+                        autoComplete="email"
+                        inputMode="email"
+                        spellCheck={false}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email"
                     />
-                    {error && <p className="text-sm text-flame">{error}</p>}
+                    {error ? <FormNote>{error}</FormNote> : null}
                     <button className="btn-flame w-full">Open account</button>
                 </form>
             </div>

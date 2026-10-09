@@ -59,9 +59,9 @@ export default function AboutPage() {
             </section>
             <section className="container-page py-16">
                 <p className="label">On the wall</p>
-                <ul className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-5">
+                <ul className="mt-6 flex flex-wrap items-center gap-x-10 gap-y-6">
                     {brands.map((brand) => (
-                        <li key={brand.name}>
+                        <li key={brand.name} className="flex h-16 items-center">
                             <BrandMark brand={brand} className={brand.tall ? "h-14" : "h-8"} />
                         </li>
                     ))}

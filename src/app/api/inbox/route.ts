@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { uid } from "@/lib/utils";
-import { bookingReceivedCopy, type InboxItem, type InboxKind } from "@/lib/inbox";
+import { type InboxItem, type InboxKind } from "@/lib/inbox";
+import { adminEmail, clientEmail } from "@/lib/email-template";
+import { SITE } from "@/lib/seo";
 import { listInbox, saveInboxItem } from "@/lib/server-inbox";
 import { sendWorkshopEmail } from "@/lib/mail";
 
@@ -41,17 +43,30 @@ export async function POST(req: Request) {
         emails: [],
     };
 
-    if (kind === "booking") {
-        const copy = bookingReceivedCopy(item);
-        const result = await sendWorkshopEmail({ to: item.email, ...copy });
-        item.emails.push({
-            at: new Date().toISOString(),
-            subject: copy.subject,
-            text: copy.text,
-            sent: result.sent,
-            error: result.error,
-        });
-    }
+    const client = clientEmail(item);
+    const clientResult = await sendWorkshopEmail({ to: item.email, ...client });
+    item.emails.push({
+        at: new Date().toISOString(),
+        subject: client.subject,
+        text: client.text,
+        sent: clientResult.sent,
+        error: clientResult.error,
+    });
+
+    const adminTo = process.env.WORKSHOP_ADMIN_EMAIL || SITE.email;
+    const admin = adminEmail(item);
+    const adminResult = await sendWorkshopEmail({
+        to: adminTo,
+        ...admin,
+        replyTo: item.email,
+    });
+    item.emails.push({
+        at: new Date().toISOString(),
+        subject: admin.subject,
+        text: admin.text,
+        sent: adminResult.sent,
+        error: adminResult.error,
+    });
 
     await saveInboxItem(item);
     return NextResponse.json({ item });

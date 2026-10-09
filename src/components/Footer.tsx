@@ -39,6 +39,8 @@ export function Footer() {
     const addSubscriber = useCms((s) => s.addSubscriber);
     const [email, setEmail] = useState("");
     const [done, setDone] = useState(false);
+    const [sending, setSending] = useState(false);
+    const [error, setError] = useState("");
     const hours = hoursList(settings);
 
     return (
@@ -147,34 +149,63 @@ export function Footer() {
                         Specials, Saturday hours and when the next catch-up is on. No spam — just the shop.
                     </p>
                     {done ? (
-                        <p className="mt-3 text-sm text-flame lg:mt-4">You are on the list.</p>
+                        <p className="mt-3 text-sm text-flame lg:mt-4" role="status">You are on the list.</p>
                     ) : (
                         <form
-                            className="mt-2 flex gap-2 lg:mt-4 lg:flex-col"
+                            className="mt-2 flex flex-col gap-2 lg:mt-4"
                             onSubmit={async (e) => {
                                 e.preventDefault();
                                 if (!email) return;
+                                setSending(true);
+                                setError("");
                                 addSubscriber(email);
-                                await submitInbox({
+                                const result = await submitInbox({
                                     kind: "newsletter",
                                     name: email,
                                     email,
                                     message: "Workshop list",
                                 });
+                                setSending(false);
+                                if (!result.ok) {
+                                    setError(result.error || "Could not join. Call the workshop.");
+                                    return;
+                                }
                                 setDone(true);
                             }}
                         >
-                            <input
-                                type="email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Email address"
-                                className="input min-w-0 flex-1 py-2.5 lg:py-3"
-                            />
-                            <button className="btn-flame shrink-0 px-4 py-2.5 lg:px-6 lg:py-3" type="submit">
-                                Join
-                            </button>
+                            <div className="flex items-center gap-2">
+                                <img
+                                    src="/brand/icon.png"
+                                    alt=""
+                                    width={28}
+                                    height={28}
+                                    className="h-7 w-7 shrink-0 rounded-full bg-white object-contain"
+                                />
+                                <label htmlFor="workshop-list-email" className="text-[11px] uppercase tracking-[0.16em] text-steel">
+                                    Email for the list
+                                </label>
+                            </div>
+                            <div className="flex gap-2">
+                                <input
+                                    id="workshop-list-email"
+                                    type="email"
+                                    required
+                                    autoComplete="email"
+                                    inputMode="email"
+                                    spellCheck={false}
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Email address"
+                                    aria-invalid={error ? true : undefined}
+                                    className="input min-w-0 flex-1 py-2.5 lg:py-3"
+                                />
+                                <button className="btn-flame shrink-0 px-4 py-2.5 lg:px-6 lg:py-3" type="submit" disabled={sending} aria-busy={sending}>
+                                    {sending ? "…" : "Join"}
+                                </button>
+                            </div>
+                            {error ? (
+                                <p className="text-sm text-flame" role="alert">{error}</p>
+                            ) : null}
                         </form>
                     )}
                 </div>

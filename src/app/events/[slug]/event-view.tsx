@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { useCms } from "@/lib/cms-store";
+import { FormLockup, FormNote, TextField } from "@/components/FormLockup";
 import { submitInbox } from "@/lib/inbox-client";
 
 export default function EventView() {
@@ -15,6 +16,8 @@ export default function EventView() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [done, setDone] = useState(false);
+    const [sending, setSending] = useState(false);
+    const [error, setError] = useState("");
 
     if (!event) {
         return (
@@ -45,46 +48,45 @@ export default function EventView() {
                     <p className="mt-6 text-sm text-steel">{event.location}</p>
                 </div>
                 <aside className="card p-6">
-                    <h2 className="display text-2xl text-white">I am in</h2>
                     {done ? (
-                        <p className="mt-4 text-chrome">Noted. We will keep you posted.</p>
+                        <div role="status">
+                            <FormLockup title="Noted." hint="We will keep you posted." />
+                        </div>
                     ) : (
                         <form
-                            className="mt-4 space-y-3"
+                            className="space-y-3"
                             onSubmit={async (e) => {
                                 e.preventDefault();
+                                setSending(true);
+                                setError("");
                                 addMessage({
                                     name,
                                     email,
                                     phone: "",
                                     message: `RSVP: ${event.title}`,
                                 });
-                                await submitInbox({
+                                const result = await submitInbox({
                                     kind: "event",
                                     name,
                                     email,
                                     message: `RSVP: ${event.title}`,
                                     fields: { event: event.title },
                                 });
+                                setSending(false);
+                                if (!result.ok) {
+                                    setError(result.error || "Could not send. Call the workshop.");
+                                    return;
+                                }
                                 setDone(true);
                             }}
                         >
-                            <input
-                                className="input"
-                                required
-                                placeholder="Name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                            <input
-                                className="input"
-                                required
-                                type="email"
-                                placeholder="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <button className="btn-flame w-full">RSVP</button>
+                            <FormLockup title="I am in" hint={event.title} />
+                            <TextField id="rsvp-name" label="Name" required autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} />
+                            <TextField id="rsvp-email" label="Email" required type="email" autoComplete="email" inputMode="email" spellCheck={false} value={email} onChange={(e) => setEmail(e.target.value)} />
+                            {error ? <FormNote live>{error}</FormNote> : null}
+                            <button className="btn-flame w-full" type="submit" disabled={sending} aria-busy={sending}>
+                                {sending ? "Sending…" : "RSVP"}
+                            </button>
                         </form>
                     )}
                 </aside>

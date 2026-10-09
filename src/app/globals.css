@@ -11,6 +11,12 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   @apply bg-ink text-paper font-body antialiased;
   background-image: radial-gradient(1200px 600px at 80% -10%, rgba(255, 106, 0, 0.08), transparent 50%),
@@ -32,11 +38,23 @@ body {
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-sm px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] transition;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] transition;
+  }
+
+  .btn:focus-visible,
+  a:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid #ff6a00;
+    outline-offset: 3px;
   }
 
   .btn-flame {
     @apply btn bg-flame text-ink hover:bg-flame-hot shadow-flame;
+  }
+
+  .btn:disabled {
+    cursor: wait;
+    opacity: 0.65;
   }
 
   .btn-ghost {
@@ -56,7 +74,12 @@ body {
   }
 
   .input {
-    @apply w-full rounded-sm border border-white/15 bg-ink px-4 py-3 text-paper outline-none transition placeholder:text-steel/70 focus:border-flame;
+    @apply w-full min-h-11 rounded-sm border border-white/15 bg-ink px-4 py-3 text-paper outline-none transition placeholder:text-steel/70 focus:border-flame;
+  }
+
+  .input:focus-visible {
+    outline: 2px solid #ff6a00;
+    outline-offset: 2px;
   }
 
   .input-light {
@@ -78,6 +101,26 @@ body {
   height: 2px;
   width: 72px;
   background: linear-gradient(90deg, var(--flame), transparent);
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 0.75rem;
+  z-index: 80;
+  transform: translateY(-140%);
+  border-radius: 2px;
+  background: #ff6a00;
+  color: #0b0b0c;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.skip-link:focus {
+  transform: none;
 }
 
 .contact-link {
@@ -313,5 +356,5 @@ body {
 }
 
 .admin-input {
-  @apply w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20;
+  @apply min-h-11 w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20;
 }

@@ -18,9 +18,12 @@ export function StoreChrome({ children }: { children: React.ReactNode }) {
             <div className="hidden lg:block">
                 <AnnouncementBar />
             </div>
+            <a href="#main" className="skip-link">
+                Skip to content
+            </a>
             <Header />
             <div className="pb-[calc(4.25rem+env(safe-area-inset-bottom))] lg:pb-0">
-                <main className="min-h-screen">{children}</main>
+                <main id="main" className="min-h-screen">{children}</main>
                 <Footer />
             </div>
             <MobileTabBar />

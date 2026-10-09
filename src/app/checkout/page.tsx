@@ -192,11 +192,24 @@ export default function CheckoutPage() {
     return (
         <div className="container-page grid gap-12 py-12 lg:grid-cols-2">
             <form onSubmit={pay} className="space-y-4">
-                <p className="label">Checkout</p>
-                <h1 className="display text-4xl text-white">Your details</h1>
+                <div className="mb-2 flex items-center gap-3">
+                    <img
+                        src="/brand/icon.png"
+                        alt="U.S.A. Motorcycle Centre"
+                        width={48}
+                        height={48}
+                        className="h-12 w-12 rounded-full bg-white object-contain"
+                    />
+                    <div>
+                        <p className="label">Checkout</p>
+                        <h1 className="display text-4xl text-white">Your details</h1>
+                    </div>
+                </div>
                 <input
                     className="input"
                     required
+                    autoComplete="name"
+                    aria-label="Full name"
                     placeholder="Full name"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -205,6 +218,10 @@ export default function CheckoutPage() {
                     className="input"
                     required
                     type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    spellCheck={false}
+                    aria-label="Email"
                     placeholder="Email"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -212,6 +229,10 @@ export default function CheckoutPage() {
                 <input
                     className="input"
                     required
+                    type="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    aria-label="Phone"
                     placeholder="Phone"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
@@ -245,6 +266,8 @@ export default function CheckoutPage() {
                                 <input
                                     className="input"
                                     required
+                                    autoComplete="address-line1"
+                                    aria-label="Street address"
                                     placeholder="Street address"
                                     value={form.line1}
                                     onChange={(e) => setForm({ ...form, line1: e.target.value })}
@@ -253,6 +276,8 @@ export default function CheckoutPage() {
                                     <input
                                         className="input col-span-1"
                                         required
+                                        autoComplete="address-level2"
+                                        aria-label="Suburb"
                                         placeholder="Suburb"
                                         value={form.suburb}
                                         onChange={(e) => setForm({ ...form, suburb: e.target.value })}
@@ -260,6 +285,8 @@ export default function CheckoutPage() {
                                     <input
                                         className="input"
                                         required
+                                        autoComplete="address-level1"
+                                        aria-label="State"
                                         placeholder="State"
                                         value={form.state}
                                         onChange={(e) => setForm({ ...form, state: e.target.value })}
@@ -267,6 +294,9 @@ export default function CheckoutPage() {
                                     <input
                                         className="input"
                                         required
+                                        autoComplete="postal-code"
+                                        inputMode="numeric"
+                                        aria-label="Postcode"
                                         placeholder="Postcode"
                                         value={form.postcode}
                                         onChange={(e) => setForm({ ...form, postcode: e.target.value })}
@@ -279,6 +309,8 @@ export default function CheckoutPage() {
                                 <input
                                     className="input"
                                     required
+                                    autoComplete="country"
+                                    aria-label="Country"
                                     placeholder="Country (ISO, e.g. NZ)"
                                     value={form.country}
                                     onChange={(e) => setForm({ ...form, country: e.target.value })}
@@ -286,6 +318,7 @@ export default function CheckoutPage() {
                                 <input
                                     className="input"
                                     required
+                                    aria-label="Description of goods"
                                     placeholder="Description of goods"
                                     value={form.description}
                                     onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -294,6 +327,8 @@ export default function CheckoutPage() {
                                     <input
                                         className="input"
                                         required
+                                        inputMode="numeric"
+                                        aria-label="Quantity"
                                         placeholder="Quantity"
                                         value={form.quantity}
                                         onChange={(e) => setForm({ ...form, quantity: e.target.value })}
@@ -301,6 +336,8 @@ export default function CheckoutPage() {
                                     <input
                                         className="input"
                                         required
+                                        inputMode="decimal"
+                                        aria-label="Value AUD"
                                         placeholder="Value AUD"
                                         value={form.valueAud}
                                         onChange={(e) => setForm({ ...form, valueAud: e.target.value })}
@@ -308,6 +345,8 @@ export default function CheckoutPage() {
                                     <input
                                         className="input"
                                         required
+                                        inputMode="decimal"
+                                        aria-label="Weight kg"
                                         placeholder="Weight kg"
                                         value={form.weightKg}
                                         onChange={(e) => setForm({ ...form, weightKg: e.target.value })}
@@ -315,6 +354,7 @@ export default function CheckoutPage() {
                                     <input
                                         className="input"
                                         required
+                                        aria-label="HS code"
                                         placeholder="HS code"
                                         value={form.hsCode}
                                         onChange={(e) => setForm({ ...form, hsCode: e.target.value })}
@@ -337,8 +377,8 @@ export default function CheckoutPage() {
                         {msg}
                     </p>
                 ))}
-                {error && <p className="text-sm text-flame">{error}</p>}
-                <button className="btn-flame w-full" disabled={busy}>
+                {error && <p className="text-sm text-flame" role="alert">{error}</p>}
+                <button className="btn-flame w-full" type="submit" disabled={busy} aria-busy={busy}>
                     {busy ? "Working…" : `Pay ${money(total)}`}
                 </button>
                 <p className="text-xs text-steel">
