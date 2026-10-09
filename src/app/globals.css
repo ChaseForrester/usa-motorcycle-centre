@@ -107,6 +107,45 @@ body {
   transform-origin: center center;
 }
 
+.glass-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05) 42%, rgba(11, 11, 12, 0.28));
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+}
+
+.glass-panel>* {
+  position: relative;
+  z-index: 1;
+}
+
+.glass-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, 0.22) 48%, transparent 64%);
+  transform: translateX(-130%);
+  animation: glass-sheen 8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s infinite;
+  pointer-events: none;
+}
+
+.hero-mark {
+  animation: hero-mark-in 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.45));
+}
+
+.hero-bar {
+  animation: hero-mark-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+}
+
 .rise {
   animation: rise-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -153,6 +192,29 @@ body {
   }
 }
 
+@keyframes glass-sheen {
+  0% {
+    transform: translateX(-130%);
+  }
+
+  42%,
+  100% {
+    transform: translateX(130%);
+  }
+}
+
+@keyframes hero-mark-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @keyframes photo-in {
   from {
     opacity: 0;
@@ -170,7 +232,10 @@ body {
   .hero-photo,
   .rise,
   .photo-in,
-  .marquee {
+  .marquee,
+  .hero-mark,
+  .hero-bar,
+  .glass-panel::after {
     animation: none;
   }
 }

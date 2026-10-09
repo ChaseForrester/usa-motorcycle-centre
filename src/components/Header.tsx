@@ -130,7 +130,7 @@ export function Header() {
                             </span>
                         )}
                     </Link>
-                    <Link href="/book" className="btn-flame hidden !px-4 !py-2.5 text-[11px] xl:inline-flex">
+                    <Link href="/book" className="btn-flame hidden !rounded-md !px-4 !py-2.5 text-[11px] lg:inline-flex">
                         Book a service
                     </Link>
                 </div>

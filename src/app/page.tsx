@@ -14,6 +14,18 @@ import { FaqList } from "@/components/FaqList";
 import { GiftCardMotion } from "@/components/GiftCardMotion";
 import { SERVICE_TOWNS } from "@/lib/seo";
 
+function HeroTitle({ title }: { title: string }) {
+  const at = title.toLowerCase().indexOf(" is ");
+  if (at === -1) return <>{title}</>;
+  return (
+    <>
+      {title.slice(0, at)}
+      <br />
+      {title.slice(at + 1)}
+    </>
+  );
+}
+
 export default function HomePage() {
   const settings = useCms((s) => s.settings);
   const products = useCms((s) => s.products);
@@ -67,20 +79,22 @@ export default function HomePage() {
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/88 to-ink/25" />
         <div className="relative px-5">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-flame">
-            Built in the workshop. Serviced since {settings.brand.established}.
-          </p>
-          <h1 className="display mt-3 text-[2.6rem] text-white">
-            Book the bike.
-            <br />
-            <span className="text-flame">Ride it right.</span>
-          </h1>
-          <p className="mt-4 max-w-[18rem] text-sm leading-relaxed text-chrome">
-            Independent Harley® specialist. Service, tuning, tyres, electrical and smash repairs. Albion Park Rail.
-          </p>
-          <Link href="/book" className="btn-flame mt-6 !rounded-md">
-            Book a service <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="glass-panel max-w-[19rem] rounded-md px-4 py-5">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-flame">
+              Built in the workshop. Serviced since {settings.brand.established}.
+            </p>
+            <h1 className="display mt-3 text-[2.6rem] text-white">
+              Book the bike.
+              <br />
+              <span className="text-flame">Ride it right.</span>
+            </h1>
+            <p className="mt-4 text-sm leading-relaxed text-chrome">
+              Independent Harley® specialist. Service, tuning, tyres, electrical and smash repairs. Albion Park Rail.
+            </p>
+            <Link href="/book" className="btn-flame mt-6 !rounded-md">
+              Book a service <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -181,53 +195,58 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative hidden bg-ink lg:block">
-        <div className="relative overflow-hidden">
-          <Image
-            src={settings.homepage.heroImage}
-            alt="U.S.A. Motorcycle Centre shop floor at 8 Miall Way, Albion Park Rail"
-            width={1640}
-            height={624}
-            priority
-            className="hero-photo block h-[42vh] min-h-[220px] w-full object-cover object-[72%_center] lg:h-auto lg:max-h-[calc(100svh-7.5rem)] lg:min-h-0 lg:object-center"
-          />
-          <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-ink/92 via-ink/40 to-transparent lg:block" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/30 lg:from-ink/40" />
-          <div className="container-page relative z-10 py-8 lg:absolute lg:inset-0 lg:flex lg:items-center lg:py-6">
-            <div className="max-w-xl lg:max-w-2xl">
-              <p className="rise label">{settings.homepage.heroKicker}</p>
-              <h1 className="rise rise-1 display mt-3 text-[clamp(2.35rem,4.6vw,4.75rem)] text-white">
-                {settings.homepage.heroTitle}
-              </h1>
-              <p className="rise rise-2 mt-4 max-w-xl text-sm leading-relaxed text-chrome sm:text-base">
-                {settings.homepage.heroSubtitle}
-              </p>
-              <div className="rise rise-3 mt-6 flex flex-wrap gap-3">
-                <Link href="/shop" className="btn-flame">
-                  {settings.homepage.heroCta}
-                </Link>
-                <Link href="/book" className="btn-ghost">
-                  {settings.homepage.heroSecondary}
-                </Link>
-              </div>
+      <section className="relative hidden min-h-[calc(100svh-7.5rem)] overflow-hidden bg-ink lg:block">
+        <Image
+          src={settings.homepage.heroImage}
+          alt="U.S.A. Motorcycle Centre shop floor at 8 Miall Way, Albion Park Rail"
+          fill
+          priority
+          className="hero-photo object-cover object-[68%_center]"
+          sizes="100vw"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/55 via-ink/20 to-transparent" />
+        <div className="container-page relative z-10 flex min-h-[calc(100svh-7.5rem)] items-center pb-24 pt-6">
+          <div className="glass-panel rise w-max max-w-full rounded-lg px-7 py-7 xl:px-9 xl:py-8">
+            <p className="rise rise-1 label">{settings.homepage.heroKicker}</p>
+            <h1 className="rise rise-2 display mt-3 text-[clamp(3.15rem,6.1vw,6.35rem)] font-bold leading-[0.86] text-white">
+              <HeroTitle title={settings.homepage.heroTitle} />
+            </h1>
+            <p className="rise rise-3 mt-5 max-w-xl text-[15px] leading-relaxed text-paper/90 xl:text-base">
+              {settings.homepage.heroSubtitle}
+            </p>
+            <div className="rise rise-4 mt-7 flex flex-wrap gap-3">
+              <Link href="/book" className="btn-flame !rounded-md">
+                Book a service
+              </Link>
+              <Link href="/shop" className="btn-ghost !rounded-md !border-white/75">
+                Shop the clothing
+              </Link>
             </div>
           </div>
         </div>
-      </section>
-
-      <section className="hidden border-y border-white/10 bg-coal lg:block">
-        <div className="container-page grid grid-cols-2 gap-px bg-white/10 md:grid-cols-4">
-          {[
-            { k: "Est.", v: String(settings.brand.established) },
-            { k: "Harley® specialist", v: "Independent" },
-            { k: "Authorised", v: "AMSOIL reseller" },
-            { k: "Rated", v: "4.8 · Illawarra" },
-          ].map((item) => (
-            <div key={item.k} className="bg-coal px-6 py-8">
-              <p className="label">{item.k}</p>
-              <p className="display mt-2 text-2xl text-white">{item.v}</p>
-            </div>
-          ))}
+        <Image
+          src="/brand/mark-white.png"
+          alt=""
+          width={545}
+          height={449}
+          className="hero-mark pointer-events-none absolute bottom-24 right-8 z-10 hidden h-36 w-auto xl:block 2xl:h-44"
+        />
+        <div className="hero-bar absolute inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink/78 backdrop-blur-md">
+          <div className="container-page grid grid-cols-4 divide-x divide-white/10">
+            {[
+              `Est. ${settings.brand.established}`,
+              "Harley® specialist",
+              "Independent workshop",
+              "Rated 4.8 · Illawarra",
+            ].map((item) => (
+              <p
+                key={item}
+                className="px-3 py-5 text-center text-[11px] font-semibold uppercase tracking-[0.16em] text-white xl:text-xs xl:tracking-[0.18em]"
+              >
+                {item}
+              </p>
+            ))}
+          </div>
         </div>
       </section>
 
