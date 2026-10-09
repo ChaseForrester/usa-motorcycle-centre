@@ -8,6 +8,7 @@ import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { FlameMark } from "@/components/FlameMark";
 import { ProductCard } from "@/components/ProductCard";
 import { BrandMark } from "@/components/BrandMark";
+import { ReviewCarousel } from "@/components/ReviewCarousel";
 import { brands } from "@/lib/seed";
 import { useCms } from "@/lib/cms-store";
 import { fullAddress, mailHref, money, telHref } from "@/lib/utils";
@@ -440,23 +441,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="m-panel container-page text-left max-lg:justify-center max-lg:px-5 lg:block lg:h-auto lg:max-h-none lg:py-20">
-        <p className="label">From the riders</p>
-        <h2 className="display mt-2 max-w-2xl text-3xl text-white lg:text-5xl">
-          Laurie and Mick went above and beyond.
-        </h2>
-        <div className="mt-5 flex gap-3 overflow-x-auto lg:mt-10 lg:grid lg:grid-cols-3 lg:overflow-visible">
-          {reviews.slice(0, 3).map((r) => (
-            <blockquote key={r.id} className="card w-[78vw] shrink-0 p-5 text-left lg:w-auto lg:p-6">
-              <div className="text-flame">{"★".repeat(r.rating)}</div>
-              <p className="mt-3 line-clamp-5 text-sm text-chrome lg:mt-4 lg:line-clamp-none lg:text-base">&ldquo;{r.quote}&rdquo;</p>
-              <p className="mt-6 text-sm">
-                <span className="text-white">{r.name}</span>
-                <span className="text-steel"> · {r.source}</span>
-              </p>
-            </blockquote>
-          ))}
+      <section className="m-panel m-panel-fill overflow-hidden text-left lg:block lg:h-auto lg:max-h-none lg:overflow-hidden lg:py-20">
+        <div className="container-page max-lg:px-5">
+          <p className="label">From the riders</p>
+          <h2 className="display mt-2 max-w-2xl text-3xl text-white lg:text-5xl">
+            Laurie and Mick went above and beyond.
+          </h2>
         </div>
+        <ReviewCarousel reviews={reviews} />
       </section>
 
       <section className="m-panel container-page text-left max-lg:justify-center max-lg:px-5 lg:block lg:h-auto lg:max-h-none lg:overflow-visible lg:py-20">

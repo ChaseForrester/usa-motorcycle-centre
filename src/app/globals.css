@@ -283,6 +283,7 @@ body {
   .rise,
   .photo-in,
   .marquee,
+  .review-marquee,
   .hero-bar,
   .glass-panel::after,
   .announce-bar::after,
@@ -290,13 +291,22 @@ body {
     animation: none;
   }
 
-  .brand-carousel {
+  .brand-carousel,
+  .review-carousel {
     overflow-x: auto;
   }
 }
 
 .marquee {
   animation: marquee 32s linear infinite;
+}
+
+.review-marquee {
+  animation: marquee 80s linear infinite;
+}
+
+.review-carousel:hover .review-marquee {
+  animation-play-state: paused;
 }
 
 /* Scroll entrances, hover lift, and the small motions that keep the page alive. */
@@ -379,7 +389,7 @@ nav[aria-label="Primary"] .text-flame svg {
     box-shadow: 0 22px 50px rgba(0, 0, 0, 0.32);
   }
 
-  .card:not(:has(video)):hover img,
+  .card:not(:has(video)):hover img:not(.source-mark),
   .shot:hover img {
     transform: scale(1.045);
   }

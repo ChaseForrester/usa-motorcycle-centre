@@ -277,44 +277,169 @@ export const services: Service[] = [
 
 export const events: EventItem[] = [];
 
+/** Public rider quotes. Sources are Localsearch, Yellow Pages, and Google. Kept short so the cards share one height. */
 export const reviews: Review[] = [
   {
     id: "r1",
     name: "Tony Hair",
     quote:
-      "Laurie and Mick went above and beyond to install my 16\" highballs on my 883 Sporty. Their work is second to none — outstanding. If there were more than 5 stars it would be a 10.",
+      "Laurie and Mick went above and beyond to install my 16\" highballs on my 883 Sporty. Their work is outstanding.",
     rating: 5,
-    source: "Local search",
+    source: "Localsearch",
   },
   {
-    id: "r2",
-    name: "Dale Gibbons",
+    id: "r-ron",
+    name: "Ron Louie",
     quote:
-      "I needed a Ventura rack in a big hurry for a last-minute trip. Laurie worked his magic and the rack was here in less than two days.",
+      "A big thank you to Laurie and the team. Really appreciated how friendly and professional they are.",
     rating: 5,
-    source: "Local search",
+    source: "Google",
   },
   {
     id: "r3",
     name: "Brendan S.",
     quote:
-      "Got new Black Burleigh apes and risers from the guys at USA Cycles. Went above and beyond. Perfect knowledge and advice for my Harley — made it look tough as.",
+      "Got new Black Burleigh apes and risers. Went above and beyond. Perfect advice for my Harley.",
     rating: 5,
     source: "Yellow Pages",
+  },
+  {
+    id: "r2",
+    name: "Dale Gibbons",
+    quote:
+      "I needed a Ventura rack in a big hurry. Laurie worked his magic and the rack was here in less than two days.",
+    rating: 5,
+    source: "Localsearch",
+  },
+  {
+    id: "r-greg",
+    name: "Greg Rangitaawa",
+    quote:
+      "Laurie and Mick go out of their way to make sure everything is perfect. Fantastic service and great pricing.",
+    rating: 5,
+    source: "Google",
+  },
+  {
+    id: "r-harry",
+    name: "Harry Llove",
+    quote:
+      "Great friendly guys. They know what they are doing on Harleys and have done wonders on my bike.",
+    rating: 5,
+    source: "Localsearch",
+  },
+  {
+    id: "r-troy",
+    name: "Troy Gibson",
+    quote:
+      "Great old-school Harley shop. Got all the bits that are hard to find, and fantastic knowledge and service.",
+    rating: 5,
+    source: "Google",
+  },
+  {
+    id: "r-donny",
+    name: "Donny Doodle Dummett",
+    quote:
+      "I've been going to USA for over 20 years now. The service, advice and price are unbeatable.",
+    rating: 5,
+    source: "Localsearch",
+  },
+  {
+    id: "r-doug",
+    name: "Doug Barr",
+    quote: "Brilliant service from Laurie and Mick. My bike was in getting Burleigh highballs fitted.",
+    rating: 5,
+    source: "Google",
+  },
+  {
+    id: "r-ian",
+    name: "Ian Olmate",
+    quote: "Bernie blew a braided oil line on the long weekend, but come Tuesday Lozza had us sorted.",
+    rating: 5,
+    source: "Google",
+  },
+  {
+    id: "r-mitch",
+    name: "Mitch",
+    quote: "Awesome bike shop. They look after you like no other.",
+    rating: 5,
+    source: "Localsearch",
+  },
+  {
+    id: "r-mick",
+    name: "Mick Knight",
+    quote: "Extremely helpful and easy to deal with. Nothing but thumbs up for Laurie and the team.",
+    rating: 5,
+    source: "Google",
+  },
+  {
+    id: "r-steve",
+    name: "Steve",
+    quote: "Great service and advice. The bike rode like new.",
+    rating: 5,
+    source: "Localsearch",
+  },
+  {
+    id: "r-robert",
+    name: "Robert Summerill",
+    quote: "They found a wiring problem and carried out the extra work without drama. Truly great people.",
+    rating: 5,
+    source: "Google",
   },
   {
     id: "r4",
     name: "Deon",
     quote: "Great service and advice always.",
     rating: 5,
-    source: "Local search",
+    source: "Localsearch",
   },
   {
-    id: "r5",
-    name: "Reg Potter",
-    quote: "Great service and good advice.",
+    id: "r-luke",
+    name: "Luke Baker",
+    quote: "Thanks Laurie and Mick for fitting me in so quick for tyres before my big trip. Highly recommended.",
     rating: 5,
-    source: "Chamber listing",
+    source: "Google",
+  },
+  {
+    id: "r-gypsy",
+    name: "Gypsy",
+    quote: "Great people with a wealth of knowledge.",
+    rating: 5,
+    source: "Localsearch",
+  },
+  {
+    id: "r-marc",
+    name: "Marc M",
+    quote: "Laurie and Mick are super helpful and offer great advice. So many accessories to choose from.",
+    rating: 5,
+    source: "Google",
+  },
+  {
+    id: "r-tdjay",
+    name: "Tdjay",
+    quote: "Laurie is great. Excellent service.",
+    rating: 5,
+    source: "Localsearch",
+  },
+  {
+    id: "r-neil",
+    name: "Neil Mitchell",
+    quote: "Good boys, gave great advice.",
+    rating: 5,
+    source: "Google",
+  },
+  {
+    id: "r-keith",
+    name: "Keith",
+    quote: "Softail Heritage. The guys at the shop are great with all the extra bells and whistles.",
+    rating: 4,
+    source: "Localsearch",
+  },
+  {
+    id: "r-nathan",
+    name: "Nathan",
+    quote: "The most reliable professional outfit I've ever been to. Highly recommended.",
+    rating: 4,
+    source: "Localsearch",
   },
 ];
 

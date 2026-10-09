@@ -177,6 +177,19 @@ export const useCms = create<CmsState>()(
                         }
                     });
                 }
+                const legacyReviewIds = new Set(["r1", "r2", "r3", "r4", "r5"]);
+                const storedReviews = state?.reviews ?? [];
+                const onlyLegacyReviews =
+                    storedReviews.length > 0 && storedReviews.every((review) => legacyReviewIds.has(review.id));
+                if (state && onlyLegacyReviews) {
+                    state.reviews = seedReviews;
+                    queueMicrotask(() => {
+                        const live = useCms.getState();
+                        if (live.reviews.every((review) => legacyReviewIds.has(review.id))) {
+                            useCms.setState({ reviews: seedReviews });
+                        }
+                    });
+                }
                 state?.setHydrated(true);
             },
         }
