@@ -15,9 +15,10 @@ export default function AdminLoginPage() {
         <div className="grid min-h-screen place-items-center bg-zinc-950 px-4 text-zinc-100">
             <form
                 className="w-full max-w-sm space-y-4 rounded-lg border border-white/10 bg-zinc-900 p-8"
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                     e.preventDefault();
-                    const res = login(email, password);
+                    setError("");
+                    const res = await login(email, password);
                     if (!res.ok) {
                         setError(res.error ?? "Login failed");
                         return;
@@ -45,7 +46,7 @@ export default function AdminLoginPage() {
                     Sign in
                 </button>
                 <p className="text-xs text-zinc-500">
-                    Super Admin for this shop. Use hello@techaidaustralia.com.au.
+                    Super Admin for this shop. Use usa_motorcycle_centre@yahoo.com.au.
                 </p>
             </form>
         </div>

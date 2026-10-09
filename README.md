@@ -22,7 +22,8 @@ Open [http://localhost:3005](http://localhost:3005) (or `next dev` default 3000)
 ### Super Admin (shop)
 
 - URL: `/admin`
-- Super Admin: `hello@techaidaustralia.com.au`
+- Shop Super Admin: `usa_motorcycle_centre@yahoo.com.au` (password is `WORKSHOP_ADMIN_PASSWORD` on the server, not the Yahoo mailbox password)
+- Tech Aid login still works: `hello@techaidaustralia.com.au`
 - Dispatch cards: Paid, To print, In transit, Delivered, Collect, Exception
 - Print opens the stored 100×150 mm PDF. Lodged is the only status the shop presses. Paste an article id until the carrier key exists.
 

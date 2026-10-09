@@ -423,10 +423,10 @@ export default function HomePage() {
             <blockquote key={r.id} className="card w-[78vw] shrink-0 p-5 text-left lg:w-auto lg:p-6">
               <div className="text-flame">{"★".repeat(r.rating)}</div>
               <p className="mt-3 line-clamp-5 text-sm text-chrome lg:mt-4 lg:line-clamp-none lg:text-base">&ldquo;{r.quote}&rdquo;</p>
-              <footer className="mt-6 text-sm">
+              <p className="mt-6 text-sm">
                 <span className="text-white">{r.name}</span>
                 <span className="text-steel"> · {r.source}</span>
-              </footer>
+              </p>
             </blockquote>
           ))}
         </div>
