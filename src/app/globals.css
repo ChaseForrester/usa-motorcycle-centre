@@ -449,13 +449,20 @@ nav[aria-label="Primary"] .text-flame svg {
     max-width: 100%;
   }
 
+  /* The footer is taller than one phone screen. A locked height piled the
+     copyright line on top of the signup form and blocked the controls. */
   html.home-snap .site-footer {
     margin-top: 0;
-    height: min(90svh, calc(100svh - 5.75rem - 4.25rem));
-    max-height: 90svh;
-    overflow: hidden;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+  }
+
+  html.home-snap .site-footer>.container-page {
+    flex: none;
+    justify-content: flex-start;
   }
 
   html.home-snap .site-footer a,
