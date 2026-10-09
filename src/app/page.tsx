@@ -384,19 +384,27 @@ export default function HomePage() {
         </section>
       )}
 
-      <section className="m-panel bg-ink px-5 text-left lg:hidden" aria-label="Brands">
-        <p className="label">On the rack</p>
-        <h2 className="display mt-2 text-3xl text-white">Names we fit.</h2>
-        <ul className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-5">
-          {brands.map((brand) => (
-            <li key={brand.name} className="flex h-12 items-center">
-              <BrandMark
-                brand={brand}
-                className={brand.tall ? "h-11 max-w-[34vw]" : "h-7 max-w-[40vw]"}
-              />
-            </li>
-          ))}
-        </ul>
+      <section className="m-panel bg-ink text-left lg:hidden" aria-label="Brands">
+        <div className="px-5">
+          <p className="label">On the rack</p>
+          <h2 className="display mt-2 text-3xl text-white">Names we fit.</h2>
+        </div>
+        <div className="brand-carousel mt-8 overflow-hidden">
+          <ul className="marquee flex w-max items-center">
+            {[...brands, ...brands].map((brand, i) => (
+              <li
+                key={`${brand.name}-${i}`}
+                className="flex h-16 items-center px-5"
+                aria-hidden={i >= brands.length || undefined}
+              >
+                <BrandMark
+                  brand={brand}
+                  className={brand.tall ? "h-14" : "h-9"}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       <section className="hidden overflow-hidden border-y border-white/10 py-8 lg:block" aria-label="Brands we fit">

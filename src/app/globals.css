@@ -289,6 +289,10 @@ body {
   .btn-flame::after {
     animation: none;
   }
+
+  .brand-carousel {
+    overflow-x: auto;
+  }
 }
 
 .marquee {
@@ -410,6 +414,7 @@ nav[aria-label="Primary"] .text-flame svg {
 }
 
 @media (max-width: 1023px) {
+
   /* Phone snap panels move as one piece. Inner cards stay put so the panel does not clip them. */
   .m-panel .reveal-watch {
     opacity: 1 !important;
