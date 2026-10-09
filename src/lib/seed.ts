@@ -318,17 +318,28 @@ export const reviews: Review[] = [
   },
 ];
 
-export const brands = [
-  "Harley-Davidson",
-  "AMSOIL",
-  "Penrite",
-  "Avon",
-  "Dunlop",
-  "Pirelli",
-  "Kuryakyn",
-  "Arlen Ness",
-  "Accel",
-  "XRH",
+export type BrandLogo = {
+  name: string;
+  /** Public file named after the brand so the URL carries the name. */
+  src: string;
+  width: number;
+  height: number;
+  /** Black artwork, shown white on the ink bar. */
+  invert?: boolean;
+  /** Shield marks need more height than a wordmark. */
+  tall?: boolean;
+};
+
+export const brands: BrandLogo[] = [
+  { name: "Harley-Davidson", src: "/brands/harley-davidson.svg", width: 348, height: 282, invert: true, tall: true },
+  { name: "AMSOIL", src: "/brands/amsoil.png", width: 117, height: 40 },
+  { name: "Penrite", src: "/brands/penrite.png", width: 900, height: 142 },
+  { name: "Avon", src: "/brands/avon.svg", width: 176, height: 32 },
+  { name: "Dunlop", src: "/brands/dunlop.svg", width: 173, height: 37 },
+  { name: "Pirelli", src: "/brands/pirelli.svg", width: 800, height: 209 },
+  { name: "Kuryakyn", src: "/brands/kuryakyn.png", width: 1036, height: 112 },
+  { name: "Arlen Ness", src: "/brands/arlen-ness.png", width: 398, height: 69 },
+  { name: "Accel", src: "/brands/accel.svg", width: 1288, height: 413, invert: true },
 ];
 
 export const discounts: Discount[] = [];

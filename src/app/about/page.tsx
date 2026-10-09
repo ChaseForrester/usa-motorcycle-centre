@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { BrandMark } from "@/components/BrandMark";
 import { brands } from "@/lib/seed";
 import { useCms } from "@/lib/cms-store";
 
@@ -58,16 +59,13 @@ export default function AboutPage() {
             </section>
             <section className="container-page py-16">
                 <p className="label">On the wall</p>
-                <div className="mt-6 flex flex-wrap gap-3">
-                    {brands.map((b) => (
-                        <span
-                            key={b}
-                            className="rounded-sm border border-white/15 px-4 py-2 text-xs uppercase tracking-[0.18em] text-chrome"
-                        >
-                            {b}
-                        </span>
+                <ul className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-5">
+                    {brands.map((brand) => (
+                        <li key={brand.name}>
+                            <BrandMark brand={brand} className={brand.tall ? "h-14" : "h-8"} />
+                        </li>
                     ))}
-                </div>
+                </ul>
             </section>
         </div>
     );

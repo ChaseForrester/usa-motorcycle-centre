@@ -7,6 +7,7 @@ import { ArrowRight, Calendar, CircleDot, Cog, Shield, Shirt, Wrench, Zap } from
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { FlameMark } from "@/components/FlameMark";
 import { ProductCard } from "@/components/ProductCard";
+import { BrandMark } from "@/components/BrandMark";
 import { brands } from "@/lib/seed";
 import { useCms } from "@/lib/cms-store";
 import { fullAddress, mailHref, money, telHref } from "@/lib/utils";
@@ -384,19 +385,27 @@ export default function HomePage() {
       <section className="m-panel bg-ink px-5 text-left lg:hidden" aria-label="Brands">
         <p className="label">On the rack</p>
         <h2 className="display mt-2 text-3xl text-white">Names we fit.</h2>
-        <p className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-left text-sm uppercase tracking-[0.14em] text-steel">
-          {brands.map((b) => (
-            <span key={b}>{b}</span>
+        <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4">
+          {brands.map((brand) => (
+            <li key={brand.name}>
+              <BrandMark
+                brand={brand}
+                className={brand.tall ? "h-11 max-w-[42vw]" : "h-7 max-w-[42vw]"}
+              />
+            </li>
           ))}
-        </p>
+        </ul>
       </section>
 
-      <section className="hidden overflow-hidden border-y border-white/10 py-8 lg:block">
-        <div className="marquee flex w-max gap-12 whitespace-nowrap text-steel">
-          {[...brands, ...brands].map((b, i) => (
-            <span key={i} className="display text-3xl">
-              {b}
-              <span className="mx-8 text-flame">/</span>
+      <section className="hidden overflow-hidden border-y border-white/10 py-8 lg:block" aria-label="Brands we fit">
+        <div className="marquee flex w-max items-center">
+          {[...brands, ...brands].map((brand, i) => (
+            <span key={`${brand.name}-${i}`} className="flex items-center" aria-hidden={i >= brands.length || undefined}>
+              <BrandMark
+                brand={brand}
+                className={brand.tall ? "h-14" : "h-9"}
+              />
+              <span className="mx-8 font-display text-3xl text-flame" aria-hidden="true">/</span>
             </span>
           ))}
         </div>
