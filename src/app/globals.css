@@ -191,11 +191,18 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
+    min-width: 0;
     height: min(90svh, calc(100svh - 5.75rem - 4.25rem));
     max-height: 90svh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
     overflow: hidden;
+  }
+
+  .m-panel>* {
+    min-width: 0;
+    max-width: 100%;
   }
 
   html.home-snap footer {
