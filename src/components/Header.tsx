@@ -4,10 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, Phone, ShoppingBag, X } from "lucide-react";
+import { Mail, Menu, Phone, ShoppingBag, X } from "lucide-react";
+import { Linkified } from "@/components/Linkified";
 import { useCms } from "@/lib/cms-store";
 import { cartCount, useCart } from "@/lib/cart";
-import { cn } from "@/lib/utils";
+import { cn, mailHref, telHref } from "@/lib/utils";
 
 const links = [
     { href: "/shop", label: "Shirts" },
@@ -86,11 +87,18 @@ export function Header() {
 
                 <div className="flex items-center gap-2 sm:gap-3">
                     <a
-                        href={settings.contact.phoneHref}
-                        className="hidden items-center gap-2 text-sm text-chrome hover:text-white md:flex"
+                        href={telHref(settings.contact.phone)}
+                        className="contact-link hidden items-center gap-2 text-sm text-chrome md:flex"
                     >
                         <Phone className="h-4 w-4 text-flame" />
                         {settings.contact.phone}
+                    </a>
+                    <a
+                        href={mailHref(settings.contact.email)}
+                        className="hidden rounded-sm border border-white/15 p-2.5 hover:border-flame md:grid"
+                        aria-label={`Email ${settings.contact.email}`}
+                    >
+                        <Mail className="h-4 w-4" />
                     </a>
                     <Link
                         href="/cart"
@@ -129,6 +137,20 @@ export function Header() {
                                 {l.label}
                             </Link>
                         ))}
+                        <a
+                            href={telHref(settings.contact.phone)}
+                            className="contact-link mt-4 flex items-center gap-2 py-2 text-sm text-chrome"
+                        >
+                            <Phone className="h-4 w-4 text-flame" />
+                            {settings.contact.phone}
+                        </a>
+                        <a
+                            href={mailHref(settings.contact.email)}
+                            className="contact-link flex items-center gap-2 py-2 text-sm text-chrome"
+                        >
+                            <Mail className="h-4 w-4 text-flame" />
+                            {settings.contact.email}
+                        </a>
                         <Link href="/book" className="btn-flame mt-4">
                             Book a service
                         </Link>
@@ -145,7 +167,7 @@ export function AnnouncementBar() {
     return (
         <div className="bg-flame text-ink">
             <div className="container-page flex items-center justify-center gap-3 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em]">
-                {settings.homepage.announcement}
+                <Linkified text={settings.homepage.announcement} linkClassName="contact-link-bar" />
             </div>
         </div>
     );

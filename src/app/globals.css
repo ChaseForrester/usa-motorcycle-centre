@@ -26,30 +26,39 @@ body {
   .container-page {
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
   }
+
   .display {
     @apply font-display uppercase tracking-[0.04em] leading-[0.92];
   }
+
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-sm px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] transition;
   }
+
   .btn-flame {
     @apply btn bg-flame text-ink hover:bg-flame-hot shadow-flame;
   }
+
   .btn-ghost {
     @apply btn border border-white/20 text-paper hover:border-flame hover:text-flame;
   }
+
   .btn-chrome {
     @apply btn bg-chrome text-ink hover:bg-white;
   }
+
   .label {
     @apply text-[11px] uppercase tracking-[0.28em] text-flame;
   }
+
   .card {
     @apply overflow-hidden rounded-sm border border-white/10 bg-coal/80;
   }
+
   .input {
     @apply w-full rounded-sm border border-white/15 bg-ink px-4 py-3 text-paper outline-none transition placeholder:text-steel/70 focus:border-flame;
   }
+
   .input-light {
     @apply w-full rounded-sm border border-black/15 bg-white px-4 py-3 text-ink outline-none focus:border-flame;
   }
@@ -71,6 +80,101 @@ body {
   background: linear-gradient(90deg, var(--flame), transparent);
 }
 
+.contact-link {
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 106, 0, 0.75);
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.contact-link:hover {
+  color: #fff;
+  text-decoration-color: #ff6a00;
+}
+
+.contact-link-bar {
+  text-decoration: underline;
+  text-decoration-color: rgba(11, 11, 12, 0.45);
+  text-underline-offset: 3px;
+}
+
+.contact-link-bar:hover {
+  text-decoration-color: #0b0b0c;
+}
+
+.hero-photo {
+  animation: hero-arrive 2.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center center;
+}
+
+.rise {
+  animation: rise-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.rise-1 {
+  animation-delay: 0.12s;
+}
+
+.rise-2 {
+  animation-delay: 0.24s;
+}
+
+.rise-3 {
+  animation-delay: 0.36s;
+}
+
+.rise-4 {
+  animation-delay: 0.48s;
+}
+
+.photo-in {
+  animation: photo-in 1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@keyframes hero-arrive {
+  from {
+    transform: scale(1.14);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes photo-in {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-photo,
+  .rise,
+  .photo-in,
+  .marquee {
+    animation: none;
+  }
+}
+
 .marquee {
   animation: marquee 32s linear infinite;
 }
@@ -79,6 +183,7 @@ body {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }

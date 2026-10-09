@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCms } from "@/lib/cms-store";
-import { money } from "@/lib/utils";
+import { money, telHref } from "@/lib/utils";
 
 export default function WorkshopPage() {
     const services = useCms((s) => s.services);
@@ -45,7 +45,7 @@ export default function WorkshopPage() {
                     <Link href="/book" className="btn-flame">
                         Book a service
                     </Link>
-                    <a href={settings.contact.phoneHref} className="btn-ghost">
+                    <a href={telHref(settings.contact.phone)} className="btn-ghost">
                         Call {settings.contact.phone}
                     </a>
                 </div>

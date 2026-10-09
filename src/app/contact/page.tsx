@@ -6,7 +6,7 @@ import { MapPin, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { useCms } from "@/lib/cms-store";
 import { submitInbox } from "@/lib/inbox-client";
-import { fullAddress, hoursList } from "@/lib/utils";
+import { fullAddress, hoursList, mailHref, telHref } from "@/lib/utils";
 
 export default function ContactPage() {
     const settings = useCms((s) => s.settings);
@@ -43,11 +43,11 @@ export default function ContactPage() {
                         <MapPin className="h-5 w-5 text-flame" />
                         {fullAddress(settings)}
                     </a>
-                    <a href={settings.contact.phoneHref} className="flex gap-3 hover:text-white">
+                    <a href={telHref(settings.contact.phone)} className="contact-link flex gap-3">
                         <Phone className="h-5 w-5 text-flame" />
                         {settings.contact.phone}
                     </a>
-                    <a href={`mailto:${settings.contact.email}`} className="block hover:text-white">
+                    <a href={mailHref(settings.contact.email)} className="contact-link block">
                         {settings.contact.email}
                     </a>
                 </div>

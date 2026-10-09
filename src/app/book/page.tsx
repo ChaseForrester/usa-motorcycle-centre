@@ -4,9 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 import { useCms } from "@/lib/cms-store";
 import { submitInbox } from "@/lib/inbox-client";
+import { telHref } from "@/lib/utils";
 
 export default function BookPage() {
     const services = useCms((s) => s.services);
+    const settings = useCms((s) => s.settings);
     const addBooking = useCms((s) => s.addBooking);
     const [done, setDone] = useState(false);
     const [form, setForm] = useState({
@@ -27,7 +29,11 @@ export default function BookPage() {
                 <p className="mt-4 max-w-lg text-chrome">
                     The workshop has your request and an email is on its way. Laurie or Mick will confirm
                     the lift. If a job gets thrown off course we will email you that we will be in touch.
-                    Urgent? Ring (02) 4257 2333.
+                    Urgent? Ring{" "}
+                    <a href={telHref(settings.contact.phone)} className="contact-link text-white">
+                        {settings.contact.phone}
+                    </a>
+                    .
                 </p>
             </div>
         );

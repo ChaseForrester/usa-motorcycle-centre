@@ -25,7 +25,11 @@ export function ProductCard({ product }: { product: Product }) {
                     src={src}
                     alt={product.name}
                     fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
+                    className={
+                        isGift
+                            ? "object-contain"
+                            : "object-cover transition duration-500 group-hover:scale-105"
+                    }
                     sizes="(min-width: 1024px) 25vw, 50vw"
                     unoptimized={isRemoteProductSrc(src)}
                 />

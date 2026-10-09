@@ -8,7 +8,7 @@ import { FlameMark } from "@/components/FlameMark";
 import { ProductCard } from "@/components/ProductCard";
 import { brands } from "@/lib/seed";
 import { useCms } from "@/lib/cms-store";
-import { fullAddress, money } from "@/lib/utils";
+import { fullAddress, mailHref, money, telHref } from "@/lib/utils";
 import { FaqList } from "@/components/FaqList";
 import { SERVICE_TOWNS } from "@/lib/seo";
 
@@ -23,31 +23,36 @@ export default function HomePage() {
 
   return (
     <div>
-      <section className="relative min-h-[88vh] overflow-hidden">
-        <Image
-          src={settings.homepage.heroImage}
-          alt="U.S.A. Motorcycle Centre shop floor at 8 Miall Way, Albion Park Rail"
-          fill
-          priority
-          className="object-cover object-[center_62%]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/50 to-ink/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/25" />
-        <div className="container-page relative flex min-h-[88vh] flex-col justify-end pb-16 pt-28 md:justify-center md:pb-0">
-          <p className="label">{settings.homepage.heroKicker}</p>
-          <h1 className="display mt-4 max-w-3xl text-5xl text-white sm:text-7xl lg:text-8xl">
-            {settings.homepage.heroTitle}
-          </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-chrome sm:text-lg">
-            {settings.homepage.heroSubtitle}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/shop" className="btn-flame">
-              {settings.homepage.heroCta}
-            </Link>
-            <Link href="/book" className="btn-ghost">
-              {settings.homepage.heroSecondary}
-            </Link>
+      <section className="relative bg-ink">
+        <div className="relative overflow-hidden">
+          <Image
+            src={settings.homepage.heroImage}
+            alt="U.S.A. Motorcycle Centre shop floor at 8 Miall Way, Albion Park Rail"
+            width={1640}
+            height={624}
+            priority
+            className="hero-photo block h-[42vh] min-h-[220px] w-full object-cover object-[72%_center] lg:h-auto lg:max-h-[calc(100svh-7.5rem)] lg:min-h-0 lg:object-center"
+          />
+          <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-ink/92 via-ink/40 to-transparent lg:block" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/30 lg:from-ink/40" />
+          <div className="container-page relative z-10 py-8 lg:absolute lg:inset-0 lg:flex lg:items-center lg:py-6">
+            <div className="max-w-xl lg:max-w-2xl">
+              <p className="rise label">{settings.homepage.heroKicker}</p>
+              <h1 className="rise rise-1 display mt-3 text-[clamp(2.35rem,4.6vw,4.75rem)] text-white">
+                {settings.homepage.heroTitle}
+              </h1>
+              <p className="rise rise-2 mt-4 max-w-xl text-sm leading-relaxed text-chrome sm:text-base">
+                {settings.homepage.heroSubtitle}
+              </p>
+              <div className="rise rise-3 mt-6 flex flex-wrap gap-3">
+                <Link href="/shop" className="btn-flame">
+                  {settings.homepage.heroCta}
+                </Link>
+                <Link href="/book" className="btn-ghost">
+                  {settings.homepage.heroSecondary}
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -75,13 +80,19 @@ export default function HomePage() {
           { src: "/workshop/primary-case.jpg", alt: "Primary case" },
           { src: "/workshop/pirelli-rack.jpg", alt: "Pirelli Night Dragon rack" },
           { src: "/workshop/dunlop-rack.jpg", alt: "Dunlop tyre racks" },
-        ].map((shot) => (
+        ].map((shot, i) => (
           <Link
             key={shot.src}
             href="/gallery"
-            className="relative aspect-[4/3] overflow-hidden md:aspect-[3/4]"
+            className="group relative aspect-[4/3] overflow-hidden md:aspect-[3/4]"
           >
-            <Image src={shot.src} alt={shot.alt} fill className="object-cover transition duration-500 hover:scale-105" />
+            <Image
+              src={shot.src}
+              alt={shot.alt}
+              fill
+              className="photo-in object-cover transition duration-700 group-hover:scale-105"
+              style={{ animationDelay: `${i * 120}ms` }}
+            />
           </Link>
         ))}
       </section>
@@ -112,7 +123,7 @@ export default function HomePage() {
               src="/products/gift-card.jpg"
               alt="U.S.A. Motorcycle Centre workshop gift card"
               fill
-              className="object-cover"
+              className="object-contain"
             />
           </div>
           <div className="flex flex-col justify-center bg-coal px-6 py-12 sm:px-12">
@@ -283,7 +294,15 @@ export default function HomePage() {
               <h2 className="display mt-4 text-4xl text-white sm:text-5xl">Come and see us.</h2>
               <p className="mt-4 max-w-md text-chrome">
                 Free parking. Wheelchair accessible. The workshop is at {fullAddress(settings)}.
-                Call {settings.contact.phone} or book the lift online.
+                Call{" "}
+                <a href={telHref(settings.contact.phone)} className="contact-link text-white">
+                  {settings.contact.phone}
+                </a>{" "}
+                or email{" "}
+                <a href={mailHref(settings.contact.email)} className="contact-link text-white">
+                  {settings.contact.email}
+                </a>{" "}
+                or book the lift online.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a href={settings.contact.mapsUrl} className="btn-flame" target="_blank" rel="noreferrer">

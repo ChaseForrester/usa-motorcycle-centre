@@ -7,7 +7,7 @@ import { MapPin, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { useCms } from "@/lib/cms-store";
 import { submitInbox } from "@/lib/inbox-client";
-import { fullAddress, hoursList } from "@/lib/utils";
+import { fullAddress, hoursList, mailHref, telHref } from "@/lib/utils";
 
 export function Footer() {
     const settings = useCms((s) => s.settings);
@@ -107,15 +107,15 @@ export function Footer() {
                         {fullAddress(settings)}
                     </a>
                     <a
-                        href={settings.contact.phoneHref}
-                        className="mt-3 flex items-center gap-2 text-sm text-chrome hover:text-white"
+                        href={telHref(settings.contact.phone)}
+                        className="contact-link mt-3 flex items-center gap-2 text-sm text-chrome"
                     >
                         <Phone className="h-4 w-4 text-flame" />
                         {settings.contact.phone}
                     </a>
                     <a
-                        href={`mailto:${settings.contact.email}`}
-                        className="mt-2 block text-sm text-chrome hover:text-white"
+                        href={mailHref(settings.contact.email)}
+                        className="contact-link mt-2 block text-sm text-chrome"
                     >
                         {settings.contact.email}
                     </a>

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqList } from "@/components/FaqList";
 import { JsonLd } from "@/components/JsonLd";
-import { breadcrumbJsonLd, faqJsonLd, pageMeta } from "@/lib/seo";
+import { breadcrumbJsonLd, faqJsonLd, pageMeta, SITE } from "@/lib/seo";
+import { telHref } from "@/lib/utils";
 
 export const metadata: Metadata = pageMeta(
     "Harley Mechanic FAQ — Wollongong, Shellharbour, Nowra",
@@ -28,8 +29,8 @@ export default function FaqPage() {
             </h1>
             <p className="mt-5 max-w-2xl text-lg text-chrome">
                 Independent workshop at 8 Miall Way, Albion Park Rail. Laurie and Mick. Est. 1992. Call{" "}
-                <a href="tel:+61242572333" className="text-flame">
-                    (02) 4257 2333
+                <a href={telHref(SITE.phone)} className="contact-link text-white">
+                    {SITE.phone}
                 </a>
                 .
             </p>

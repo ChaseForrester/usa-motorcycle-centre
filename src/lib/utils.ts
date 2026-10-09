@@ -22,6 +22,24 @@ export function fullAddress(s: SiteSettings) {
     return `${s.contact.addressLine}, ${s.contact.suburb} ${s.contact.state} ${s.contact.postcode}`;
 }
 
+/** Opens the phone app. Built from the number on screen, so a saved setting cannot strip the link. */
+export function telHref(phone: string) {
+    const trimmed = phone.trim();
+    if (trimmed.toLowerCase().startsWith("tel:")) return trimmed;
+    let digits = trimmed.replace(/[^\d+]/g, "");
+    if (digits.startsWith("+")) return `tel:${digits}`;
+    if (digits.startsWith("61")) return `tel:+${digits}`;
+    if (digits.startsWith("0")) digits = `61${digits.slice(1)}`;
+    // Local Illawarra number written without the 02, e.g. "4257 2333".
+    else if (digits.length === 8) digits = `612${digits}`;
+    return `tel:+${digits}`;
+}
+
+export function mailHref(email: string) {
+    const trimmed = email.trim();
+    return trimmed.toLowerCase().startsWith("mailto:") ? trimmed : `mailto:${trimmed}`;
+}
+
 const dayOrder: DayKey[] = [
     "monday",
     "tuesday",

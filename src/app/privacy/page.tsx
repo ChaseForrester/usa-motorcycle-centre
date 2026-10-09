@@ -1,6 +1,7 @@
 "use client";
 
 import { useCms } from "@/lib/cms-store";
+import { mailHref, telHref } from "@/lib/utils";
 
 export default function PrivacyPage() {
     const s = useCms((x) => x.settings);
@@ -15,7 +16,15 @@ export default function PrivacyPage() {
             <p className="mt-4">
                 Payments run through Stripe. We do not store full card numbers. Hosting and the product
                 catalogue may use Firebase. We do not sell your details. You can ask us to update or delete
-                your information by emailing {s.contact.email} or calling {s.contact.phone}.
+                your information by emailing{" "}
+                <a href={mailHref(s.contact.email)} className="contact-link text-white">
+                    {s.contact.email}
+                </a>{" "}
+                or calling{" "}
+                <a href={telHref(s.contact.phone)} className="contact-link text-white">
+                    {s.contact.phone}
+                </a>
+                .
             </p>
             <p className="mt-4">
                 This policy can be edited in Super Admin so it always matches how the shop actually runs.

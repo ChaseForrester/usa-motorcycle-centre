@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { GiftAmountPicker } from "@/components/GiftAmountPicker";
 import { useCms } from "@/lib/cms-store";
+import { telHref } from "@/lib/utils";
 
 export default function GiftCardsPage() {
     const product = useCms((s) => s.products).find((p) => p.category === "Gift Cards");
@@ -15,7 +16,11 @@ export default function GiftCardsPage() {
                 <p className="label">Gift cards</p>
                 <h1 className="display mt-2 text-5xl text-white">Ask the workshop.</h1>
                 <p className="mt-4 max-w-xl text-chrome">
-                    Call {settings.contact.phone} and Laurie or Mick will sort one.
+                    Call{" "}
+                    <a href={telHref(settings.contact.phone)} className="contact-link text-white">
+                        {settings.contact.phone}
+                    </a>{" "}
+                    and Laurie or Mick will sort one.
                 </p>
             </div>
         );
@@ -36,7 +41,7 @@ export default function GiftCardsPage() {
                         src={product.images[0]}
                         alt="U.S.A. Motorcycle Centre workshop gift card"
                         fill
-                        className="object-cover"
+                        className="object-contain"
                         priority
                     />
                 </div>

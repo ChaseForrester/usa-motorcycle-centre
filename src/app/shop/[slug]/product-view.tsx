@@ -57,14 +57,14 @@ export default function ProductView() {
                     <div
                         className={cn(
                             "relative overflow-hidden rounded-sm bg-ash",
-                            isGift ? "aspect-[16/9]" : "aspect-[4/5]"
+                            isGift ? (img === 1 ? "aspect-[4/5]" : "aspect-[16/9]") : "aspect-[4/5]"
                         )}
                     >
                         <Image
                             src={product.images[img] ?? product.images[0] ?? "/brand/icon.png"}
                             alt={product.name}
                             fill
-                            className="object-cover"
+                            className={isGift ? "object-contain" : "object-cover"}
                             priority
                             unoptimized={isRemoteProductSrc(
                                 product.images[img] ?? product.images[0] ?? ""
@@ -86,7 +86,7 @@ export default function ProductView() {
                                         src={src}
                                         alt=""
                                         fill
-                                        className="object-cover"
+                                        className={isGift ? "object-contain" : "object-cover"}
                                         unoptimized={isRemoteProductSrc(src)}
                                     />
                                 </button>
