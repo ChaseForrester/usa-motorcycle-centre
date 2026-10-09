@@ -101,20 +101,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="m-panel bg-ink px-5 text-left lg:hidden" aria-label="Workshop lanes">
+      <section className="m-panel m-panel-fill bg-ink px-5 pb-5 text-left lg:hidden" aria-label="Workshop lanes">
         <p className="label">From the workshop</p>
         <h2 className="display mt-2 text-3xl text-white">What we do.</h2>
-        <div className="mt-6 grid grid-cols-2 gap-3">
+        <div className="lane-grid mt-5 grid min-h-0 flex-1 grid-cols-2 grid-rows-2 gap-3">
           {lanes.map((lane) => {
             const Icon = lane.icon;
             return (
               <Link
                 key={lane.href}
                 href={lane.href}
-                className="flex items-center gap-3 rounded-md border border-white/10 bg-coal px-3 py-4 text-left"
+                className="flex h-full items-center gap-3 rounded-md border border-white/10 bg-coal px-4 text-left"
               >
-                <Icon className="h-6 w-6 shrink-0 text-white" strokeWidth={1.6} />
-                <span className="text-[12px] font-semibold uppercase leading-tight tracking-[0.06em] text-chrome">
+                <Icon className="h-7 w-7 shrink-0 text-white" strokeWidth={1.6} />
+                <span className="text-[13px] font-semibold uppercase leading-tight tracking-[0.06em] text-chrome">
                   {lane.label}
                 </span>
               </Link>

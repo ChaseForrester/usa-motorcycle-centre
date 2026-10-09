@@ -449,6 +449,17 @@ nav[aria-label="Primary"] .text-flame svg {
     max-width: 100%;
   }
 
+  /* Short phone panels were centered, which left a large empty band under the header. */
+  .m-panel.m-panel-fill {
+    justify-content: flex-start;
+    padding-top: 1.25rem;
+  }
+
+  .m-panel.m-panel-fill>.lane-grid {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
   /* The footer is taller than one phone screen. A locked height piled the
      copyright line on top of the signup form and blocked the controls. */
   html.home-snap .site-footer {
