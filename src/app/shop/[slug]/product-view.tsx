@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { GiftAmountPicker } from "@/components/GiftAmountPicker";
+import { GiftCardMotion } from "@/components/GiftCardMotion";
 import { ProductCard } from "@/components/ProductCard";
 import { useCart } from "@/lib/cart";
 import { useCms } from "@/lib/cms-store";
@@ -57,21 +58,25 @@ export default function ProductView() {
                     <div
                         className={cn(
                             "relative overflow-hidden rounded-sm bg-ash",
-                            isGift ? (img === 1 ? "aspect-[4/5]" : "aspect-[16/9]") : "aspect-[4/5]"
+                            isGift ? "aspect-[16/9]" : "aspect-[4/5]"
                         )}
                     >
-                        <Image
-                            src={product.images[img] ?? product.images[0] ?? "/brand/icon.png"}
-                            alt={product.name}
-                            fill
-                            className={isGift ? "object-contain" : "object-cover"}
-                            priority
-                            unoptimized={isRemoteProductSrc(
-                                product.images[img] ?? product.images[0] ?? ""
-                            )}
-                        />
+                        {isGift ? (
+                            <GiftCardMotion />
+                        ) : (
+                            <Image
+                                src={product.images[img] ?? product.images[0] ?? "/brand/icon.png"}
+                                alt={product.name}
+                                fill
+                                className="object-cover"
+                                priority
+                                unoptimized={isRemoteProductSrc(
+                                    product.images[img] ?? product.images[0] ?? ""
+                                )}
+                            />
+                        )}
                     </div>
-                    {product.images.length > 1 && (
+                    {!isGift && product.images.length > 1 && (
                         <div className="mt-3 grid grid-cols-4 gap-2">
                             {product.images.map((src, i) => (
                                 <button

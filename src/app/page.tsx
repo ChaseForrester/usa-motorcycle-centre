@@ -11,6 +11,7 @@ import { brands } from "@/lib/seed";
 import { useCms } from "@/lib/cms-store";
 import { fullAddress, mailHref, money, telHref } from "@/lib/utils";
 import { FaqList } from "@/components/FaqList";
+import { GiftCardMotion } from "@/components/GiftCardMotion";
 import { SERVICE_TOWNS } from "@/lib/seo";
 
 export default function HomePage() {
@@ -270,12 +271,7 @@ export default function HomePage() {
       <section className="m-panel container-page text-left max-lg:justify-center max-lg:px-5 lg:block lg:pb-20">
         <div className="min-w-0 overflow-hidden rounded-sm border border-white/10 lg:grid lg:grid-cols-2 lg:items-center">
           <div className="relative h-40 bg-ash lg:h-auto lg:min-h-[260px]">
-            <Image
-              src="/products/gift-card.jpg"
-              alt="U.S.A. Motorcycle Centre workshop gift card"
-              fill
-              className="object-contain"
-            />
+            <GiftCardMotion />
           </div>
           <div className="min-w-0 bg-coal px-5 py-5 text-left sm:px-12 lg:py-12">
             <p className="label">Gift cards</p>

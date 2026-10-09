@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { GiftCardMotion } from "@/components/GiftCardMotion";
 import type { Product } from "@/lib/types";
 import { isRemoteProductSrc, money } from "@/lib/utils";
 
@@ -21,18 +22,18 @@ export function ProductCard({ product }: { product: Product }) {
                         : "relative aspect-[4/5] overflow-hidden bg-ash"
                 }
             >
-                <Image
-                    src={src}
-                    alt={product.name}
-                    fill
-                    className={
-                        isGift
-                            ? "object-contain"
-                            : "object-cover transition duration-500 group-hover:scale-105"
-                    }
-                    sizes="(min-width: 1024px) 25vw, 50vw"
-                    unoptimized={isRemoteProductSrc(src)}
-                />
+                {isGift ? (
+                    <GiftCardMotion />
+                ) : (
+                    <Image
+                        src={src}
+                        alt={product.name}
+                        fill
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                        sizes="(min-width: 1024px) 25vw, 50vw"
+                        unoptimized={isRemoteProductSrc(src)}
+                    />
+                )}
                 {product.featured && (
                     <span className="absolute left-3 top-3 bg-flame px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-ink">
                         Shop favourite

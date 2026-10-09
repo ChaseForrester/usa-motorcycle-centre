@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { GiftAmountPicker } from "@/components/GiftAmountPicker";
+import { GiftCardMotion } from "@/components/GiftCardMotion";
 import { useCms } from "@/lib/cms-store";
 import { telHref } from "@/lib/utils";
 
@@ -37,13 +37,7 @@ export default function GiftCardsPage() {
 
             <div className="mt-10 grid gap-10 lg:grid-cols-2">
                 <div className="relative aspect-[16/9] overflow-hidden rounded-sm border border-white/10 bg-ash">
-                    <Image
-                        src={product.images[0]}
-                        alt="U.S.A. Motorcycle Centre workshop gift card"
-                        fill
-                        className="object-contain"
-                        priority
-                    />
+                    <GiftCardMotion />
                 </div>
                 <div>
                     <p className="label">{product.brand}</p>
