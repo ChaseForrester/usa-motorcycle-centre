@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { MapPin, Phone } from "lucide-react";
+import { useState, type FormEvent } from "react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { useCms } from "@/lib/cms-store";
 import { submitInbox } from "@/lib/inbox-client";
-import { cn, fullAddress, hoursList, mailHref, telHref } from "@/lib/utils";
+import { cn, hoursList, mailHref, telHref } from "@/lib/utils";
 import type { SiteSettings } from "@/lib/types";
 
 const workshopLinks = [
@@ -34,6 +34,21 @@ function compactHours(settings: SiteSettings) {
         .join(" · ");
 }
 
+function groupedHours(hours: { key: string; label: string; value: string }[]) {
+    const short = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    const groups: { start: string; end: string; full: string; value: string }[] = [];
+    hours.forEach((day, i) => {
+        const name = short[i] || day.label;
+        const last = groups[groups.length - 1];
+        if (last && last.value === day.value) last.end = name;
+        else groups.push({ start: name, end: name, full: day.label, value: day.value });
+    });
+    return groups.map((group) => ({
+        label: group.start === group.end ? group.full : `${group.start}–${group.end}`,
+        value: group.value,
+    }));
+}
+
 export function Footer() {
     const settings = useCms((s) => s.settings);
     const addSubscriber = useCms((s) => s.addSubscriber);
@@ -41,44 +56,65 @@ export function Footer() {
     const [done, setDone] = useState(false);
     const [sending, setSending] = useState(false);
     const [error, setError] = useState("");
-    const hours = hoursList(settings);
+    const hours = groupedHours(hoursList(settings));
+
+    async function joinList(e: FormEvent) {
+        e.preventDefault();
+        if (!email) return;
+        setSending(true);
+        setError("");
+        addSubscriber(email);
+        const result = await submitInbox({
+            kind: "newsletter",
+            name: email,
+            email,
+            message: "Workshop list",
+        });
+        setSending(false);
+        if (!result.ok) {
+            setError(result.error || "Could not join. Call the workshop.");
+            return;
+        }
+        setDone(true);
+    }
 
     return (
-        <footer className="site-footer flex flex-col border-t border-white/10 bg-coal lg:mt-24 lg:block">
-            <div className="container-page grid min-h-0 flex-1 content-center gap-4 py-5 lg:grid-cols-4 lg:content-start lg:gap-12 lg:py-16">
-                <div className="footer-col min-w-0">
-                    <div className="flex items-center gap-3">
+        <footer className="site-footer flex flex-col border-t border-white/10 bg-coal lg:mt-24">
+            <div className="container-page flex min-h-0 flex-1 flex-col justify-center gap-4 py-4 lg:block lg:py-14">
+                <div className="footer-col flex flex-col gap-3 border-b border-white/10 pb-4 lg:flex-row lg:items-center lg:justify-between lg:pb-8">
+                    <div className="flex min-w-0 items-center gap-3 lg:gap-4">
                         <Image
                             src={settings.brand.logo}
                             alt={settings.brand.name}
-                            width={88}
-                            height={88}
+                            width={72}
+                            height={72}
                             className={cn(
-                                "h-12 w-12 rounded-full bg-white object-contain lg:h-20 lg:w-20",
+                                "h-12 w-12 shrink-0 rounded-full bg-white object-contain lg:h-16 lg:w-16",
                                 settings.brand.logoInvert && "invert"
                             )}
                         />
-                        <div className="leading-tight lg:hidden">
-                            <p className="display text-lg text-white">U.S.A.</p>
-                            <p className="text-[10px] uppercase tracking-[0.22em] text-steel">Motorcycle Centre</p>
+                        <div className="min-w-0">
+                            <p className="display text-xl leading-none text-white lg:text-3xl">
+                                U.S.A. Motorcycle Centre
+                            </p>
+                            <p className="mt-2 hidden max-w-md text-sm leading-relaxed text-steel lg:block">
+                                {settings.brand.slogan}
+                            </p>
+                            <p className="footer-est mt-1.5 text-[11px] uppercase tracking-[0.22em] text-flame lg:mt-2">
+                                Est. {settings.brand.established} · Illawarra
+                            </p>
                         </div>
                     </div>
-                    <p className="mt-4 hidden max-w-xs text-sm leading-relaxed text-steel lg:block">
-                        {settings.brand.slogan}
-                    </p>
-                    <p className="footer-est mt-3 text-[11px] uppercase tracking-[0.22em] text-flame">
-                        Est. {settings.brand.established} · Illawarra
-                    </p>
-                    <div className="footer-social mt-4 flex gap-3 lg:mt-5">
+                    <div className="footer-social flex gap-2">
                         {settings.social.facebook && (
                             <a
                                 href={settings.social.facebook}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="grid h-10 w-10 place-items-center rounded-sm border border-white/15 transition hover:border-[#1877F2] hover:bg-white/5"
+                                className="grid h-11 w-11 place-items-center rounded-sm border border-white/15 hover:border-[#1877F2] hover:bg-white/5"
                                 aria-label="Facebook"
                             >
-                                <FacebookIcon className="h-5 w-5" />
+                                <FacebookIcon className="h-4 w-4" />
                             </a>
                         )}
                         {settings.social.instagram && (
@@ -86,147 +122,130 @@ export function Footer() {
                                 href={settings.social.instagram}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="grid h-10 w-10 place-items-center rounded-sm border border-white/15 transition hover:border-[#d6249f] hover:bg-white/5"
+                                className="grid h-11 w-11 place-items-center rounded-sm border border-white/15 hover:border-[#d6249f] hover:bg-white/5"
                                 aria-label="Instagram"
                             >
-                                <InstagramIcon className="h-5 w-5" />
+                                <InstagramIcon className="h-4 w-4" />
                             </a>
                         )}
                     </div>
                 </div>
 
-                <div className="footer-col min-w-0">
-                    <p className="label">Workshop</p>
-                    <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-chrome lg:mt-4 lg:block lg:space-y-2">
-                        {workshopLinks.map((link) => (
-                            <li key={link.href}>
-                                <Link href={link.href} className="hover:text-flame">
-                                    {link.label}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <div className="grid gap-4 lg:mt-10 lg:grid-cols-12 lg:gap-8">
+                    <div className="footer-col lg:col-span-3">
+                        <p className="label">Workshop</p>
+                        <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm text-chrome lg:mt-4 lg:block lg:space-y-2.5">
+                            {workshopLinks.map((link) => (
+                                <li key={link.href}>
+                                    <Link href={link.href} className="transition-colors hover:text-flame">
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
-                <div className="footer-col min-w-0">
-                    <p className="label">Find us</p>
-                    <a
-                        href={settings.contact.mapsUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-2 flex items-start gap-2 text-sm text-chrome hover:text-white lg:mt-4"
-                    >
-                        <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-flame" />
-                        <span className="min-w-0">{fullAddress(settings)}</span>
-                    </a>
-                    <a
-                        href={telHref(settings.contact.phone)}
-                        className="contact-link mt-2 flex items-center gap-2 text-sm text-chrome lg:mt-3"
-                    >
-                        <Phone className="h-4 w-4 shrink-0 text-flame" />
-                        {settings.contact.phone}
-                    </a>
-                    <a
-                        href={mailHref(settings.contact.email)}
-                        className="contact-link mt-2 block break-all text-sm text-chrome"
-                    >
-                        {settings.contact.email}
-                    </a>
-                    <p className="mt-2 text-xs leading-relaxed text-steel lg:hidden">{compactHours(settings)}</p>
-                    <ul className="mt-5 hidden space-y-1 text-xs text-steel lg:block">
-                        {hours.map((h) => (
-                            <li key={h.key} className="flex justify-between gap-4">
-                                <span>{h.label}</span>
-                                <span className="text-chrome">{h.value}</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                    <div className="footer-col lg:col-span-4">
+                        <p className="label">Find us</p>
+                        <div className="mt-3 space-y-2.5 text-sm lg:mt-4">
+                            <a
+                                href={settings.contact.mapsUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="flex items-start gap-2.5 text-chrome hover:text-white"
+                            >
+                                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-flame" />
+                                <span>
+                                    <span className="block">{settings.contact.addressLine}</span>
+                                    <span className="block text-steel">
+                                        {settings.contact.suburb} {settings.contact.state} {settings.contact.postcode}
+                                    </span>
+                                </span>
+                            </a>
+                            <a
+                                href={telHref(settings.contact.phone)}
+                                className="contact-link flex items-center gap-2.5 text-chrome"
+                            >
+                                <Phone className="h-4 w-4 shrink-0 text-flame" />
+                                {settings.contact.phone}
+                            </a>
+                            <a
+                                href={mailHref(settings.contact.email)}
+                                className="contact-link flex items-start gap-2.5 break-all text-chrome"
+                            >
+                                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-flame" />
+                                {settings.contact.email}
+                            </a>
+                            <p className="pl-[26px] text-xs leading-relaxed text-steel lg:hidden">{compactHours(settings)}</p>
+                        </div>
+                    </div>
 
-                <div className="footer-col min-w-0">
-                    <p className="label">The workshop list</p>
-                    <p className="mt-4 hidden text-sm text-steel lg:block">
-                        Specials, Saturday hours and when the next catch-up is on. No spam — just the shop.
-                    </p>
-                    {done ? (
-                        <p className="mt-3 text-sm text-flame lg:mt-4" role="status">You are on the list.</p>
-                    ) : (
-                        <form
-                            className="mt-2 flex flex-col gap-2 lg:mt-4"
-                            onSubmit={async (e) => {
-                                e.preventDefault();
-                                if (!email) return;
-                                setSending(true);
-                                setError("");
-                                addSubscriber(email);
-                                const result = await submitInbox({
-                                    kind: "newsletter",
-                                    name: email,
-                                    email,
-                                    message: "Workshop list",
-                                });
-                                setSending(false);
-                                if (!result.ok) {
-                                    setError(result.error || "Could not join. Call the workshop.");
-                                    return;
-                                }
-                                setDone(true);
-                            }}
-                        >
-                            <div className="flex items-center gap-2">
-                                <img
-                                    src="/brand/icon.png"
-                                    alt=""
-                                    width={28}
-                                    height={28}
-                                    className="h-7 w-7 shrink-0 rounded-full bg-white object-contain"
-                                />
-                                <label htmlFor="workshop-list-email" className="text-[11px] uppercase tracking-[0.16em] text-steel">
-                                    Email for the list
+                    <div className="footer-col hidden lg:col-span-2 lg:block">
+                        <p className="label">Hours</p>
+                        <ul className="mt-4 space-y-2.5 text-sm">
+                            {hours.map((row) => (
+                                <li key={row.label} className="flex items-baseline justify-between gap-4">
+                                    <span className="text-steel">{row.label}</span>
+                                    <span className="tabular-nums text-white">{row.value}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className="footer-col lg:col-span-3">
+                        <p className="label">The workshop list</p>
+                        <p className="mt-3 hidden text-sm leading-relaxed text-steel lg:mt-4 lg:block">
+                            Saturday hours, specials and the next catch-up. No spam.
+                        </p>
+                        {done ? (
+                            <p className="mt-3 text-sm text-flame" role="status">You are on the list.</p>
+                        ) : (
+                            <form className="mt-3 lg:mt-4" onSubmit={joinList}>
+                                <label htmlFor="workshop-list-email" className="sr-only">
+                                    Email for the workshop list
                                 </label>
-                            </div>
-                            <div className="flex gap-2">
-                                <input
-                                    id="workshop-list-email"
-                                    type="email"
-                                    required
-                                    autoComplete="email"
-                                    inputMode="email"
-                                    spellCheck={false}
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="Email address"
-                                    aria-invalid={error ? true : undefined}
-                                    className="input min-w-0 flex-1 py-2.5 lg:py-3"
-                                />
-                                <button className="btn-flame shrink-0 px-4 py-2.5 lg:px-6 lg:py-3" type="submit" disabled={sending} aria-busy={sending}>
-                                    {sending ? "…" : "Join"}
-                                </button>
-                            </div>
-                            {error ? (
-                                <p className="text-sm text-flame" role="alert">{error}</p>
-                            ) : null}
-                        </form>
-                    )}
+                                <div className="flex gap-2">
+                                    <input
+                                        id="workshop-list-email"
+                                        type="email"
+                                        required
+                                        autoComplete="email"
+                                        inputMode="email"
+                                        spellCheck={false}
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="Email address"
+                                        aria-invalid={error ? true : undefined}
+                                        className="input min-h-11 min-w-0 flex-1"
+                                    />
+                                    <button
+                                        className="btn-flame !shadow-none shrink-0 px-4"
+                                        type="submit"
+                                        disabled={sending}
+                                        aria-busy={sending}
+                                    >
+                                        {sending ? "…" : "Join"}
+                                    </button>
+                                </div>
+                                {error ? (
+                                    <p className="mt-2 text-sm text-flame" role="alert">{error}</p>
+                                ) : null}
+                            </form>
+                        )}
+                    </div>
                 </div>
             </div>
             <div className="border-t border-white/10">
-                <div className="container-page flex flex-col items-start justify-between gap-2 py-3 text-[11px] leading-snug text-steel sm:flex-row sm:items-center lg:gap-3 lg:py-6 lg:text-xs">
+                <div className="container-page flex flex-col items-start justify-between gap-2 py-3 text-[11px] leading-snug text-steel sm:flex-row sm:items-center lg:py-5 lg:text-xs">
                     <p className="max-w-3xl">
                         © {new Date().getFullYear()} {settings.brand.legalName}. Harley-Davidson® is a
                         registered trademark of H-D U.S.A., LLC. Independent specialist — not an authorised
                         Harley-Davidson dealer.
                     </p>
                     <div className="flex shrink-0 gap-4">
-                        <Link href="/privacy" className="hover:text-chrome">
-                            Privacy
-                        </Link>
-                        <Link href="/terms" className="hover:text-chrome">
-                            Terms
-                        </Link>
-                        <Link href="/account" className="hover:text-chrome">
-                            Account
-                        </Link>
+                        <Link href="/privacy" className="hover:text-white">Privacy</Link>
+                        <Link href="/terms" className="hover:text-white">Terms</Link>
+                        <Link href="/account" className="hover:text-white">Account</Link>
                     </div>
                 </div>
             </div>

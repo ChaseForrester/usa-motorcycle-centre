@@ -6,6 +6,7 @@ import { firebaseConfigured } from "@/lib/firebase";
 import { hydrateFromFirebase, watchCmsToFirebase } from "@/lib/firebase-sync";
 import { TenantProvider } from "@/lib/commerce/tenant-context";
 import type { Tenant } from "@/lib/commerce/types";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 export function Providers({ tenant, children }: { tenant: Tenant; children: React.ReactNode }) {
     const setHydrated = useCms((s) => s.setHydrated);
@@ -26,5 +27,10 @@ export function Providers({ tenant, children }: { tenant: Tenant; children: Reac
         return () => stop?.();
     }, []);
 
-    return <TenantProvider tenant={tenant}>{children}</TenantProvider>;
+    return (
+        <TenantProvider tenant={tenant}>
+            <ScrollReveal />
+            {children}
+        </TenantProvider>
+    );
 }
