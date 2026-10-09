@@ -26,7 +26,7 @@ export default function WorkshopPage() {
                 </p>
                 <div className="mt-12 grid gap-6 md:grid-cols-2">
                     {services.map((s) => (
-                        <article key={s.id} className="card overflow-hidden md:flex">
+                        <article id={s.slug} key={s.id} className="card scroll-mt-28 overflow-hidden md:flex">
                             <div className="relative h-48 w-full md:h-auto md:w-48">
                                 <Image src={s.image} alt="" fill className="object-cover" />
                             </div>

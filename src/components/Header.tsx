@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Mail, Menu, Phone, ShoppingBag, X } from "lucide-react";
+import { Mail, Phone, ShoppingBag } from "lucide-react";
 import { Linkified } from "@/components/Linkified";
 import { useCms } from "@/lib/cms-store";
 import { cartCount, useCart } from "@/lib/cart";
@@ -24,7 +24,6 @@ export function Header() {
     const settings = useCms((s) => s.settings);
     const items = useCart((s) => s.items);
     const count = cartCount(items);
-    const [open, setOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [ready, setReady] = useState(false);
 
@@ -36,18 +35,37 @@ export function Header() {
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
-    useEffect(() => setOpen(false), [pathname]);
+    const siteHost = "usamotorcyclecentre.com.au";
 
     return (
         <header
             className={cn(
                 "sticky top-0 z-40 border-b transition",
                 scrolled
-                    ? "border-white/10 bg-ink/90 backdrop-blur-md"
-                    : "border-transparent bg-ink/40 backdrop-blur-sm"
+                    ? "border-white/10 bg-ink/95 backdrop-blur-md"
+                    : "border-transparent bg-ink lg:bg-ink/40 lg:backdrop-blur-sm"
             )}
         >
-            <div className="container-page flex h-[78px] items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-3 px-4 py-3 lg:hidden">
+                <Link href="/" aria-label={settings.brand.name} className="shrink-0">
+                    <Image
+                        src="/brand/logo.png"
+                        alt=""
+                        width={168}
+                        height={135}
+                        className="h-16 w-auto max-w-[42vw] invert"
+                        priority
+                    />
+                </Link>
+                <div className="min-w-0 text-right leading-tight">
+                    <a href={telHref(settings.contact.phone)} className="contact-link block text-sm text-chrome">
+                        {settings.contact.phone}
+                    </a>
+                    <p className="mt-1 truncate text-[10px] text-steel">{siteHost}</p>
+                </div>
+            </div>
+
+            <div className="container-page hidden h-[78px] items-center justify-between gap-4 lg:flex">
                 <Link href="/" className="flex items-center gap-3">
                     <Image
                         src={settings.brand.logo}
@@ -68,7 +86,7 @@ export function Header() {
                     </span>
                 </Link>
 
-                <nav className="hidden items-center gap-7 lg:flex">
+                <nav className="flex items-center gap-7">
                     {links.map((l) => (
                         <Link
                             key={l.href}
@@ -115,48 +133,9 @@ export function Header() {
                     <Link href="/book" className="btn-flame hidden !px-4 !py-2.5 text-[11px] xl:inline-flex">
                         Book a service
                     </Link>
-                    <button
-                        className="rounded-sm border border-white/15 p-2.5 lg:hidden"
-                        onClick={() => setOpen((v) => !v)}
-                        aria-label="Menu"
-                    >
-                        {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-                    </button>
                 </div>
             </div>
 
-            {open && (
-                <div className="border-t border-white/10 bg-ink lg:hidden">
-                    <nav className="container-page flex flex-col py-4">
-                        {links.map((l) => (
-                            <Link
-                                key={l.href}
-                                href={l.href}
-                                className="border-b border-white/5 py-3 text-sm uppercase tracking-[0.2em]"
-                            >
-                                {l.label}
-                            </Link>
-                        ))}
-                        <a
-                            href={telHref(settings.contact.phone)}
-                            className="contact-link mt-4 flex items-center gap-2 py-2 text-sm text-chrome"
-                        >
-                            <Phone className="h-4 w-4 text-flame" />
-                            {settings.contact.phone}
-                        </a>
-                        <a
-                            href={mailHref(settings.contact.email)}
-                            className="contact-link flex items-center gap-2 py-2 text-sm text-chrome"
-                        >
-                            <Mail className="h-4 w-4 text-flame" />
-                            {settings.contact.email}
-                        </a>
-                        <Link href="/book" className="btn-flame mt-4">
-                            Book a service
-                        </Link>
-                    </nav>
-                </div>
-            )}
         </header>
     );
 }
@@ -166,7 +145,7 @@ export function AnnouncementBar() {
     if (!settings.homepage.announcement) return null;
     return (
         <div className="bg-flame text-ink">
-            <div className="container-page flex items-center justify-center gap-3 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em]">
+            <div className="container-page flex items-center justify-center gap-3 py-1.5 text-center text-[10px] font-semibold uppercase leading-snug tracking-normal lg:py-2 lg:text-[11px] lg:tracking-[0.18em]">
                 <Linkified text={settings.homepage.announcement} linkClassName="contact-link-bar" />
             </div>
         </div>

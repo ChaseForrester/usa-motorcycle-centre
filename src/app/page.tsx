@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Calendar, Shield, Wrench } from "lucide-react";
+import { ArrowRight, CircleDot, Cog, Shield, Shirt, Wrench, Zap } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { FlameMark } from "@/components/FlameMark";
 import { ProductCard } from "@/components/ProductCard";
@@ -19,11 +19,133 @@ export default function HomePage() {
   const events = useCms((s) => s.events);
   const reviews = useCms((s) => s.reviews);
   const featured = products.filter((p) => p.featured).slice(0, 4);
+  const gearOrder = [
+    "usa-mcc-flame-crew-grey",
+    "usa-mcc-flame-hoodie-black",
+    "usa-mcc-flame-crew-black",
+  ];
+  const rack = gearOrder
+    .map((slug) => products.find((p) => p.slug === slug))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p));
+  const gear = rack.length ? rack : featured;
   const nextEvents = [...events].slice(0, 3);
+  const lanes = [
+    { href: "/workshop#harley-service-tuning", label: "Service & tuning", icon: Cog },
+    { href: "/workshop#tyres-alignment-balancing", label: "Tyres & alignment", icon: CircleDot },
+    { href: "/workshop#electrical-repairs-wiring", label: "Electrical & wiring", icon: Zap },
+    { href: "/shop", label: "Rider gear", icon: Shirt },
+  ];
 
   return (
     <div>
-      <section className="relative bg-ink">
+      <div className="bg-ink lg:hidden">
+        <section className="relative overflow-hidden">
+          <Image
+            src="/workshop/chopper-build.jpg"
+            alt=""
+            fill
+            priority
+            className="object-cover object-[78%_center]"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/88 to-ink/25" />
+          <div className="relative px-4 pb-4 pt-1">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-flame">
+              Built in the workshop. Serviced since {settings.brand.established}.
+            </p>
+            <h1 className="display mt-1.5 text-[2.35rem] text-white">
+              Book the bike.
+              <br />
+              <span className="text-flame">Ride it right.</span>
+            </h1>
+            <p className="mt-2 max-w-[18rem] text-[13px] leading-snug text-chrome">
+              Independent Harley® specialist. Service, tuning, tyres, electrical and smash repairs. Albion Park Rail.
+            </p>
+            <Link href="/book" className="btn-flame mt-3 !rounded-md !px-4 !py-2.5 text-[12px]">
+              Book a service <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </section>
+
+        <section className="grid grid-cols-4 gap-2 px-4 pt-4" aria-label="Workshop lanes">
+          {lanes.map((lane) => {
+            const Icon = lane.icon;
+            return (
+              <Link key={lane.href} href={lane.href} className="text-center">
+                <span className="grid h-14 w-full place-items-center rounded-md border border-white/10 bg-coal">
+                  <Icon className="h-6 w-6 text-white" strokeWidth={1.5} />
+                </span>
+                <span className="mt-1.5 block text-[9px] font-semibold uppercase leading-tight tracking-[0.06em] text-chrome">
+                  {lane.label}
+                </span>
+              </Link>
+            );
+          })}
+        </section>
+
+        <section className="mt-4" aria-label="Featured gear">
+          <div className="flex items-end justify-between px-4">
+            <h2 className="text-[13px] font-semibold uppercase tracking-[0.16em] text-white">Featured gear</h2>
+            <Link href="/shop" className="text-[11px] font-semibold uppercase tracking-[0.14em] text-chrome">
+              View all <ArrowRight className="inline h-3.5 w-3.5" />
+            </Link>
+          </div>
+          <div className="mt-3 grid grid-cols-3 gap-2 px-4">
+            {gear.map((p) => (
+              <Link
+                key={p.id}
+                href={`/shop/${p.slug}`}
+                className="overflow-hidden rounded-md border border-white/10 bg-coal"
+              >
+                <div className="relative h-[118px] bg-[#d5d3cf]">
+                  <Image
+                    src={p.images[0] || "/brand/icon.png"}
+                    alt={p.name}
+                    fill
+                    className="object-cover object-top"
+                    sizes="33vw"
+                  />
+                </div>
+                <div className="px-2 py-2">
+                  <h3 className="text-[11px] font-medium leading-tight text-white">
+                    U.S.A.
+                    <br />
+                    Motorcycle Centre
+                  </h3>
+                  <p className="mt-1.5 text-sm font-semibold text-flame">
+                    {new Intl.NumberFormat("en-AU", {
+                      style: "currency",
+                      currency: "AUD",
+                      maximumFractionDigits: 0,
+                    }).format(p.price)}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="px-4 pb-4 pt-3">
+          <Link href="/shop" className="relative block h-[92px] overflow-hidden rounded-md border border-white/10">
+            <Image
+              src="/workshop/chopper-build.jpg"
+              alt=""
+              fill
+              className="object-cover object-[70%_center]"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/75 to-transparent" />
+            <div className="relative flex h-full max-w-[12rem] flex-col justify-center px-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-chrome">Gear up</p>
+              <p className="display text-[1.45rem] leading-none text-white">
+                Flame crew
+                <br />& hoodie
+              </p>
+            </div>
+          </Link>
+        </section>
+      </div>
+
+      <section className="relative hidden bg-ink lg:block">
         <div className="relative overflow-hidden">
           <Image
             src={settings.homepage.heroImage}
@@ -57,7 +179,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-y border-white/10 bg-coal">
+      <section className="hidden border-y border-white/10 bg-coal lg:block">
         <div className="container-page grid grid-cols-2 gap-px bg-white/10 md:grid-cols-4">
           {[
             { k: "Est.", v: String(settings.brand.established) },
@@ -97,7 +219,7 @@ export default function HomePage() {
         ))}
       </section>
 
-      <section className="container-page py-20">
+      <section className="container-page hidden py-20 lg:block">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="label">The shirts</p>
