@@ -499,12 +499,15 @@ export default function HomePage() {
             <p className="mt-3 max-w-full text-sm leading-snug text-chrome [overflow-wrap:anywhere] lg:mt-4 lg:max-w-md lg:text-base lg:leading-relaxed">
               Free parking. Wheelchair accessible. The workshop is at {fullAddress(settings)}.
             </p>
-            <p className="mt-3 max-w-full text-sm leading-snug [overflow-wrap:anywhere]">
+            <p className="mt-3 flex max-w-full flex-col gap-1 text-sm leading-snug lg:flex-row lg:items-baseline lg:gap-0">
               <a href={telHref(settings.contact.phone)} className="contact-link text-white">
                 {settings.contact.phone}
               </a>
-              <span className="text-chrome"> · </span>
-              <a href={mailHref(settings.contact.email)} className="contact-link break-all text-white">
+              <span className="mx-1 hidden text-chrome lg:inline">·</span>
+              <a
+                href={mailHref(settings.contact.email)}
+                className="contact-link block max-w-full whitespace-nowrap text-[clamp(11px,3.15vw,14px)] text-white lg:inline lg:whitespace-normal lg:text-sm"
+              >
                 {settings.contact.email}
               </a>
             </p>
