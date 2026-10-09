@@ -26,7 +26,7 @@ export const defaultSettings: SiteSettings = {
   contact: {
     phone: "(02) 4257 2333",
     phoneHref: "tel:+61242572333",
-    email: "workshop@usamotorcyclecentre.com.au",
+    email: "usa_motorcycle_centre@yahoo.com.au",
     addressLine: "8 Miall Way",
     suburb: "Albion Park Rail",
     state: "NSW",

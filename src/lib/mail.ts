@@ -26,6 +26,7 @@ export async function sendWorkshopEmail(opts: {
         body: JSON.stringify({
             from,
             to,
+            reply_to: "usa_motorcycle_centre@yahoo.com.au",
             subject: opts.subject,
             text: opts.text,
         }),

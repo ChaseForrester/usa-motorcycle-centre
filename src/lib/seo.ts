@@ -9,7 +9,7 @@ export const SITE = {
     slogan: "U.S.A. Motorcycle Centre is the name. Servicing Harleys is our game.",
     phone: "(02) 4257 2333",
     phoneHref: "tel:+61242572333",
-    email: "workshop@usamotorcyclecentre.com.au",
+    email: "usa_motorcycle_centre@yahoo.com.au",
     street: "8 Miall Way",
     suburb: "Albion Park Rail",
     state: "NSW",

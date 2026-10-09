@@ -161,6 +161,22 @@ export const useCms = create<CmsState>()(
         {
             name: "usamcc-cms-v6",
             onRehydrateStorage: () => (state) => {
+                const previous = "workshop@usamotorcyclecentre.com.au";
+                const current = "usa_motorcycle_centre@yahoo.com.au";
+                if (state && state.settings.contact.email === previous) {
+                    state.settings.contact.email = current;
+                    queueMicrotask(() => {
+                        const live = useCms.getState();
+                        if (live.settings.contact.email === previous) {
+                            useCms.setState({
+                                settings: {
+                                    ...live.settings,
+                                    contact: { ...live.settings.contact, email: current },
+                                },
+                            });
+                        }
+                    });
+                }
                 state?.setHydrated(true);
             },
         }
