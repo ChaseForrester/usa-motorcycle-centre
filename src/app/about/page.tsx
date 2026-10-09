@@ -32,9 +32,10 @@ export default function AboutPage() {
                         diagnostics when it is not firing the way it used to.
                     </p>
                     <p>
-                        From the Albion Park Rail workshop we stock Avon, Dunlop and Pirelli tyres, Penrite and
-                        AMSOIL, Kuryakyn, Arlen Ness, Accel, XRH lids and a run of U.S.A. clothing — the flame
-                        hoodie and crew with the original shop print.
+                        From the Albion Park Rail workshop we fit Avon, Dunlop and Pirelli tyres, run Penrite
+                        and AMSOIL, and sell the U.S.A. flame hoodie and crews with the original shop print.
+                        The online shop is those shirts. Tyres, oils and parts stay on the floor — call or
+                        come in.
                     </p>
                     <p>
                         Independent. Not a dealer. If you want it done properly, bring it in.

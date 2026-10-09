@@ -3,7 +3,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { AppClaims } from "./types";
-import { DEMO_BUYER_EMAIL, DEMO_BUYER_ID } from "./demo";
 
 type SessionState = {
     claims: AppClaims | null;
@@ -20,7 +19,7 @@ export const useSession = create<SessionState>()(
             signInBuyer: (email) => {
                 const trimmed = email.trim().toLowerCase();
                 if (!trimmed.includes("@")) return { ok: false, error: "Enter the email on the order." };
-                const buyerId = trimmed === DEMO_BUYER_EMAIL ? DEMO_BUYER_ID : `buyer-${trimmed}`;
+                const buyerId = `buyer-${trimmed}`;
                 set({
                     claims: {
                         role: "buyer",

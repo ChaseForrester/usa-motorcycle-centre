@@ -10,11 +10,10 @@ import { cartCount, useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
 
 const links = [
-    { href: "/shop", label: "Shop" },
-    { href: "/shop?cat=parts", label: "Parts" },
-    { href: "/shop?cat=tyres", label: "Tyres" },
-    { href: "/shop?cat=service", label: "Service" },
+    { href: "/shop", label: "Shirts" },
+    { href: "/gift-cards", label: "Gift cards" },
     { href: "/workshop", label: "Workshop" },
+    { href: "/book", label: "Book" },
     { href: "/account", label: "Account" },
     { href: "/contact", label: "Contact" },
 ];
@@ -54,7 +53,10 @@ export function Header() {
                         alt={settings.brand.name}
                         width={52}
                         height={52}
-                        className="h-12 w-12 object-contain invert"
+                        className={cn(
+                            "h-12 w-12 rounded-full bg-white object-contain",
+                            settings.brand.logoInvert && "invert"
+                        )}
                         priority
                     />
                     <span className="hidden leading-tight sm:block">

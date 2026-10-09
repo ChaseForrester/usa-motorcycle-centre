@@ -10,7 +10,11 @@ type CartState = {
     discountCode: string;
     setFulfillment: (f: CartState["fulfillment"]) => void;
     setDiscountCode: (c: string) => void;
-    add: (product: Product, qty?: number, variant?: { id: string; label: string }) => void;
+    add: (
+        product: Product,
+        qty?: number,
+        variant?: { id: string; label: string; price?: number }
+    ) => void;
     setQty: (key: string, qty: number) => void;
     remove: (key: string) => void;
     clear: () => void;
@@ -32,17 +36,19 @@ export const useCart = create<CartState>()(
                 const key = cartKey({ productId: product.id, variantId: variant?.id });
                 const items = [...get().items];
                 const i = items.findIndex((it) => cartKey(it) === key);
+                const price =
+                    variant?.price ??
+                    product.variants?.find((v) => v.id === variant?.id)?.price ??
+                    product.price;
                 if (i >= 0) {
-                    items[i] = { ...items[i], qty: items[i].qty + qty };
+                    items[i] = { ...items[i], qty: items[i].qty + qty, price };
                 } else {
                     items.push({
                         productId: product.id,
                         slug: product.slug,
                         name: product.name,
                         image: product.images[0],
-                        price: variant?.id
-                            ? product.variants?.find((v) => v.id === variant.id)?.price ?? product.price
-                            : product.price,
+                        price,
                         qty,
                         variantId: variant?.id,
                         variantLabel: variant?.label,

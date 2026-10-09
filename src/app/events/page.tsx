@@ -14,6 +14,12 @@ export default function EventsPage() {
                 Saturday mornings, Illawarra catch-ups and the charity nights we get behind — including
                 Bikers 4 Heroes and the i98FM Illawarra Convoy.
             </p>
+            {events.length === 0 && (
+                <p className="mt-10 max-w-xl text-chrome">
+                    Nothing dated on the calendar right now. Follow the shop on Facebook or Instagram, or
+                    join the workshop list in the footer.
+                </p>
+            )}
             <div className="mt-10 grid gap-6 md:grid-cols-2">
                 {events.map((e) => (
                     <Link key={e.id} href={`/events/${e.slug}`} className="card group overflow-hidden">

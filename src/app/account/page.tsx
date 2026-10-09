@@ -7,15 +7,13 @@ import { useSession } from "@/lib/commerce/session";
 import { useTenant } from "@/lib/commerce/tenant-context";
 import { buyerShipCopy } from "@/lib/commerce/dispatch";
 import { money } from "@/lib/utils";
-import { DEMO_BUYER_EMAIL } from "@/lib/commerce/demo";
-
 export default function AccountPage() {
     const tenant = useTenant();
     const claims = useSession((s) => s.claims);
     const signInBuyer = useSession((s) => s.signInBuyer);
     const signOut = useSession((s) => s.signOut);
     const orders = useCommerce((s) => s.orders);
-    const [email, setEmail] = useState(DEMO_BUYER_EMAIL);
+    const [email, setEmail] = useState("");
     const [error, setError] = useState("");
 
     const mine =

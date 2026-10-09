@@ -12,7 +12,6 @@ import { dutyEstimate } from "@/lib/commerce/duty";
 import { useCommerce } from "@/lib/commerce/store";
 import { useTenant } from "@/lib/commerce/tenant-context";
 import { collectLabel } from "@/lib/commerce/tenants";
-import { DEMO_BUYER_ID } from "@/lib/commerce/demo";
 import type { CommerceOrder, InternationalFields } from "@/lib/commerce/types";
 
 export default function CheckoutPage() {
@@ -126,7 +125,7 @@ export default function CheckoutPage() {
         const order: CommerceOrder = {
             id: uid("ord"),
             tenantId: tenant.id,
-            buyerId: form.email.trim().toLowerCase() === "rider@example.com" ? DEMO_BUYER_ID : `buyer-${form.email.trim().toLowerCase()}`,
+            buyerId: `buyer-${form.email.trim().toLowerCase()}`,
             createdAt: new Date().toISOString(),
             email: form.email,
             name: form.name,

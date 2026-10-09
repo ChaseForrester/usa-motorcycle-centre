@@ -62,7 +62,11 @@ export default function CartPage() {
                                             {it.name}
                                         </Link>
                                         {it.variantLabel && (
-                                            <p className="text-sm text-steel">Size {it.variantLabel}</p>
+                                            <p className="text-sm text-steel">
+                                                {it.category === "Gift Cards" || it.variantLabel.startsWith("$")
+                                                    ? it.variantLabel
+                                                    : `Size ${it.variantLabel}`}
+                                            </p>
                                         )}
                                     </div>
                                     <p className="text-flame">{money(it.price * it.qty)}</p>

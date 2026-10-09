@@ -92,7 +92,7 @@ export type ProductVariant = {
   id: string;
   label: string;
   sku: string;
-  stock: number;
+  stock?: number;
   price?: number;
 };
 
@@ -170,7 +170,7 @@ export type Booking = {
   bike: string;
   preferredDate: string;
   notes: string;
-  status: "new" | "confirmed" | "complete" | "cancelled";
+  status: "new" | "confirmed" | "delayed" | "complete" | "cancelled";
 };
 
 export type Order = {

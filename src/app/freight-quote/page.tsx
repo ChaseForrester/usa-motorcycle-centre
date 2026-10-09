@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTenant } from "@/lib/commerce/tenant-context";
+import { submitInbox } from "@/lib/inbox-client";
 
 export default function FreightQuotePage() {
     const tenant = useTenant();
@@ -28,10 +29,13 @@ export default function FreightQuotePage() {
                 className="mt-8 space-y-4"
                 onSubmit={async (e) => {
                     e.preventDefault();
-                    await fetch("/api/freight-quote", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(form),
+                    await submitInbox({
+                        kind: "freight",
+                        name: form.name,
+                        email: form.email,
+                        phone: form.phone,
+                        message: form.notes,
+                        fields: { country: form.country },
                     });
                     setDone(true);
                 }}

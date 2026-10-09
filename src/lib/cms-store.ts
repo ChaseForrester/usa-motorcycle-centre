@@ -159,7 +159,7 @@ export const useCms = create<CmsState>()(
             resetToSeed: () => set({ ...seed }),
         }),
         {
-            name: "usamcc-cms-v2",
+            name: "usamcc-cms-v6",
             onRehydrateStorage: () => (state) => {
                 state?.setHydrated(true);
             },

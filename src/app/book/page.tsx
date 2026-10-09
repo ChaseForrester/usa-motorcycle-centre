@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useCms } from "@/lib/cms-store";
+import { submitInbox } from "@/lib/inbox-client";
 
 export default function BookPage() {
     const services = useCms((s) => s.services);
@@ -24,8 +25,9 @@ export default function BookPage() {
                 <p className="label">Booked in</p>
                 <h1 className="display mt-2 text-5xl text-white">We will confirm the lift.</h1>
                 <p className="mt-4 max-w-lg text-chrome">
-                    The workshop has your request. Laurie or Mick will call to lock in the time. If it is
-                    urgent, ring (02) 4257 2333.
+                    The workshop has your request and an email is on its way. Laurie or Mick will confirm
+                    the lift. If a job gets thrown off course we will email you that we will be in touch.
+                    Urgent? Ring (02) 4257 2333.
                 </p>
             </div>
         );
@@ -51,12 +53,26 @@ export default function BookPage() {
             </div>
             <form
                 className="card space-y-4 p-6"
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                     e.preventDefault();
                     const svc = services.find((s) => s.id === form.serviceId);
+                    const serviceName = svc?.name ?? "Service";
                     addBooking({
                         ...form,
-                        serviceName: svc?.name ?? "Service",
+                        serviceName,
+                    });
+                    await submitInbox({
+                        kind: "booking",
+                        name: form.name,
+                        email: form.email,
+                        phone: form.phone,
+                        message: form.notes,
+                        fields: {
+                            serviceId: form.serviceId,
+                            serviceName,
+                            bike: form.bike,
+                            preferredDate: form.preferredDate,
+                        },
                     });
                     setDone(true);
                 }}

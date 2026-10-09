@@ -15,7 +15,7 @@ export const defaultSettings: SiteSettings = {
     tagline: "Harley® specialist repair, parts and rider gear — Illawarra since 1992.",
     slogan: "U.S.A. Motorcycle Centre is the name. Servicing Harleys is our game.",
     established: 1992,
-    logo: "/brand/logo.png",
+    logo: "/brand/icon.png",
     logoInvert: false,
   },
   colors: {
@@ -52,21 +52,21 @@ export const defaultSettings: SiteSettings = {
     tiktok: "",
   },
   seo: {
-    title: "U.S.A. Motorcycle Centre | Harley® Specialists · Albion Park Rail",
+    title: "Harley Mechanic Wollongong to Nowra | U.S.A. Motorcycle Centre",
     description:
-      "Harley-Davidson specialist workshop in Albion Park Rail. Servicing, smash repairs, tyres, parts, AMSOIL and U.S.A. rider clothing. Est. 1992. Call (02) 4257 2333.",
+      "Independent Harley® specialist workshop at 8 Miall Way, Albion Park Rail NSW. Service, smash repairs, tyres and parts for riders from Wollongong, Shellharbour and Kiama through to Nowra. Est. 1992. Call (02) 4257 2333.",
     keywords:
-      "Harley Davidson service Illawarra, motorcycle repairs Albion Park Rail, USA Motorcycle Centre, Harley parts NSW, motorcycle tyres Wollongong",
+      "Harley mechanic Wollongong, motorcycle mechanic Nowra, Harley service Illawarra, motorcycle repairs Shellharbour, USA Motorcycle Centre Albion Park Rail, motorcycle tyres Kiama",
   },
   homepage: {
     announcement:
-      "Workshop open Mon–Fri 8am–5pm · Sat 8am–12pm · See Laurie or Mick · PH 4257 2333",
-    heroKicker: "Est. 1992 · Albion Park Rail, NSW",
+      "Workshop open Mon–Fri 8am–5pm · Sat 8am–12pm · Wollongong to Nowra · See Laurie or Mick · PH 4257 2333",
+    heroKicker: "Est. 1992 · Albion Park Rail · Wollongong to Nowra",
     heroTitle: "Servicing Harleys is our game.",
     heroSubtitle:
-      "Independent Harley® specialist workshop for the Illawarra. Diagnostics, smash repairs, tyres, parts and genuine U.S.A. rider gear — from the same crew that’s been looking after your bike for more than three decades.",
-    heroImage: "/workshop/chopper-build.jpg",
-    heroCta: "Shop the range",
+      "Independent Harley® specialist workshop for the Illawarra and Shoalhaven. Diagnostics, smash repairs, tyres, parts and genuine U.S.A. rider gear — from the same crew that’s been looking after bikes from Wollongong to Nowra since 1992.",
+    heroImage: "/brand/shop-floor.jpg",
+    heroCta: "Shop the shirts",
     heroSecondary: "Book a service",
   },
   shipping: {
@@ -95,6 +95,33 @@ export const defaultSettings: SiteSettings = {
   },
 };
 
+const SHIRT_SIZES = [
+  { id: "s", label: "S" },
+  { id: "m", label: "M" },
+  { id: "l", label: "L" },
+  { id: "xl", label: "XL" },
+  { id: "2xl", label: "2XL" },
+  { id: "3xl", label: "3XL" },
+];
+
+function shirtSizes(skuPrefix: string) {
+  return SHIRT_SIZES.map((s) => ({ ...s, sku: `${skuPrefix}-${s.id.toUpperCase()}` }));
+}
+
+export const GIFT_MIN = 100;
+export const GIFT_MAX = 5000;
+export const GIFT_AMOUNTS = [100, 250, 500, 1000, 2500, 5000];
+
+function giftVariants() {
+  return GIFT_AMOUNTS.map((n) => ({
+    id: `amt-${n}`,
+    label: `$${n.toLocaleString("en-AU")}`,
+    sku: `GIFT-${n}`,
+    price: n,
+  }));
+}
+
+/** Shop stock for now: the three shirts with real photos and the prices on the rack. */
 export const products: Product[] = [
   {
     id: "p-hoodie-black",
@@ -110,18 +137,11 @@ export const products: Product[] = [
       "/products/sleeves-detail.jpg",
     ],
     category: "Apparel",
-    tags: ["merch", "hoodie", "bestseller"],
+    tags: ["merch", "hoodie", "shirt"],
     featured: true,
     inStock: true,
     brand: "U.S.A. MCC",
-    variants: [
-      { id: "s", label: "S", sku: "HOOD-BLK-S", stock: 8 },
-      { id: "m", label: "M", sku: "HOOD-BLK-M", stock: 12 },
-      { id: "l", label: "L", sku: "HOOD-BLK-L", stock: 14 },
-      { id: "xl", label: "XL", sku: "HOOD-BLK-XL", stock: 10 },
-      { id: "2xl", label: "2XL", sku: "HOOD-BLK-2XL", stock: 6 },
-      { id: "3xl", label: "3XL", sku: "HOOD-BLK-3XL", stock: 4 },
-    ],
+    variants: shirtSizes("HOOD-BLK"),
     details: [
       "Front shield with EST 1992",
       "Full back workshop print and phone number",
@@ -143,14 +163,7 @@ export const products: Product[] = [
     featured: true,
     inStock: true,
     brand: "U.S.A. MCC",
-    variants: [
-      { id: "s", label: "S", sku: "CREW-BLK-S", stock: 6 },
-      { id: "m", label: "M", sku: "CREW-BLK-M", stock: 10 },
-      { id: "l", label: "L", sku: "CREW-BLK-L", stock: 12 },
-      { id: "xl", label: "XL", sku: "CREW-BLK-XL", stock: 8 },
-      { id: "2xl", label: "2XL", sku: "CREW-BLK-2XL", stock: 5 },
-      { id: "3xl", label: "3XL", sku: "CREW-BLK-3XL", stock: 3 },
-    ],
+    variants: shirtSizes("CREW-BLK"),
   },
   {
     id: "p-crew-grey",
@@ -170,189 +183,29 @@ export const products: Product[] = [
     featured: true,
     inStock: true,
     brand: "U.S.A. MCC",
-    variants: [
-      { id: "s", label: "S", sku: "CREW-GRY-S", stock: 7 },
-      { id: "m", label: "M", sku: "CREW-GRY-M", stock: 11 },
-      { id: "l", label: "L", sku: "CREW-GRY-L", stock: 13 },
-      { id: "xl", label: "XL", sku: "CREW-GRY-XL", stock: 9 },
-      { id: "2xl", label: "2XL", sku: "CREW-GRY-2XL", stock: 5 },
-      { id: "3xl", label: "3XL", sku: "CREW-GRY-3XL", stock: 3 },
-    ],
+    variants: shirtSizes("CREW-GRY"),
   },
   {
-    id: "p-gift-100",
-    slug: "workshop-gift-card-100",
-    name: "Workshop Gift Card — $100",
-    subtitle: "Redeem in-store or online",
+    id: "p-gift-card",
+    slug: "usa-mcc-gift-card",
+    name: "Workshop Gift Card",
+    subtitle: "$100 to $5,000",
     description:
-      "A $100 U.S.A. Motorcycle Centre gift card. Good for apparel, parts, oils, tyres or put it toward a service. Printed in-store or emailed instantly at checkout.",
+      "Put it toward a service, smash work, tyres or a shirt from the rack. Choose any amount from $100 to $5,000. Printed in-store or emailed after checkout. Redeem at 8 Miall Way with Laurie or Mick.",
     price: 100,
-    images: ["/brand/logo.png"],
+    images: ["/products/gift-card.jpg", "/products/gift-card-portrait.jpg"],
     category: "Gift Cards",
-    tags: ["gift"],
-    featured: true,
-    inStock: true,
-    details: ["No expiry on store credit issued in-shop", "GST included"],
-  },
-  {
-    id: "p-gift-50",
-    slug: "workshop-gift-card-50",
-    name: "Workshop Gift Card — $50",
-    description:
-      "A $50 U.S.A. Motorcycle Centre gift card for gear, oils or a contribution toward a service.",
-    price: 50,
-    images: ["/brand/logo.png"],
-    category: "Gift Cards",
-    tags: ["gift"],
+    tags: ["gift-card", "voucher"],
     featured: false,
     inStock: true,
-  },
-  {
-    id: "p-helmet",
-    slug: "xrh-open-face-helmet",
-    name: "Open Face Helmet",
-    subtitle: "In-store fitting recommended",
-    description:
-      "Open-face lid from the range we keep on the wall. Come in and get fitted — we will not ship a helmet we have not confirmed is the right size. Click & collect from Albion Park Rail.",
-    price: 189,
-    images: ["/products/helmet-black.jpg"],
-    category: "Helmets",
-    tags: ["safety"],
-    featured: true,
-    inStock: true,
-    brand: "XRH",
-    variants: [
-      { id: "s", label: "S", sku: "HLM-S", stock: 2 },
-      { id: "m", label: "M", sku: "HLM-M", stock: 4 },
-      { id: "l", label: "L", sku: "HLM-L", stock: 4 },
-      { id: "xl", label: "XL", sku: "HLM-XL", stock: 3 },
-    ],
-    details: ["AS/NZS approved options in-store", "Fitting at 8 Miall Way"],
-  },
-  {
-    id: "p-tyre-fit",
-    slug: "tyre-fitment-voucher",
-    name: "Tyre Supply & Fitment",
-    subtitle: "Avon · Dunlop · Pirelli",
-    description:
-      "We stock and fit Avon, Dunlop and Pirelli. Price shown is a starting point for a quality cruiser tyre including electronic balancing — confirm size and compound with Laurie or Mick and we will lock in the exact figure.",
-    price: 249,
-    images: ["/workshop/pirelli-rack.jpg", "/workshop/dunlop-rack.jpg"],
-    category: "Tyres",
-    tags: ["workshop"],
-    featured: true,
-    inStock: true,
+    brand: "U.S.A. MCC",
+    variants: giftVariants(),
     details: [
-      "Electronic wheel balancing included",
-      "Alignment available",
-      "Call (02) 4257 2333 with your size",
+      "Any amount from $100 to $5,000",
+      "Redeem on workshop time or shirts",
+      "Collect at 8 Miall Way or we email it",
+      "GST included",
     ],
-  },
-  {
-    id: "p-pirelli-nd",
-    slug: "pirelli-night-dragon",
-    name: "Pirelli Night Dragon",
-    subtitle: "On the wall at Albion Park Rail",
-    description:
-      "Pirelli Night Dragon from the rack in the shop. Cruiser compound, fitted and electronically balanced here. Confirm size with Laurie or Mick — we will pull it off the wall.",
-    price: 269,
-    images: ["/workshop/pirelli-rack.jpg"],
-    category: "Tyres",
-    tags: ["pirelli", "workshop"],
-    featured: true,
-    inStock: true,
-    brand: "Pirelli",
-    details: ["Fitted in-house", "Electronic balancing included"],
-  },
-  {
-    id: "p-dunlop",
-    slug: "dunlop-cruiser-tyres",
-    name: "Dunlop Cruiser Tyres",
-    subtitle: "D402 · D427 and the touring sizes we keep",
-    description:
-      "Dunlop cruiser and touring rubber from the blue racks. We stock the sizes that actually fit Harleys around the Illawarra. Price is a starting point — call with the size on the sidewall.",
-    price: 239,
-    images: ["/workshop/dunlop-rack.jpg"],
-    category: "Tyres",
-    tags: ["dunlop", "workshop"],
-    featured: true,
-    inStock: true,
-    brand: "Dunlop",
-    details: ["Fitted in-house", "Electronic balancing included"],
-  },
-  {
-    id: "p-amsoil",
-    slug: "amsoil-v-twin-oil-change-kit",
-    name: "V-Twin Oil Change Kit",
-    subtitle: "Authorised AMSOIL reseller",
-    description:
-      "AMSOIL V-Twin engine and transmission lubricants plus a matching filter. We are an authorised AMSOIL reseller — buy the kit and fit it yourself, or book it in and we will do the change on the lift.",
-    price: 129,
-    images: ["/products/oils.jpg"],
-    category: "Oils & Fluids",
-    tags: ["amsoil", "service"],
-    featured: true,
-    inStock: true,
-    brand: "AMSOIL",
-    details: ["V-Twin engine oil", "Transmission lubricant", "Oil filter"],
-  },
-  {
-    id: "p-penrite",
-    slug: "penrite-v-twin-oil",
-    name: "Penrite V-Twin Oil 4L",
-    description:
-      "Penrite V-Twin from the rack we have always kept. Tell us the year and model and we will pick the right grade.",
-    price: 64,
-    images: ["/products/oils.jpg"],
-    category: "Oils & Fluids",
-    tags: ["penrite"],
-    featured: false,
-    inStock: true,
-    brand: "Penrite",
-  },
-  {
-    id: "p-battery",
-    slug: "motorcycle-battery-fitment",
-    name: "Motorcycle Battery + Fitment",
-    subtitle: "In-store programming where required",
-    description:
-      "Quality motorcycle battery sized to your bike, plus fitment. Bring the bike in — we will test the charging system while it is on the bench.",
-    price: 149,
-    images: ["/workshop/clutch-job.jpg"],
-    category: "Electrical",
-    tags: ["electrical"],
-    featured: false,
-    inStock: true,
-  },
-  {
-    id: "p-apes",
-    slug: "ape-hanger-handlebar-kit",
-    name: "Ape Hanger Handlebar Kit",
-    subtitle: "Ask Laurie about Burleigh bars",
-    description:
-      "Ape hangers, risers and the lines to match. We have fitted 16\" highballs on Sportsters and Burleigh apes on everything from Softails to baggers. Kit price is a starting point — we quote the full job including cables and brake lines.",
-    price: 489,
-    images: ["/workshop/chopper-build.jpg", "/workshop/primary-case.jpg"],
-    category: "Parts & Accessories",
-    tags: ["handlebars", "custom"],
-    featured: true,
-    inStock: true,
-    details: ["Bars, risers and hardware", "Cables and lines quoted to the bike"],
-  },
-  {
-    id: "p-kuryakyn",
-    slug: "kuryakyn-chrome-accent-kit",
-    name: "Chrome Accent Kit",
-    subtitle: "Kuryakyn · Arlen Ness",
-    description:
-      "Chrome covers, pegs and accents from the brands we have stocked for decades — Kuryakyn, Arlen Ness and Accel. Tell us the model and we will pull the right pieces.",
-    price: 179,
-    images: ["/workshop/chopper-build.jpg"],
-    category: "Parts & Accessories",
-    tags: ["chrome", "kuryakyn"],
-    featured: false,
-    inStock: true,
-    brand: "Kuryakyn",
   },
 ];
 
@@ -422,66 +275,7 @@ export const services: Service[] = [
   },
 ];
 
-export const events: EventItem[] = [
-  {
-    id: "e-b4h-ball",
-    slug: "bikers-4-heroes-masquerade-ball-2026",
-    title: "Bikers 4 Heroes Masquerade Ball",
-    summary:
-      "A night out for the Illawarra riding community, raising money for the i98FM Illawarra Convoy.",
-    description:
-      "U.S.A. Motorcycle Centre is behind the local riding community — including Bikers 4 Heroes. Gather your friends and family for an evening of dancing and a good cause at City Beach Function Centre, Wollongong. Tickets through Bikers 4 Heroes.",
-    date: "2026-09-26",
-    time: "6:00 pm",
-    location: "City Beach Function Centre, Marine Drive, Wollongong",
-    image: "/workshop/chopper-build.jpg",
-    ticketed: true,
-    featured: true,
-    price: 0,
-  },
-  {
-    id: "e-saturday",
-    slug: "saturday-workshop-morning",
-    title: "Saturday Workshop Morning",
-    summary: "Coffee, a yarn and the parts wall — 8am to midday.",
-    description:
-      "We open Saturday mornings for parts, apparel, oil and a look at whatever you rode in on. No booking needed for a chat. Book if you want it on the lift.",
-    date: "2026-10-11",
-    time: "8:00 am – 12:00 pm",
-    location: "8 Miall Way, Albion Park Rail",
-    image: "/workshop/dunlop-rack.jpg",
-    ticketed: false,
-    featured: true,
-  },
-  {
-    id: "e-spring",
-    slug: "spring-service-month",
-    title: "Spring Service Month",
-    summary: "Get the Harley ready before the summer runs start stacking up.",
-    description:
-      "Book a major or minor service through October and we will include a charging-system check and a tyre inspection. Mention Spring Service Month when you call.",
-    date: "2026-10-01",
-    time: "All month",
-    location: "U.S.A. Motorcycle Centre workshop",
-    image: "/workshop/primary-case.jpg",
-    ticketed: false,
-    featured: true,
-  },
-  {
-    id: "e-illawarra-night",
-    slug: "illawarra-harley-catch-up",
-    title: "Illawarra Harley Catch-up",
-    summary: "Park up, talk rubbish, look at bars and pipes.",
-    description:
-      "An informal catch-up for Harley riders around the Illawarra. Details posted on Facebook — follow U.S.A. Motorcycle Centre for the next date. The workshop is the usual meeting point.",
-    date: "2026-11-07",
-    time: "From 4:00 pm",
-    location: "8 Miall Way, Albion Park Rail",
-    image: "/workshop/clutch-job.jpg",
-    ticketed: false,
-    featured: false,
-  },
-];
+export const events: EventItem[] = [];
 
 export const reviews: Review[] = [
   {
@@ -537,23 +331,6 @@ export const brands = [
   "XRH",
 ];
 
-export const discounts: Discount[] = [
-  {
-    id: "d-welcome",
-    code: "ILLAWARRA10",
-    type: "percent",
-    value: 10,
-    active: true,
-    minSpend: 80,
-  },
-];
+export const discounts: Discount[] = [];
 
-export const categories = [
-  "Apparel",
-  "Helmets",
-  "Tyres",
-  "Oils & Fluids",
-  "Electrical",
-  "Parts & Accessories",
-  "Gift Cards",
-];
+export const categories = ["Apparel", "Gift Cards"];

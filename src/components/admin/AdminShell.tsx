@@ -28,7 +28,7 @@ const nav = [
     { href: "/admin/events", label: "Events", icon: Calendar },
     { href: "/admin/reviews", label: "Reviews", icon: Star },
     { href: "/admin/discounts", label: "Discounts", icon: Ticket },
-    { href: "/admin/inbox", label: "Inbox", icon: Inbox },
+    { href: "/admin/inbox", label: "Forms", icon: Inbox },
     { href: "/admin/payments", label: "Stripe", icon: CreditCard },
     { href: "/admin/settings", label: "Site settings", icon: Settings },
 ];

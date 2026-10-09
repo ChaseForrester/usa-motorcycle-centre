@@ -6,6 +6,7 @@ import { useState } from "react";
 import { MapPin, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { useCms } from "@/lib/cms-store";
+import { submitInbox } from "@/lib/inbox-client";
 import { fullAddress, hoursList } from "@/lib/utils";
 
 export function Footer() {
@@ -24,7 +25,7 @@ export function Footer() {
                         alt={settings.brand.name}
                         width={88}
                         height={88}
-                        className="h-20 w-20 object-contain invert"
+                        className="h-20 w-20 rounded-full bg-white object-contain"
                     />
                     <p className="mt-4 max-w-xs text-sm leading-relaxed text-steel">
                         {settings.brand.slogan}
@@ -73,7 +74,7 @@ export function Footer() {
                         </li>
                         <li>
                             <Link href="/shop" className="hover:text-flame">
-                                Parts & apparel
+                                Shirts
                             </Link>
                         </li>
                         <li>
@@ -84,6 +85,11 @@ export function Footer() {
                         <li>
                             <Link href="/gift-cards" className="hover:text-flame">
                                 Gift cards
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/faq" className="hover:text-flame">
+                                FAQ
                             </Link>
                         </li>
                     </ul>
@@ -133,10 +139,16 @@ export function Footer() {
                     ) : (
                         <form
                             className="mt-4 flex flex-col gap-2"
-                            onSubmit={(e) => {
+                            onSubmit={async (e) => {
                                 e.preventDefault();
                                 if (!email) return;
                                 addSubscriber(email);
+                                await submitInbox({
+                                    kind: "newsletter",
+                                    name: email,
+                                    email,
+                                    message: "Workshop list",
+                                });
                                 setDone(true);
                             }}
                         >

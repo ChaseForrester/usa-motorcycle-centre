@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { useCms } from "@/lib/cms-store";
+import { submitInbox } from "@/lib/inbox-client";
 import { fullAddress, hoursList } from "@/lib/utils";
 
 export default function ContactPage() {
@@ -93,9 +94,16 @@ export default function ContactPage() {
             ) : (
                 <form
                     className="card space-y-4 p-6"
-                    onSubmit={(e) => {
+                    onSubmit={async (e) => {
                         e.preventDefault();
                         addMessage(form);
+                        await submitInbox({
+                            kind: "contact",
+                            name: form.name,
+                            email: form.email,
+                            phone: form.phone,
+                            message: form.message,
+                        });
                         setDone(true);
                     }}
                 >

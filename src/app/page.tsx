@@ -9,6 +9,8 @@ import { ProductCard } from "@/components/ProductCard";
 import { brands } from "@/lib/seed";
 import { useCms } from "@/lib/cms-store";
 import { fullAddress, money } from "@/lib/utils";
+import { FaqList } from "@/components/FaqList";
+import { SERVICE_TOWNS } from "@/lib/seo";
 
 export default function HomePage() {
   const settings = useCms((s) => s.settings);
@@ -24,7 +26,7 @@ export default function HomePage() {
       <section className="relative min-h-[88vh] overflow-hidden">
         <Image
           src={settings.homepage.heroImage}
-          alt="Custom Harley chopper build at U.S.A. Motorcycle Centre, Albion Park Rail"
+          alt="U.S.A. Motorcycle Centre shop floor at 8 Miall Way, Albion Park Rail"
           fill
           priority
           className="object-cover object-[center_62%]"
@@ -87,17 +89,43 @@ export default function HomePage() {
       <section className="container-page py-20">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="label">The shop wall</p>
-            <h2 className="display mt-2 text-4xl text-white sm:text-5xl">Rider gear from the workshop.</h2>
+            <p className="label">The shirts</p>
+            <h2 className="display mt-2 text-4xl text-white sm:text-5xl">Workshop print, on the rack.</h2>
           </div>
           <Link href="/shop" className="btn-ghost">
-            View all <ArrowRight className="h-4 w-4" />
+            All shirts <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {featured.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {(featured.length ? featured : products.filter((p) => p.category !== "Gift Cards"))
+            .slice(0, 3)
+            .map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+        </div>
+      </section>
+
+      <section className="container-page pb-20">
+        <div className="grid overflow-hidden rounded-sm border border-white/10 lg:grid-cols-2">
+          <div className="relative min-h-[260px] bg-ash">
+            <Image
+              src="/products/gift-card.jpg"
+              alt="U.S.A. Motorcycle Centre workshop gift card"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="flex flex-col justify-center bg-coal px-6 py-12 sm:px-12">
+            <p className="label">Gift cards</p>
+            <h2 className="display mt-2 text-4xl text-white sm:text-5xl">$100 to $5,000.</h2>
+            <p className="mt-4 max-w-md text-chrome">
+              Put it toward a service, smash work, tyres or a shirt. Any amount from a hundred to five
+              thousand.
+            </p>
+            <Link href="/gift-cards" className="btn-flame mt-8 w-fit">
+              Buy a gift card
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -144,39 +172,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="container-page py-20">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <p className="label">On the calendar</p>
-            <h2 className="display mt-2 text-4xl text-white sm:text-5xl">Rides, balls and Saturday mornings.</h2>
-          </div>
-          <Link href="/events" className="btn-ghost">
-            All events
-          </Link>
-        </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {nextEvents.map((e) => (
-            <Link key={e.id} href={`/events/${e.slug}`} className="card group">
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <Image
-                  src={e.image}
-                  alt={e.title}
-                  fill
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-5">
-                <p className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-flame">
-                  <Calendar className="h-3.5 w-3.5" />
-                  {e.date} · {e.time}
-                </p>
-                <h3 className="display mt-2 text-2xl text-white">{e.title}</h3>
-                <p className="mt-2 text-sm text-steel">{e.summary}</p>
-              </div>
+      {nextEvents.length > 0 && (
+        <section className="container-page py-20">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="label">On the calendar</p>
+              <h2 className="display mt-2 text-4xl text-white sm:text-5xl">Rides, balls and Saturday mornings.</h2>
+            </div>
+            <Link href="/events" className="btn-ghost">
+              All events
             </Link>
-          ))}
-        </div>
-      </section>
+          </div>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {nextEvents.map((e) => (
+              <Link key={e.id} href={`/events/${e.slug}`} className="card group">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={e.image}
+                    alt={e.title}
+                    fill
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-5">
+                  <p className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-flame">
+                    <Calendar className="h-3.5 w-3.5" />
+                    {e.date} · {e.time}
+                  </p>
+                  <h3 className="display mt-2 text-2xl text-white">{e.title}</h3>
+                  <p className="mt-2 text-sm text-steel">{e.summary}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="overflow-hidden border-y border-white/10 py-8">
         <div className="marquee flex w-max gap-12 whitespace-nowrap text-steel">
@@ -186,6 +216,23 @@ export default function HomePage() {
               <span className="mx-8 text-flame">/</span>
             </span>
           ))}
+        </div>
+      </section>
+
+      <section className="border-y border-white/10 bg-coal py-10">
+        <div className="container-page">
+          <p className="label">Harley specialist for the corridor</p>
+          <h2 className="display mt-2 text-3xl text-white sm:text-4xl">
+            Wollongong to Nowra.
+          </h2>
+          <p className="mt-4 max-w-2xl text-chrome">
+            Independent Harley® workshop at Albion Park Rail. Riders roll in from the Illawarra and
+            the Shoalhaven — service, smash repairs, tyres and parts without a dealer markup on the
+            conversation.
+          </p>
+          <p className="mt-6 text-sm uppercase tracking-[0.14em] text-steel">
+            {SERVICE_TOWNS.join(" · ")}
+          </p>
         </div>
       </section>
 
@@ -206,6 +253,19 @@ export default function HomePage() {
             </blockquote>
           ))}
         </div>
+      </section>
+
+      <section className="container-page py-20">
+        <p className="label">Asked on the phone</p>
+        <h2 className="display mt-2 max-w-3xl text-4xl text-white sm:text-5xl">
+          Straight answers for Wollongong to Nowra.
+        </h2>
+        <div className="mt-10">
+          <FaqList />
+        </div>
+        <Link href="/faq" className="btn-ghost mt-8 inline-flex">
+          Full FAQ
+        </Link>
       </section>
 
       <section className="container-page pb-8">

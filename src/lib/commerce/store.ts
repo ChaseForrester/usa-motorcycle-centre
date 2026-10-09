@@ -3,7 +3,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { uid } from "@/lib/utils";
-import { demoOrders, demoShipments } from "./demo";
 import type { CommerceOrder, CommerceShipment, FulfilmentStatus } from "./types";
 
 type CommerceState = {
@@ -19,8 +18,8 @@ type CommerceState = {
 export const useCommerce = create<CommerceState>()(
     persist(
         (set, get) => ({
-            orders: demoOrders,
-            shipments: demoShipments,
+            orders: [],
+            shipments: [],
             saveOrder: (order) =>
                 set((s) => ({
                     orders: [order, ...s.orders.filter((o) => o.id !== order.id)],
@@ -61,7 +60,7 @@ export const useCommerce = create<CommerceState>()(
             },
             shipmentFor: (order) => get().shipments.find((sh) => sh.id === order.shipmentId),
         }),
-        { name: "usamcc-commerce-v1" }
+        { name: "usamcc-commerce-v2" }
     )
 );
 

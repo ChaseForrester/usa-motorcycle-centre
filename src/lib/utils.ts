@@ -6,6 +6,10 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
+export function isRemoteProductSrc(src: string) {
+    return src.startsWith("/api/") || src.startsWith("data:");
+}
+
 export function money(amount: number, currency = "AUD") {
     return new Intl.NumberFormat("en-AU", {
         style: "currency",
