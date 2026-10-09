@@ -13,11 +13,13 @@ export function Linkified({
     linkClassName?: string;
 }) {
     const nodes: ReactNode[] = [];
+    const re = new RegExp(TOKEN.source, TOKEN.flags);
     let last = 0;
     let i = 0;
-    for (const match of text.matchAll(TOKEN)) {
+    let match: RegExpExecArray | null;
+    while ((match = re.exec(text)) !== null) {
         const raw = match[0];
-        const index = match.index ?? 0;
+        const index = match.index;
         if (index > last) nodes.push(text.slice(last, index));
         const email = raw.includes("@");
         nodes.push(

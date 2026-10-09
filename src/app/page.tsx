@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CircleDot, Cog, Shield, Shirt, Wrench, Zap } from "lucide-react";
+import { ArrowRight, Calendar, CircleDot, Cog, Shield, Shirt, Wrench, Zap } from "lucide-react";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 import { FlameMark } from "@/components/FlameMark";
 import { ProductCard } from "@/components/ProductCard";
