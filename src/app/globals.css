@@ -137,11 +137,6 @@ body {
   pointer-events: none;
 }
 
-.hero-mark {
-  animation: hero-mark-in 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
-  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.45));
-}
-
 .hero-bar {
   animation: hero-mark-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
 }
@@ -233,7 +228,6 @@ body {
   .rise,
   .photo-in,
   .marquee,
-  .hero-mark,
   .hero-bar,
   .glass-panel::after {
     animation: none;

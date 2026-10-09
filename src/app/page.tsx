@@ -224,13 +224,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <Image
-          src="/brand/mark-white.png"
-          alt=""
-          width={545}
-          height={449}
-          className="hero-mark pointer-events-none absolute bottom-24 right-8 z-10 hidden h-36 w-auto xl:block 2xl:h-44"
-        />
         <div className="hero-bar absolute inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink/78 backdrop-blur-md">
           <div className="container-page grid grid-cols-4 divide-x divide-white/10">
             {[
