@@ -12,16 +12,16 @@ export const defaultSettings: SiteSettings = {
     name: "U.S.A. Motorcycle Centre",
     legalName: "U.S.A. Motorcycle Centre Pty Ltd",
     shortName: "U.S.A. MCC",
-    tagline: "Harley® specialist repair, parts and rider gear — Illawarra since 1992.",
+    tagline: "Harley shirts and jumpers from the Albion Park Rail rack. Est. 1992.",
     slogan: "U.S.A. Motorcycle Centre is the name. Servicing Harleys is our game.",
     established: 1992,
-    logo: "/brand/icon.png",
+    logo: "/brand/icon.svg",
     logoInvert: false,
   },
   colors: {
-    accent: "#FF6A00",
-    accentSoft: "#FF8A3D",
-    ink: "#0B0B0C",
+    accent: "#FF1414",
+    accentSoft: "#000B58",
+    ink: "#000B58",
   },
   contact: {
     phone: "(02) 4257 2333",
@@ -52,22 +52,22 @@ export const defaultSettings: SiteSettings = {
     tiktok: "",
   },
   seo: {
-    title: "Harley Mechanic Wollongong to Nowra | U.S.A. Motorcycle Centre",
+    title: "Harley Shirts and Jumpers | U.S.A. Motorcycle Centre",
     description:
-      "Independent Harley® specialist workshop at 8 Miall Way, Albion Park Rail NSW. Service, smash repairs, tyres and parts for riders from Wollongong, Shellharbour and Kiama through to Nowra. Est. 1992. Call (02) 4257 2333.",
+      "Harley shirts and jumpers from U.S.A. Motorcycle Centre. The flame hoodie and crews, printed with the EST 1992 shop crest. Click and collect at 8 Miall Way, Albion Park Rail.",
     keywords:
-      "Harley mechanic Wollongong, motorcycle mechanic Nowra, Harley service Illawarra, motorcycle repairs Shellharbour, USA Motorcycle Centre Albion Park Rail, motorcycle tyres Kiama",
+      "Harley shirts Australia, Harley hoodie, motorcycle jumper, USA Motorcycle Centre apparel, flame crew Albion Park Rail",
   },
   homepage: {
     announcement:
-      "Workshop open Mon–Fri 8am–5pm · Sat 8am–12pm · Wollongong to Nowra · See Laurie or Mick · PH 4257 2333",
-    heroKicker: "Est. 1992 · Albion Park Rail · Wollongong to Nowra",
-    heroTitle: "Servicing Harleys is our game.",
+      "Shirts and jumpers on the rack · Click & collect at Albion Park Rail · PH 4257 2333",
+    heroKicker: "Est. 1992 · Albion Park Rail",
+    heroTitle: "Harley shirts and jumpers.",
     heroSubtitle:
-      "Independent Harley® specialist workshop for the Illawarra and Shoalhaven. Diagnostics, smash repairs, tyres, parts and genuine U.S.A. rider gear — from the same crew that’s been looking after bikes from Wollongong to Nowra since 1992.",
-    heroImage: "/brand/shop-floor.jpg",
-    heroCta: "Shop the shirts",
-    heroSecondary: "Book a service",
+      "The flame hoodie and the crews, printed with the workshop crest. Collect them from 8 Miall Way or have them posted.",
+    heroImage: "/products/hoodie-black-front.jpg",
+    heroCta: "Shop the rack",
+    heroSecondary: "Read the blog",
   },
   shipping: {
     clickCollectEnabled: true,
@@ -129,15 +129,15 @@ export const products: Product[] = [
     name: "Flame Hoodie — Black",
     subtitle: "Shop hoodie · EST 1992 shield",
     description:
-      "Heavyweight black hoodie with the U.S.A. Motorcycle Centre shield on the chest, EST 1992, full back print of the workshop crest and the original shop copy, plus flame sleeves finishing on the cuff badges. The piece the workshop wears.",
+      "Heavyweight black hoodie. White shield on the chest with EST 1992, white flame sleeves and cuff badges, and the full workshop back print: the crest, Servicing Harleys is our game, the job list and PH 4257 2333. The piece the workshop wears.",
     price: 119,
     images: [
       "/products/hoodie-black-front.jpg",
       "/products/hoodie-black-back.jpg",
-      "/products/sleeves-detail.jpg",
+      "/products/sleeve-black.jpg",
     ],
-    category: "Apparel",
-    tags: ["merch", "hoodie", "shirt"],
+    category: "Jumpers",
+    tags: ["merch", "hoodie", "jumper"],
     featured: true,
     inStock: true,
     brand: "U.S.A. MCC",
@@ -145,7 +145,7 @@ export const products: Product[] = [
     details: [
       "Front shield with EST 1992",
       "Full back workshop print and phone number",
-      "Flame graphics down both sleeves",
+      "White flame sleeves and cuff badges",
       "Click & collect from Albion Park Rail",
     ],
   },
@@ -155,15 +155,21 @@ export const products: Product[] = [
     name: "Flame Crew — Black",
     subtitle: "Shop crew · back print",
     description:
-      "Black crew with the full U.S.A. Motorcycle Centre back print — shield, the original slogan, workshop services and PH 4257 2333 — over grey flame artwork. Sleeve flames and cuff badges.",
+      "Black crew with the full workshop back print: the shield, Servicing Harleys is our game, the job list and PH 4257 2333, over the flame artwork. White flame sleeves and cuff badges.",
     price: 89,
-    images: ["/products/crew-black-back.jpg", "/products/sleeves-detail.jpg"],
-    category: "Apparel",
-    tags: ["merch", "crew"],
+    images: ["/products/crew-black-back.jpg", "/products/sleeve-black.jpg"],
+    category: "Shirts",
+    tags: ["merch", "crew", "shirt"],
     featured: true,
     inStock: true,
     brand: "U.S.A. MCC",
     variants: shirtSizes("CREW-BLK"),
+    details: [
+      "Full back workshop print and phone number",
+      "White flame sleeves",
+      "Cuff badges",
+      "Click & collect from Albion Park Rail",
+    ],
   },
   {
     id: "p-crew-grey",
@@ -171,19 +177,25 @@ export const products: Product[] = [
     name: "Flame Crew — Grey Marle",
     subtitle: "Shop crew · EST 1992",
     description:
-      "Grey marle crew with the black U.S.A. Motorcycle Centre shield, EST 1992, flame sleeves and the full workshop back print. A weekday staple that still looks like it came out of the shop.",
+      "Grey marle crew with the black shield and EST 1992 on the chest, black flame sleeves and cuff badges, and the full workshop back print. A weekday staple that still looks like it came out of the shop.",
     price: 89,
     images: [
       "/products/crew-grey-front.jpg",
       "/products/crew-grey-back.jpg",
-      "/products/sleeves-detail.jpg",
+      "/products/sleeve-grey.jpg",
     ],
-    category: "Apparel",
-    tags: ["merch", "crew"],
+    category: "Shirts",
+    tags: ["merch", "crew", "shirt"],
     featured: true,
     inStock: true,
     brand: "U.S.A. MCC",
     variants: shirtSizes("CREW-GRY"),
+    details: [
+      "Front shield with EST 1992",
+      "Full back workshop print and phone number",
+      "Black flame sleeves",
+      "Click & collect from Albion Park Rail",
+    ],
   },
   {
     id: "p-gift-card",
@@ -277,7 +289,7 @@ export const services: Service[] = [
 
 export const events: EventItem[] = [];
 
-/** Public rider quotes. Sources are Localsearch, Yellow Pages, and Google. Kept short so the cards share one height. */
+/** Public rider quotes. Listing marks rotate so the same directory is never on two cards in a row. Kept short so the cards share one height. */
 export const reviews: Review[] = [
   {
     id: "r1",
@@ -285,7 +297,7 @@ export const reviews: Review[] = [
     quote:
       "Laurie and Mick went above and beyond to install my 16\" highballs on my 883 Sporty. Their work is outstanding.",
     rating: 5,
-    source: "Localsearch",
+    source: "Yellow Pages",
   },
   {
     id: "r-ron",
@@ -293,7 +305,7 @@ export const reviews: Review[] = [
     quote:
       "A big thank you to Laurie and the team. Really appreciated how friendly and professional they are.",
     rating: 5,
-    source: "Google",
+    source: "Yelp",
   },
   {
     id: "r3",
@@ -301,7 +313,7 @@ export const reviews: Review[] = [
     quote:
       "Got new Black Burleigh apes and risers. Went above and beyond. Perfect advice for my Harley.",
     rating: 5,
-    source: "Yellow Pages",
+    source: "Localsearch",
   },
   {
     id: "r2",
@@ -309,7 +321,7 @@ export const reviews: Review[] = [
     quote:
       "I needed a Ventura rack in a big hurry. Laurie worked his magic and the rack was here in less than two days.",
     rating: 5,
-    source: "Localsearch",
+    source: "Google",
   },
   {
     id: "r-greg",
@@ -317,7 +329,7 @@ export const reviews: Review[] = [
     quote:
       "Laurie and Mick go out of their way to make sure everything is perfect. Fantastic service and great pricing.",
     rating: 5,
-    source: "Google",
+    source: "Facebook",
   },
   {
     id: "r-harry",
@@ -325,7 +337,7 @@ export const reviews: Review[] = [
     quote:
       "Great friendly guys. They know what they are doing on Harleys and have done wonders on my bike.",
     rating: 5,
-    source: "Localsearch",
+    source: "Yellow Pages",
   },
   {
     id: "r-troy",
@@ -333,7 +345,7 @@ export const reviews: Review[] = [
     quote:
       "Great old-school Harley shop. Got all the bits that are hard to find, and fantastic knowledge and service.",
     rating: 5,
-    source: "Google",
+    source: "Yelp",
   },
   {
     id: "r-donny",
@@ -355,21 +367,21 @@ export const reviews: Review[] = [
     name: "Ian Olmate",
     quote: "Bernie blew a braided oil line on the long weekend, but come Tuesday Lozza had us sorted.",
     rating: 5,
-    source: "Google",
+    source: "Facebook",
   },
   {
     id: "r-mitch",
     name: "Mitch",
     quote: "Awesome bike shop. They look after you like no other.",
     rating: 5,
-    source: "Localsearch",
+    source: "Yellow Pages",
   },
   {
     id: "r-mick",
     name: "Mick Knight",
     quote: "Extremely helpful and easy to deal with. Nothing but thumbs up for Laurie and the team.",
     rating: 5,
-    source: "Google",
+    source: "Yelp",
   },
   {
     id: "r-steve",
@@ -390,56 +402,56 @@ export const reviews: Review[] = [
     name: "Deon",
     quote: "Great service and advice always.",
     rating: 5,
-    source: "Localsearch",
+    source: "Facebook",
   },
   {
     id: "r-luke",
     name: "Luke Baker",
     quote: "Thanks Laurie and Mick for fitting me in so quick for tyres before my big trip. Highly recommended.",
     rating: 5,
-    source: "Google",
+    source: "Yellow Pages",
   },
   {
     id: "r-gypsy",
     name: "Gypsy",
     quote: "Great people with a wealth of knowledge.",
     rating: 5,
-    source: "Localsearch",
+    source: "Yelp",
   },
   {
     id: "r-marc",
     name: "Marc M",
     quote: "Laurie and Mick are super helpful and offer great advice. So many accessories to choose from.",
     rating: 5,
-    source: "Google",
+    source: "Localsearch",
   },
   {
     id: "r-tdjay",
     name: "Tdjay",
     quote: "Laurie is great. Excellent service.",
     rating: 5,
-    source: "Localsearch",
+    source: "Google",
   },
   {
     id: "r-neil",
     name: "Neil Mitchell",
     quote: "Good boys, gave great advice.",
     rating: 5,
-    source: "Google",
+    source: "Facebook",
   },
   {
     id: "r-keith",
     name: "Keith",
     quote: "Softail Heritage. The guys at the shop are great with all the extra bells and whistles.",
     rating: 4,
-    source: "Localsearch",
+    source: "Yellow Pages",
   },
   {
     id: "r-nathan",
     name: "Nathan",
     quote: "The most reliable professional outfit I've ever been to. Highly recommended.",
     rating: 4,
-    source: "Localsearch",
+    source: "Yelp",
   },
 ];
 
@@ -457,7 +469,7 @@ export type BrandLogo = {
 
 export const brands: BrandLogo[] = [
   { name: "Harley-Davidson", src: "/brands/harley-davidson.png", width: 182, height: 142, tall: true },
-  { name: "AMSOIL", src: "/brands/amsoil.png", width: 117, height: 40 },
+  { name: "AMSOIL", src: "/brands/amsoil.png", width: 202, height: 72 },
   { name: "Penrite", src: "/brands/penrite.png", width: 900, height: 142 },
   { name: "Avon", src: "/brands/avon.svg", width: 176, height: 32 },
   { name: "Dunlop", src: "/brands/dunlop.svg", width: 173, height: 37 },

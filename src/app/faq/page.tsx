@@ -24,12 +24,12 @@ export default function FaqPage() {
                 ]}
             />
             <p className="label">FAQ</p>
-            <h1 className="display mt-2 max-w-4xl text-4xl text-white sm:text-6xl">
+            <h1 className="display mt-2 max-w-4xl text-4xl text-[#000B58] sm:text-6xl">
                 Harley mechanic from Wollongong to Nowra.
             </h1>
             <p className="mt-5 max-w-2xl text-lg text-chrome">
                 Independent workshop at 8 Miall Way, Albion Park Rail. Laurie and Mick. Est. 1992. Call{" "}
-                <a href={telHref(SITE.phone)} className="contact-link text-white">
+                <a href={telHref(SITE.phone)} className="contact-link">
                     {SITE.phone}
                 </a>
                 .

@@ -15,12 +15,18 @@ export function generateMetadata({ params }: Props): Metadata {
     if (!product) {
         return pageMeta("Parts", "That product is no longer on the rack.", "/shop");
     }
-    const meta = pageMeta(product.name, product.description.slice(0, 160), `/shop/${product.slug}`);
+    const description = product.description.slice(0, 160);
+    const image = absUrl(product.images[0]);
+    const meta = pageMeta(product.name, description, `/shop/${product.slug}`, image);
     return {
         ...meta,
         openGraph: {
             ...meta.openGraph,
-            images: [{ url: product.images[0], alt: product.name }],
+            images: [{ url: image, width: 1200, height: 630, alt: product.name }],
+        },
+        twitter: {
+            ...meta.twitter,
+            images: [image],
         },
     };
 }

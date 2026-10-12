@@ -38,13 +38,13 @@ export default function AccountOrderPage() {
 
     return (
         <div className="container-page max-w-2xl py-12">
-            <Link href="/account" className="text-sm text-steel hover:text-white">
+            <Link href="/account" className="text-sm text-steel hover:text-flame">
                 All orders
             </Link>
-            <h1 className="display mt-4 text-4xl text-white">{order.id}</h1>
+            <h1 className="display mt-4 text-4xl text-[#000B58]">{order.id}</h1>
             <p className="mt-4 text-chrome">{buyerShipCopy(order)}</p>
             {order.method === "ship" && order.fulfilment !== "paid" && (
-                <p className="mt-3 text-sm text-white">Label booked.</p>
+                <p className="mt-3 text-sm text-[#000B58]">Postage label booked.</p>
             )}
             {order.method === "ship" && order.trackingUrl && order.fulfilment !== "labelled" && order.fulfilment !== "paid" && (
                 <a href={order.trackingUrl} className="mt-4 inline-block text-flame" target="_blank" rel="noreferrer">
@@ -52,7 +52,7 @@ export default function AccountOrderPage() {
                 </a>
             )}
             {order.method === "collect" && (
-                <p className="mt-4 text-white">Collect at 8 Miall Way, Albion Park Rail NSW 2527. No label.</p>
+                <p className="mt-4 text-[#000B58]">Collect at 8 Miall Way, Albion Park Rail NSW 2527.</p>
             )}
             {shipment?.lastScan && (
                 <p className="mt-4 text-sm text-steel">
@@ -70,7 +70,7 @@ export default function AccountOrderPage() {
                     </li>
                 ))}
             </ul>
-            <p className="mt-6 font-display text-3xl text-white">{money(order.total)}</p>
+            <p className="mt-6 font-display text-3xl text-[#000B58]">{money(order.total)}</p>
         </div>
     );
 }

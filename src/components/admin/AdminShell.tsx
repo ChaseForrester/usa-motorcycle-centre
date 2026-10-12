@@ -43,18 +43,18 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         if (!email && pathname !== "/admin/login") router.replace("/admin/login");
     }, [email, pathname, router]);
 
-    if (pathname === "/admin/login") return <>{children}</>;
+    if (pathname === "/admin/login") return <div className="admin-root">{children}</div>;
     if (pathname.startsWith("/admin/print")) {
-        if (!email) return <div className="min-h-screen bg-white" />;
-        return <>{children}</>;
+        if (!email) return <div className="admin-root min-h-screen bg-white" />;
+        return <div className="admin-root">{children}</div>;
     }
-    if (!email) return <div className="min-h-screen bg-zinc-100" />;
+    if (!email) return <div className="admin-root min-h-screen bg-zinc-100" />;
 
     return (
-        <div className="flex min-h-screen bg-zinc-100 text-zinc-900">
+        <div className="admin-root flex min-h-screen bg-zinc-100 text-zinc-900">
             <aside className="hidden w-64 shrink-0 border-r border-zinc-200 bg-zinc-950 text-zinc-100 md:flex md:flex-col">
                 <div className="border-b border-white/10 px-5 py-5">
-                    <p className="text-[10px] uppercase tracking-[0.28em] text-orange-400">Super Admin</p>
+                    <p className="text-[10px] uppercase tracking-[0.28em] text-red-200">Super Admin</p>
                     <p className="mt-1 font-semibold">U.S.A. Motorcycle Centre</p>
                 </div>
                 <nav className="flex-1 space-y-0.5 p-3">
@@ -68,7 +68,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                                 href={item.href}
                                 className={cn(
                                     "flex items-center gap-2 rounded-md px-3 py-2 text-sm",
-                                    active ? "bg-orange-500 text-zinc-950" : "text-zinc-300 hover:bg-white/5"
+                                    active ? "bg-[#BF0A30] text-white" : "text-zinc-300 hover:bg-white/5"
                                 )}
                             >
                                 <Icon className="h-4 w-4" />
@@ -88,7 +88,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                     >
                         <LogOut className="h-4 w-4" /> Sign out
                     </button>
-                    <Link href="/" className="mt-3 block text-xs text-orange-400">
+                    <Link href="/" className="mt-3 block text-xs text-red-200">
                         View storefront →
                     </Link>
                 </div>

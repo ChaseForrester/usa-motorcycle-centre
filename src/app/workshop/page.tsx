@@ -13,7 +13,7 @@ export default function WorkshopPage() {
             <section className="relative h-[46vh] min-h-[320px]">
                 <Image src="/workshop/chopper-build.jpg" alt="Workshop Harley build" fill className="object-cover object-[center_65%]" />
                 <div className="absolute inset-0 bg-ink/60" />
-                <div className="container-page relative flex h-full flex-col justify-end pb-10">
+                <div className="on-field container-page relative flex h-full flex-col justify-end pb-10">
                     <p className="label">Workshop</p>
                     <h1 className="display mt-2 text-5xl text-white sm:text-6xl">See Laurie or Mick for it.</h1>
                 </div>

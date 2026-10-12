@@ -49,7 +49,7 @@ export default function AdminDiscounts() {
                     value={value}
                     onChange={(e) => setValue(Number(e.target.value))}
                 />
-                <button className="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold">Add</button>
+                <button className="rounded-md bg-[#BF0A30] text-white px-4 py-2 text-sm font-semibold">Add</button>
             </form>
             <ul className="mt-4 space-y-2">
                 {discounts.map((d) => (

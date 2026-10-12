@@ -1,18 +1,37 @@
 import type { Review } from "@/lib/types";
 
 const SOURCE_MARK: Record<string, { src: string; alt: string; plate?: boolean }> = {
-    Localsearch: { src: "/brand/localsearch.png", alt: "Localsearch" },
     "Yellow Pages": { src: "/brand/yellow-pages.svg", alt: "Yellow Pages", plate: true },
+    Yelp: { src: "/brand/yelp.svg", alt: "Yelp" },
+    Localsearch: { src: "/brand/localsearch.png", alt: "Localsearch" },
     Google: { src: "/brand/google.png", alt: "Google" },
+    Facebook: { src: "/brand/facebook.svg", alt: "Facebook" },
 };
 
-function SourceMark({ source }: { source: string }) {
+export function SourceMark({
+    source,
+    large = false,
+    onDark = false,
+}: {
+    source: string;
+    large?: boolean;
+    onDark?: boolean;
+}) {
     const mark = SOURCE_MARK[source];
     if (!mark) return <span className="ml-auto shrink-0 text-xs text-steel">{source}</span>;
-    if (mark.plate) {
+    const plate = mark.plate || onDark;
+    const plateClass = mark.plate ? "bg-[#FFD100]" : "bg-white";
+    if (plate) {
         return (
-            <span className="ml-auto inline-flex h-5 shrink-0 items-center rounded-[2px] bg-[#FFD100] px-1.5">
-                <img src={mark.src} alt={mark.alt} className="source-mark h-4 w-auto" />
+            <span
+                className={`inline-flex shrink-0 items-center rounded-[3px] ${plateClass} ${large ? "h-11 px-2.5" : "ml-auto h-5 px-1.5"
+                    }`}
+            >
+                <img
+                    src={mark.src}
+                    alt={mark.alt}
+                    className={`source-mark w-auto object-contain ${large ? "h-7 max-w-[9.5rem]" : "h-4 max-w-[7.5rem]"}`}
+                />
             </span>
         );
     }
@@ -25,9 +44,28 @@ function SourceMark({ source }: { source: string }) {
     );
 }
 
+function spreadSources(reviews: Review[]) {
+    if (reviews.length < 2) return reviews;
+    const remaining = [...reviews];
+    const ordered: Review[] = [];
+    while (remaining.length) {
+        const previous = ordered[ordered.length - 1]?.source;
+        const first = ordered[0]?.source;
+        const closing = remaining.length === 1;
+        let index = remaining.findIndex(
+            (review) => review.source !== previous && (!closing || review.source !== first)
+        );
+        if (index < 0) index = remaining.findIndex((review) => review.source !== previous);
+        if (index < 0) index = 0;
+        ordered.push(remaining.splice(index, 1)[0]);
+    }
+    return ordered;
+}
+
 export function ReviewCarousel({ reviews }: { reviews: Review[] }) {
     if (!reviews.length) return null;
-    const loop = [...reviews, ...reviews];
+    const spread = spreadSources(reviews);
+    const loop = [...spread, ...spread];
     return (
         <div className="review-carousel mt-5 overflow-hidden py-3 lg:mt-10">
             <ul className="review-marquee flex w-max items-stretch gap-3 lg:gap-4">

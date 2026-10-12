@@ -27,7 +27,7 @@ export default function FreightQuotePage() {
     return (
         <div className="container-page max-w-lg py-16">
             <p className="label">Freight</p>
-            <h1 className="display mt-2 text-4xl text-white">Human freight quote</h1>
+            <h1 className="display mt-2 text-4xl text-[#000B58]">Freight quote</h1>
             <form
                 className="card mt-8 space-y-4 p-6"
                 onSubmit={async (e) => {

@@ -57,7 +57,7 @@ export default function AdminReviews() {
                         onChange={(e) => setDraft({ ...draft, source: e.target.value })}
                     />
                 </div>
-                <button className="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold">Add</button>
+                <button className="rounded-md bg-[#BF0A30] text-white px-4 py-2 text-sm font-semibold">Add</button>
             </form>
             <ul className="mt-6 space-y-3">
                 {reviews.map((r) => (

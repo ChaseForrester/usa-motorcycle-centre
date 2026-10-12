@@ -26,7 +26,7 @@ export default function AccountPage() {
         return (
             <div className="container-page max-w-lg py-16">
                 <p className="label">Account</p>
-                <h1 className="display mt-2 text-4xl text-white">Your order</h1>
+                <h1 className="display mt-2 text-4xl text-[#000B58]">Your order</h1>
                 <p className="mt-4 text-chrome">Use the email on the order. You only see that order.</p>
                 <form
                     className="card mt-8 space-y-4 p-6"
@@ -60,7 +60,7 @@ export default function AccountPage() {
             <div className="flex items-end justify-between gap-4">
                 <div>
                     <p className="label">Account</p>
-                    <h1 className="display mt-2 text-4xl text-white">Your orders</h1>
+                    <h1 className="display mt-2 text-4xl text-[#000B58]">Your orders</h1>
                 </div>
                 <button className="btn-ghost" onClick={signOut}>
                     Sign out

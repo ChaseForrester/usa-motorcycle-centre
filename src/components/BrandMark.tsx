@@ -13,7 +13,7 @@ export function BrandMark({
             alt={brand.name}
             width={brand.width}
             height={brand.height}
-            className={`block w-auto shrink-0 object-contain object-center ${brand.invert ? "brightness-0 invert" : ""} ${className}`}
+            className={`block h-auto w-auto max-w-full object-contain object-center ${brand.invert ? "brightness-0 invert" : ""} ${brand.tall ? "is-tall" : ""} ${className}`}
         />
     );
 }

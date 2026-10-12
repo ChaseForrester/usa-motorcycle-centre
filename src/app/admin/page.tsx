@@ -178,7 +178,7 @@ function OrderCard({
                     <button
                         type="button"
                         onClick={pressLodged}
-                        className="w-full rounded-md bg-orange-500 px-3 py-1.5 text-xs font-semibold text-zinc-950"
+                        className="w-full rounded-md bg-[#BF0A30] px-3 py-1.5 text-xs font-semibold text-white"
                     >
                         Lodged
                     </button>
@@ -190,7 +190,7 @@ function OrderCard({
                     href={order.trackingUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-2 inline-block text-xs text-orange-600"
+                    className="mt-2 inline-block text-xs text-[#002868]"
                 >
                     Tracking
                 </a>

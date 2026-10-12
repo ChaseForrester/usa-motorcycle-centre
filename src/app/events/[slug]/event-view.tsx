@@ -35,7 +35,7 @@ export default function EventView() {
             <div className="relative h-[42vh] min-h-[280px]">
                 <Image src={event.image} alt={event.title} fill className="object-cover" />
                 <div className="absolute inset-0 bg-ink/55" />
-                <div className="container-page relative flex h-full flex-col justify-end pb-10">
+                <div className="on-field container-page relative flex h-full flex-col justify-end pb-10">
                     <p className="label">
                         {event.date} · {event.time}
                     </p>

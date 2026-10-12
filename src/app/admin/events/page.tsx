@@ -30,7 +30,7 @@ export default function AdminEvents() {
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-semibold">Events</h1>
                 <button
-                    className="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold"
+                    className="rounded-md bg-[#BF0A30] text-white px-4 py-2 text-sm font-semibold"
                     onClick={() => setEdit(empty())}
                 >
                     Add event
@@ -46,7 +46,7 @@ export default function AdminEvents() {
                             </p>
                         </div>
                         <div>
-                            <button className="text-orange-600" onClick={() => setEdit(e)}>
+                            <button className="text-[#002868]" onClick={() => setEdit(e)}>
                                 Edit
                             </button>
                             <button className="ml-3 text-zinc-400" onClick={() => deleteEvent(e.id)}>
@@ -107,7 +107,7 @@ export default function AdminEvents() {
                             <button type="button" onClick={() => setEdit(null)}>
                                 Cancel
                             </button>
-                            <button className="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold">
+                            <button className="rounded-md bg-[#BF0A30] text-white px-4 py-2 text-sm font-semibold">
                                 Save
                             </button>
                         </div>

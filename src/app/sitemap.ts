@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { blogPosts } from "@/lib/blog";
 import { events, products } from "@/lib/seed";
 import { SITE_URL } from "@/lib/seo";
 
@@ -8,7 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         [
             { path: "", priority: 1, changeFrequency: "weekly" },
             { path: "/workshop", priority: 0.95, changeFrequency: "weekly" },
-            { path: "/shop", priority: 0.9, changeFrequency: "weekly" },
+            { path: "/shop", priority: 0.95, changeFrequency: "weekly" },
+            { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
             { path: "/book", priority: 0.9, changeFrequency: "monthly" },
             { path: "/faq", priority: 0.85, changeFrequency: "monthly" },
             { path: "/contact", priority: 0.85, changeFrequency: "monthly" },
@@ -28,12 +30,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: p.changeFrequency,
             priority: p.priority,
         })),
-        ...products.map((p) => ({
-            url: `${SITE_URL}/shop/${p.slug}`,
+        ...blogPosts.map((post) => ({
+            url: `${SITE_URL}/blog/${post.slug}`,
             lastModified: now,
-            changeFrequency: "weekly" as const,
-            priority: 0.7,
+            changeFrequency: "monthly" as const,
+            priority: 0.6,
         })),
+        ...products
+            .filter((p) => p.category === "Shirts" || p.category === "Jumpers")
+            .map((p) => ({
+                url: `${SITE_URL}/shop/${p.slug}`,
+                lastModified: now,
+                changeFrequency: "weekly" as const,
+                priority: 0.7,
+            })),
         ...events.map((e) => ({
             url: `${SITE_URL}/events/${e.slug}`,
             lastModified: now,

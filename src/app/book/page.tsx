@@ -7,6 +7,13 @@ import { AreaField, FormLockup, FormNote, TextField } from "@/components/FormLoc
 import { submitInbox } from "@/lib/inbox-client";
 import { telHref } from "@/lib/utils";
 
+function localToday() {
+    const now = new Date();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${now.getFullYear()}-${month}-${day}`;
+}
+
 export default function BookPage() {
     const services = useCms((s) => s.services);
     const settings = useCms((s) => s.settings);
@@ -30,10 +37,8 @@ export default function BookPage() {
                 <FormLockup title="We will confirm the lift." hint="Booked in" />
                 <h1 className="sr-only">We will confirm the lift.</h1>
                 <p className="mt-4 max-w-lg text-chrome">
-                    The workshop has your request and an email is on its way. Laurie or Mick will confirm
-                    the lift. If a job gets thrown off course we will email you that we will be in touch.
-                    Urgent? Ring{" "}
-                    <a href={telHref(settings.contact.phone)} className="contact-link text-white">
+                    The workshop has your request. Laurie or Mick will confirm the lift. Urgent? Ring{" "}
+                    <a href={telHref(settings.contact.phone)} className="contact-link">
                         {settings.contact.phone}
                     </a>
                     .
@@ -46,7 +51,7 @@ export default function BookPage() {
         <div className="container-page grid gap-12 py-12 lg:grid-cols-2">
             <div>
                 <p className="label">Book a service</p>
-                <h1 className="display mt-2 text-5xl text-white">Get it on the lift.</h1>
+                <h1 className="display mt-2 text-5xl text-[#000B58]">Get it on the lift.</h1>
                 <p className="mt-4 text-chrome">
                     Tell us the bike and what it is doing. We will come back with a time. Smash repairs and
                     insurance jobs — send photos in the notes or bring them in.
@@ -157,6 +162,8 @@ export default function BookPage() {
                     label="Preferred day"
                     required
                     type="date"
+                    min={localToday()}
+                    hint="Opens the calendar on this phone or computer."
                     value={form.preferredDate}
                     onChange={(e) => setForm({ ...form, preferredDate: e.target.value })}
                 />

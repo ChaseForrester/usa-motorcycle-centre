@@ -76,10 +76,10 @@ export default function AdminPayments() {
                     value={accountId}
                     onChange={(e) => setAccountId(e.target.value)}
                 />
-                <button className="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold">
+                <button className="rounded-md bg-[#BF0A30] text-white px-4 py-2 text-sm font-semibold">
                     Save account
                 </button>
-                {msg && <p className="text-sm text-orange-700">{msg}</p>}
+                {msg && <p className="text-sm text-[#7A1020]">{msg}</p>}
             </form>
 
             <div className="mt-6 space-y-2 rounded-xl border border-zinc-200 bg-zinc-50 p-5 text-sm">

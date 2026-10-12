@@ -47,8 +47,8 @@ export default function PlatformLoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                {error && <p className="text-sm text-orange-400">{error}</p>}
-                <button className="w-full rounded-md bg-[#3ebb00] py-2.5 text-sm font-semibold text-zinc-950">
+                {error && <p className="text-sm text-red-200">{error}</p>}
+                <button className="w-full rounded-md bg-[#BF0A30] py-2.5 text-sm font-semibold text-white">
                     Sign in
                 </button>
             </form>

@@ -9,7 +9,7 @@ export default function EventsPage() {
     return (
         <div className="container-page py-12">
             <p className="label">Events</p>
-            <h1 className="display mt-2 text-5xl text-white">The riding community, not just the rack.</h1>
+            <h1 className="display mt-2 text-5xl text-[#000B58]">The riding community, not just the rack.</h1>
             <p className="mt-4 max-w-2xl text-chrome">
                 Saturday mornings, Illawarra catch-ups and the charity nights we get behind — including
                 Bikers 4 Heroes and the i98FM Illawarra Convoy.
@@ -32,12 +32,12 @@ export default function EventsPage() {
                             />
                         </div>
                         <div className="p-6">
-                            <p className="text-xs uppercase tracking-[0.2em] text-flame">
+                            <p className="text-xs uppercase tracking-[0.2em] text-[#FF6262]">
                                 {e.date} · {e.time}
                             </p>
                             <h2 className="display mt-2 text-3xl text-white">{e.title}</h2>
                             <p className="mt-2 text-sm text-steel">{e.summary}</p>
-                            <p className="mt-3 text-xs text-chrome">{e.location}</p>
+                            <p className="mt-3 text-xs text-white/80">{e.location}</p>
                         </div>
                     </Link>
                 ))}

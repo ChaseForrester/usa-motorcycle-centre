@@ -28,14 +28,14 @@ export default function AdminLoginPage() {
             >
                 <div className="flex items-center gap-3">
                     <img
-                        src="/brand/icon.png"
+                        src="/brand/icon.svg"
                         alt="U.S.A. Motorcycle Centre"
                         width={48}
                         height={48}
                         className="h-12 w-12 rounded-full bg-white object-contain"
                     />
                     <div>
-                        <p className="text-[10px] uppercase tracking-[0.28em] text-orange-400">Super Admin</p>
+                        <p className="text-[10px] uppercase tracking-[0.28em] text-red-200">Super Admin</p>
                         <h1 className="text-xl font-semibold">U.S.A. Motorcycle Centre</h1>
                     </div>
                 </div>
@@ -63,8 +63,8 @@ export default function AdminLoginPage() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </label>
-                {error && <p className="text-sm text-orange-400" role="alert">{error}</p>}
-                <button className="min-h-11 w-full rounded-md bg-orange-500 py-2.5 text-sm font-semibold text-zinc-950">
+                {error && <p className="text-sm text-red-200" role="alert">{error}</p>}
+                <button className="min-h-11 w-full rounded-md bg-[#BF0A30] py-2.5 text-sm font-semibold text-white">
                     Sign in
                 </button>
                 <p className="text-xs text-zinc-500">

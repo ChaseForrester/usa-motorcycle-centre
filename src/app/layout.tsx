@@ -13,6 +13,7 @@ import {
   TITLE,
   faqJsonLd,
   localBusinessJsonLd,
+  shareCard,
   websiteJsonLd,
 } from "@/lib/seo";
 import "./globals.css";
@@ -31,13 +32,13 @@ const body = Barlow({
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#0B0B0C" },
-    { media: "(prefers-color-scheme: dark)", color: "#0B0B0C" },
+    { media: "(prefers-color-scheme: light)", color: "#000B58" },
+    { media: "(prefers-color-scheme: dark)", color: "#000B58" },
   ],
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  colorScheme: "dark",
+  colorScheme: "light",
 };
 
 export const metadata: Metadata = {
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
   authors: [{ name: SITE.name, url: SITE_URL }],
   creator: SITE.name,
   publisher: SITE.name,
-  category: "Motorcycle repair",
+  category: "Apparel",
   alternates: { canonical: SITE_URL },
   manifest: "/manifest.webmanifest",
   robots: {
@@ -69,10 +70,10 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     images: [
       {
-        url: SITE.ogImage,
+        url: shareCard(TITLE, DESCRIPTION),
         width: 1200,
         height: 630,
-        alt: "U.S.A. Motorcycle Centre shop floor at 8 Miall Way, Albion Park Rail",
+        alt: "Harley shirts and jumpers from U.S.A. Motorcycle Centre",
       },
     ],
   },
@@ -80,7 +81,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: [SITE.ogImage],
+    images: [shareCard(TITLE, DESCRIPTION)],
   },
   appleWebApp: {
     capable: true,

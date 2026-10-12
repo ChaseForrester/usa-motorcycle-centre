@@ -24,36 +24,36 @@ function shell(heading: string, paragraphs: string[], extra = "") {
     const body = paragraphs
         .map(
             (p) =>
-                `<p style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;color:#1a1a1c;">${p}</p>`
+                `<p style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;color:#002868;">${p}</p>`
         )
         .join("");
     const links = LINKS.map(
         (l) =>
-            `<a href="${l.href}" style="color:#ff6a00;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;">${l.label}</a>`
+            `<a href="${l.href}" style="color:#002868;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;">${l.label}</a>`
     ).join(
         `<span style="color:#8b8b92;font-family:Arial,Helvetica,sans-serif;font-size:13px;"> &nbsp;·&nbsp; </span>`
     );
     return `<!doctype html>
 <html lang="en">
-<body style="margin:0;padding:0;background:#f4f1ea;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f1ea;padding:24px 12px;">
+<body style="margin:0;padding:0;background:#ffffff;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;padding:24px 12px;">
     <tr><td align="center">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border:1px solid #e4e0d8;">
-        <tr><td style="background:#0b0b0c;padding:22px 28px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border:2px solid #002868;">
+        <tr><td style="background:#002868;border-bottom:4px solid #bf0a30;padding:22px 28px;">
           <img src="${LOGO}" width="56" height="56" alt="${esc(SITE.name)}" style="display:block;width:56px;height:56px;border-radius:28px;background:#ffffff;object-fit:contain;" />
-          <p style="margin:12px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:#ff6a00;">${esc(SITE.name)}</p>
+          <p style="margin:12px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:#ffffff;">${esc(SITE.name)}</p>
         </td></tr>
         <tr><td style="padding:28px;">
-          <h1 style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:1.25;color:#0b0b0c;">${esc(heading)}</h1>
+          <h1 style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:1.25;color:#002868;">${esc(heading)}</h1>
           ${body}
           ${extra}
         </td></tr>
         <tr><td style="padding:0 28px 28px;">
           <p style="margin:0 0 12px;">${links}</p>
           <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;color:#5c5c64;">
-            <a href="${SITE.phoneHref}" style="color:#0b0b0c;">${esc(SITE.phone)}</a><br />
-            <a href="mailto:${SITE.email}" style="color:#0b0b0c;">${esc(SITE.email)}</a><br />
-            <a href="${SITE.mapsUrl}" style="color:#0b0b0c;">${esc(SITE.street)}, ${esc(SITE.suburb)} ${esc(SITE.state)} ${esc(SITE.postcode)}</a>
+            <a href="${SITE.phoneHref}" style="color:#002868;">${esc(SITE.phone)}</a><br />
+            <a href="mailto:${SITE.email}" style="color:#002868;">${esc(SITE.email)}</a><br />
+            <a href="${SITE.mapsUrl}" style="color:#002868;">${esc(SITE.street)}, ${esc(SITE.suburb)} ${esc(SITE.state)} ${esc(SITE.postcode)}</a>
           </p>
           <p style="margin:14px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.45;color:#8b8b92;">
             Independent Harley specialist. Not an authorised Harley-Davidson dealer. Est. ${SITE.established}.
@@ -95,7 +95,7 @@ export function clientEmail(item: InboxItem): { subject: string; text: string; h
                 `Hi ${esc(name)},`,
                 `The workshop has your request for <strong>${esc(service)}</strong>${date ? ` on ${esc(item.fields.preferredDate)}` : ""}.${bike ? ` ${esc(bike.trim())}` : ""}`,
                 `We will confirm the lift. If a job gets thrown off course we will email you that we will be in touch.`,
-                `Urgent? Call <a href="${SITE.phoneHref}" style="color:#ff6a00;">${esc(SITE.phone)}</a> and ask for Laurie or Mick.`,
+                `Urgent? Call <a href="${SITE.phoneHref}" style="color:#002868;">${esc(SITE.phone)}</a> and ask for Laurie or Mick.`,
             ]),
         };
     }
@@ -130,7 +130,7 @@ export function clientEmail(item: InboxItem): { subject: string; text: string; h
         html: shell(subject.replace(`${SITE.name} — `, ""), [
             `Hi ${esc(name)},`,
             esc(lead),
-            `If it is urgent, call <a href="${SITE.phoneHref}" style="color:#ff6a00;">${esc(SITE.phone)}</a>.`,
+            `If it is urgent, call <a href="${SITE.phoneHref}" style="color:#002868;">${esc(SITE.phone)}</a>.`,
         ]),
     };
 }
@@ -171,11 +171,11 @@ export function adminEmail(item: InboxItem): { subject: string; text: string; ht
     const table = rows
         .map(
             ([k, v]) =>
-                `<tr><td style="padding:8px 12px 8px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8b8b92;vertical-align:top;">${esc(k)}</td><td style="padding:8px 0;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#0b0b0c;">${esc(v)}</td></tr>`
+                `<tr><td style="padding:8px 12px 8px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#8b8b92;vertical-align:top;">${esc(k)}</td><td style="padding:8px 0;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#002868;">${esc(v)}</td></tr>`
         )
         .join("");
     const extra = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 18px;">${table}</table>
-<p style="margin:0;"><a href="${ORIGIN}/admin/inbox" style="display:inline-block;background:#ff6a00;color:#0b0b0c;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;padding:12px 18px;">Open Super Admin</a></p>`;
+<p style="margin:0;"><a href="${ORIGIN}/admin/inbox" style="display:inline-block;background:#bf0a30;color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;padding:12px 18px;">Open Super Admin</a></p>`;
     return {
         subject,
         text,
@@ -198,7 +198,7 @@ export function bookingDelayEmail(item: InboxItem): { subject: string; text: str
             `Hi ${esc(item.name)},`,
             `Your booking for ${esc(service)}${bike ? esc(bike) : ""} (preferred ${esc(date)}) has been thrown off course in the workshop.`,
             "We still have you on the list. Laurie or Mick will be in touch to lock in a new time.",
-            `If you need us sooner, call <a href="${SITE.phoneHref}" style="color:#ff6a00;">${esc(SITE.phone)}</a>.`,
+            `If you need us sooner, call <a href="${SITE.phoneHref}" style="color:#002868;">${esc(SITE.phone)}</a>.`,
         ]),
     };
 }

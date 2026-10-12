@@ -19,7 +19,7 @@ export default function GalleryPage() {
     return (
         <div className="container-page py-12">
             <p className="label">Gallery</p>
-            <h1 className="display mt-2 text-5xl text-white">The shop, the gear, the road.</h1>
+            <h1 className="display mt-2 text-5xl text-[#000B58]">The shop, the gear, the road.</h1>
             <div className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3">
                 {shots.map((s) => (
                     <div key={s.src} className="shot mb-4 break-inside-avoid overflow-hidden rounded-sm">

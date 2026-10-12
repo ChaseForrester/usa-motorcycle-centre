@@ -9,21 +9,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#0B0B0C",
-        coal: "#141416",
-        ash: "#1C1C1F",
-        steel: "#8B8B92",
-        chrome: "#D7D4CC",
-        flame: "#FF6A00",
-        "flame-hot": "#FF8A3D",
-        paper: "#F4F1EA",
+        ink: "#000B58",
+        coal: "#000B58",
+        ash: "#FFFFFF",
+        steel: "#6C829D",
+        chrome: "#000B58",
+        flame: "#FF1414",
+        "flame-hot": "#C40000",
+        paper: "#FFFFFF",
+        slate: "#A2B5CB",
+        royal: "#00139E",
       },
       fontFamily: {
         display: ["var(--font-display)", "Impact", "sans-serif"],
         body: ["var(--font-body)", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        flame: "0 0 40px rgba(255, 106, 0, 0.25)",
+        flame: "0 0 28px rgba(255, 20, 20, 0.4)",
       },
       backgroundImage: {
         grain:

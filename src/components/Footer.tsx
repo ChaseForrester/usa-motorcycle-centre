@@ -1,53 +1,72 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
-import { Mail, MapPin, Phone } from "lucide-react";
-import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
+import { useState, type FormEvent, type ReactNode } from "react";
 import { TechAidCredit } from "@/components/TechAidBrand";
 import { useCms } from "@/lib/cms-store";
 import { submitInbox } from "@/lib/inbox-client";
-import { cn, hoursList, mailHref, telHref } from "@/lib/utils";
+import { hoursList, mailHref, telHref } from "@/lib/utils";
 import type { SiteSettings } from "@/lib/types";
 
-const workshopLinks = [
-    { href: "/workshop", label: "Harley® servicing" },
-    { href: "/book", label: "Book a service" },
-    { href: "/shop", label: "Shirts" },
-    { href: "/events", label: "Rides & events" },
-    { href: "/gift-cards", label: "Gift cards" },
-    { href: "/faq", label: "FAQ" },
+const rackLinks = [
+    { href: "/shop?cat=Shirts", label: "Shirts" },
+    { href: "/shop?cat=Jumpers", label: "Jumpers" },
+    { href: "/shop", label: "The rack" },
+    { href: "/blog", label: "Blog" },
 ];
 
-const dayShort = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const shopLinks = [
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
+];
 
-function compactHours(settings: SiteSettings) {
+function groupedHours(settings: SiteSettings) {
+    const short = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     const groups: { start: string; end: string; value: string }[] = [];
     hoursList(settings).forEach((day, i) => {
-        const name = dayShort[i];
+        const name = short[i] || day.label;
         const last = groups[groups.length - 1];
         if (last && last.value === day.value) last.end = name;
         else groups.push({ start: name, end: name, value: day.value });
     });
-    return groups
-        .map((group) => `${group.start === group.end ? group.start : `${group.start}–${group.end}`} ${group.value}`)
-        .join(" · ");
-}
-
-function groupedHours(hours: { key: string; label: string; value: string }[]) {
-    const short = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    const groups: { start: string; end: string; full: string; value: string }[] = [];
-    hours.forEach((day, i) => {
-        const name = short[i] || day.label;
-        const last = groups[groups.length - 1];
-        if (last && last.value === day.value) last.end = name;
-        else groups.push({ start: name, end: name, full: day.label, value: day.value });
-    });
     return groups.map((group) => ({
-        label: group.start === group.end ? group.full : `${group.start}–${group.end}`,
+        label: group.start === group.end ? group.start : `${group.start}–${group.end}`,
         value: group.value,
     }));
+}
+
+function LinkColumn({ title, links }: { title: string; links: { href: string; label: string }[] }) {
+    return (
+        <div>
+            <p className="font-semibold text-[#000B58]">{title}</p>
+            <ul className="mt-3 space-y-2 text-sm">
+                {links.map((link) => (
+                    <li key={link.href}>
+                        <Link href={link.href} className="inline-flex items-center gap-2 hover:text-[#00139E]">
+                            <span className="text-[#BF0A30]" aria-hidden>
+                                ›
+                            </span>
+                            {link.label}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+
+function SocialDot({ href, label, children }: { href: string; label: string; children: ReactNode }) {
+    return (
+        <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={label}
+            className="footer-dot grid h-11 w-11 place-items-center rounded-full"
+        >
+            {children}
+        </a>
+    );
 }
 
 export function Footer() {
@@ -57,7 +76,10 @@ export function Footer() {
     const [done, setDone] = useState(false);
     const [sending, setSending] = useState(false);
     const [error, setError] = useState("");
-    const hours = groupedHours(hoursList(settings));
+    const hours = groupedHours(settings);
+    const { contact } = settings;
+    const mapQuery = `${contact.addressLine}, ${contact.suburb} ${contact.state} ${contact.postcode}`;
+    const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=15&output=embed`;
 
     async function joinList(e: FormEvent) {
         e.preventDefault();
@@ -80,176 +102,155 @@ export function Footer() {
     }
 
     return (
-        <footer className="site-footer flex flex-col border-t border-white/10 bg-coal lg:mt-24">
-            <div className="container-page flex min-h-0 flex-1 flex-col justify-center gap-4 py-4 lg:block lg:py-14">
-                <div className="footer-col flex flex-col gap-3 border-b border-white/10 pb-4 lg:flex-row lg:items-center lg:justify-between lg:pb-8">
-                    <div className="flex min-w-0 items-center gap-3 lg:gap-4">
-                        <Image
-                            src={settings.brand.logo}
-                            alt={settings.brand.name}
-                            width={72}
-                            height={72}
-                            className={cn(
-                                "h-12 w-12 shrink-0 rounded-full bg-white object-contain lg:h-16 lg:w-16",
-                                settings.brand.logoInvert && "invert"
-                            )}
-                        />
-                        <div className="min-w-0">
-                            <p className="display text-xl leading-none text-white lg:text-3xl">
-                                U.S.A. Motorcycle Centre
-                            </p>
-                            <p className="mt-2 hidden max-w-md text-sm leading-relaxed text-steel lg:block">
-                                {settings.brand.slogan}
-                            </p>
-                            <p className="footer-est mt-1.5 text-[11px] uppercase tracking-[0.22em] text-flame lg:mt-2">
-                                Est. {settings.brand.established} · Illawarra
-                            </p>
-                        </div>
-                    </div>
-                    <div className="footer-social flex gap-2">
-                        {settings.social.facebook && (
-                            <a
-                                href={settings.social.facebook}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="grid h-11 w-11 place-items-center rounded-sm border border-white/15 hover:border-[#1877F2] hover:bg-white/5"
-                                aria-label="Facebook"
-                            >
-                                <FacebookIcon className="h-4 w-4" />
-                            </a>
-                        )}
-                        {settings.social.instagram && (
-                            <a
-                                href={settings.social.instagram}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="grid h-11 w-11 place-items-center rounded-sm border border-white/15 hover:border-[#d6249f] hover:bg-white/5"
-                                aria-label="Instagram"
-                            >
-                                <InstagramIcon className="h-4 w-4" />
-                            </a>
-                        )}
-                    </div>
-                </div>
-
-                <div className="grid gap-4 lg:mt-10 lg:grid-cols-12 lg:gap-8">
-                    <div className="footer-col lg:col-span-3">
-                        <p className="label">Workshop</p>
-                        <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm text-chrome lg:mt-4 lg:block lg:space-y-2.5">
-                            {workshopLinks.map((link) => (
-                                <li key={link.href}>
-                                    <Link href={link.href} className="transition-colors hover:text-flame">
-                                        {link.label}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className="footer-col lg:col-span-4">
-                        <p className="label">Find us</p>
-                        <div className="mt-3 space-y-2.5 text-sm lg:mt-4">
-                            <a
-                                href={settings.contact.mapsUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="flex items-start gap-2.5 text-chrome hover:text-white"
-                            >
-                                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-flame" />
-                                <span>
-                                    <span className="block">{settings.contact.addressLine}</span>
-                                    <span className="block text-steel">
-                                        {settings.contact.suburb} {settings.contact.state} {settings.contact.postcode}
-                                    </span>
-                                </span>
-                            </a>
-                            <a
-                                href={telHref(settings.contact.phone)}
-                                className="contact-link flex items-center gap-2.5 text-chrome"
-                            >
-                                <Phone className="h-4 w-4 shrink-0 text-flame" />
-                                {settings.contact.phone}
-                            </a>
-                            <a
-                                href={mailHref(settings.contact.email)}
-                                className="contact-link flex items-start gap-2.5 break-all text-chrome"
-                            >
-                                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-flame" />
-                                {settings.contact.email}
-                            </a>
-                            <p className="pl-[26px] text-xs leading-relaxed text-steel lg:hidden">{compactHours(settings)}</p>
-                        </div>
-                    </div>
-
-                    <div className="footer-col hidden lg:col-span-2 lg:block">
-                        <p className="label">Hours</p>
-                        <ul className="mt-4 space-y-2.5 text-sm">
-                            {hours.map((row) => (
-                                <li key={row.label} className="flex items-baseline justify-between gap-4">
-                                    <span className="text-steel">{row.label}</span>
-                                    <span className="tabular-nums text-white">{row.value}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className="footer-col lg:col-span-3">
-                        <p className="label">The workshop list</p>
-                        <p className="mt-3 hidden text-sm leading-relaxed text-steel lg:mt-4 lg:block">
-                            Saturday hours, specials and the next catch-up. No spam.
-                        </p>
-                        {done ? (
-                            <p className="mt-3 text-sm text-flame" role="status">You are on the list.</p>
-                        ) : (
-                            <form className="mt-3 lg:mt-4" onSubmit={joinList}>
-                                <label htmlFor="workshop-list-email" className="sr-only">
-                                    Email for the workshop list
-                                </label>
-                                <div className="flex gap-2">
-                                    <input
-                                        id="workshop-list-email"
-                                        type="email"
-                                        required
-                                        autoComplete="email"
-                                        inputMode="email"
-                                        spellCheck={false}
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="Email address"
-                                        aria-invalid={error ? true : undefined}
-                                        className="input min-h-11 min-w-0 flex-1"
-                                    />
-                                    <button
-                                        className="btn-flame !shadow-none shrink-0 px-4"
-                                        type="submit"
-                                        disabled={sending}
-                                        aria-busy={sending}
-                                    >
-                                        {sending ? "…" : "Join"}
-                                    </button>
-                                </div>
-                                {error ? (
-                                    <p className="mt-2 text-sm text-flame" role="alert">{error}</p>
-                                ) : null}
-                            </form>
-                        )}
-                    </div>
-                </div>
-            </div>
-            <div className="border-t border-white/10">
-                <div className="container-page flex flex-col items-start justify-between gap-3 py-3 text-[11px] leading-snug text-steel sm:flex-row sm:items-center lg:py-5 lg:text-xs">
-                    <p className="max-w-3xl">
-                        © {new Date().getFullYear()} {settings.brand.legalName}. Harley-Davidson® is a
-                        registered trademark of H-D U.S.A., LLC. Independent specialist — not an authorised
-                        Harley-Davidson dealer.
+        <footer className="site-footer border-t border-[#000B58]/15 bg-white text-[#000B58] lg:mt-24">
+            <div className="container-page flex flex-col gap-4 border-b border-[#000B58]/10 py-5 lg:flex-row lg:items-center lg:gap-10 lg:py-6">
+                <p className="shrink-0 text-lg font-bold">Subscribe</p>
+                <p className="max-w-xs text-xs leading-relaxed text-[#000B58]/60">
+                    Saturday hours, specials and the next catch-up. No spam.
+                </p>
+                {done ? (
+                    <p className="text-sm font-semibold text-[#00139E] lg:ml-auto" role="status">
+                        You are on the list.
                     </p>
-                    <TechAidCredit />
-                    <div className="flex shrink-0 gap-4">
-                        <Link href="/privacy" className="hover:text-white">Privacy</Link>
-                        <Link href="/terms" className="hover:text-white">Terms</Link>
-                        <Link href="/account" className="hover:text-white">Account</Link>
+                ) : (
+                    <form onSubmit={joinList} className="flex min-w-0 flex-1 gap-2 lg:ml-auto lg:max-w-md">
+                        <label htmlFor="workshop-list-email" className="sr-only">
+                            Email for the workshop list
+                        </label>
+                        <input
+                            id="workshop-list-email"
+                            type="email"
+                            required
+                            autoComplete="email"
+                            inputMode="email"
+                            spellCheck={false}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Email"
+                            aria-invalid={error ? true : undefined}
+                            className="min-h-11 min-w-0 flex-1 rounded-lg bg-[#F2F4F7] px-4 text-sm text-[#000B58] outline-none placeholder:text-[#000B58]/40 focus:ring-2 focus:ring-[#FF1414]"
+                        />
+                        <button
+                            type="submit"
+                            disabled={sending}
+                            aria-busy={sending}
+                            aria-label={sending ? "Joining" : "Join the list"}
+                            className="grid h-11 w-11 shrink-0 place-items-center rounded-md bg-[#FF1414] hover:bg-[#C40000]"
+                        >
+                            <svg viewBox="0 0 12 12" className="h-3.5 w-3.5" aria-hidden>
+                                <path d="M2.2 1.2v9.6L10.4 6 2.2 1.2z" fill="currentColor" />
+                            </svg>
+                        </button>
+                    </form>
+                )}
+            </div>
+            {error ? (
+                <p className="container-page pt-3 text-sm text-[#BF0A30]" role="alert">
+                    {error}
+                </p>
+            ) : null}
+
+            <div className="container-page py-8 lg:py-12">
+                <div className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-12 lg:gap-6">
+                    <div className="col-span-2 lg:col-span-3">
+                        <p className="display text-3xl text-[#000B58] sm:text-4xl">
+                            U.S.A.
+                            <span className="mt-1 block">Motorcycle Centre</span>
+                        </p>
+                        <p className="mt-3 font-semibold text-[#BF0A30]">Harley shirts and jumpers.</p>
+                        <div className="mt-4 h-px w-40 bg-[#000B58]" />
+                        <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#000B58]/70">
+                            {settings.brand.slogan}
+                        </p>
+                        <div className="mt-5 flex gap-2">
+                            {settings.social.facebook ? (
+                                <SocialDot href={settings.social.facebook} label="Facebook">
+                                    f
+                                </SocialDot>
+                            ) : null}
+                            {settings.social.instagram ? (
+                                <SocialDot href={settings.social.instagram} label="Instagram">
+                                    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden fill="none" stroke="currentColor" strokeWidth="2">
+                                        <rect x="4" y="4" width="16" height="16" rx="5" />
+                                        <circle cx="12" cy="12" r="3.5" />
+                                        <circle cx="17.2" cy="6.8" r="0.8" fill="currentColor" stroke="none" />
+                                    </svg>
+                                </SocialDot>
+                            ) : null}
+                        </div>
+                    </div>
+
+                    <div className="lg:col-span-2">
+                        <LinkColumn title="The rack" links={rackLinks} />
+                    </div>
+                    <div className="lg:col-span-2">
+                        <LinkColumn title="The shop" links={shopLinks} />
+                    </div>
+                    <div className="col-span-2 lg:col-span-2">
+                        <p className="font-semibold text-[#000B58]">Contact</p>
+                        <div className="mt-3 space-y-3 text-sm">
+                            <p>
+                                <span className="block font-semibold">Call</span>
+                                <a href={telHref(contact.phone)} className="contact-link">
+                                    {contact.phone}
+                                </a>
+                            </p>
+                            <p>
+                                <span className="block font-semibold">Email</span>
+                                <a href={mailHref(contact.email)} className="contact-link break-all">
+                                    {contact.email}
+                                </a>
+                            </p>
+                            <p>
+                                <a href={contact.mapsUrl} target="_blank" rel="noreferrer" className="hover:text-[#00139E]">
+                                    <span className="block">{contact.addressLine}</span>
+                                    <span className="block text-[#000B58]/70">
+                                        {contact.suburb} {contact.state} {contact.postcode}
+                                    </span>
+                                </a>
+                            </p>
+                            <p className="text-[#000B58]/70">
+                                {hours.map((row) => (
+                                    <span key={row.label} className="block">
+                                        {row.label} {row.value}
+                                    </span>
+                                ))}
+                            </p>
+                        </div>
+                    </div>
+                    <div className="col-span-2 lg:col-span-3">
+                        <div className="overflow-hidden rounded-2xl bg-[#F2F4F7]">
+                            <iframe
+                                title={`Map of ${mapQuery}`}
+                                src={mapSrc}
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                className="h-44 w-full border-0 lg:h-52"
+                            />
+                        </div>
                     </div>
                 </div>
+
+                <p className="mx-auto mt-8 w-fit max-w-full rounded-full border border-[#000B58] px-5 py-2 text-center text-sm font-medium">
+                    Independent specialist. Est. {settings.brand.established}.
+                </p>
+            </div>
+
+            <div className="footer-legal">
+                <div className="container-page flex flex-col gap-3 py-4 text-[11px] leading-snug sm:text-xs lg:flex-row lg:items-center lg:justify-between">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <Link href="/privacy">Privacy</Link>
+                        <span aria-hidden className="opacity-40">|</span>
+                        <Link href="/terms">Terms</Link>
+                        <span aria-hidden className="opacity-40">|</span>
+                        <Link href="/account">Account</Link>
+                    </div>
+                    <TechAidCredit />
+                    <p>© {new Date().getFullYear()} {settings.brand.legalName}</p>
+                </div>
+                <p className="footer-note container-page pb-4 text-[11px] leading-relaxed">
+                    Harley-Davidson® is a registered trademark of H-D U.S.A., LLC. Independent specialist — not an authorised Harley-Davidson dealer.
+                </p>
             </div>
         </footer>
     );

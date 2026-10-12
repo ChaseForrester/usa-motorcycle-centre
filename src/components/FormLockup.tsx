@@ -1,10 +1,11 @@
 import type { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
+import { Calendar } from "lucide-react";
 
 export function FormLockup({ title, hint }: { title: string; hint?: string }) {
     return (
         <div className="mb-6 flex items-center gap-3">
             <img
-                src="/brand/icon.png"
+                src="/brand/icon.svg"
                 alt="U.S.A. Motorcycle Centre"
                 width={56}
                 height={56}
@@ -33,19 +34,44 @@ export function TextField({
     hint?: string;
     error?: string;
 } & InputHTMLAttributes<HTMLInputElement>) {
+    const isDate = props.type === "date";
     return (
         <div>
             <label htmlFor={id} className={fieldLabel}>
                 <span>{label}</span>
                 {props.required ? <span className="text-flame">Required</span> : null}
             </label>
-            <input
-                id={id}
-                aria-invalid={error ? true : undefined}
-                aria-describedby={error ? `${id}-error` : hint ? `${id}-hint` : undefined}
-                className="input"
-                {...props}
-            />
+            <div className={isDate ? "relative" : undefined}>
+                <input
+                    {...props}
+                    id={id}
+                    aria-invalid={error ? true : undefined}
+                    aria-describedby={error ? `${id}-error` : hint ? `${id}-hint` : undefined}
+                    className={isDate ? "input date-input pr-12" : "input"}
+                />
+                {isDate ? (
+                    <button
+                        type="button"
+                        className="absolute right-1 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center text-flame"
+                        aria-label="Open calendar"
+                        onClick={() => {
+                            const field = document.getElementById(id) as HTMLInputElement | null;
+                            if (!field) return;
+                            if (typeof field.showPicker === "function") {
+                                try {
+                                    field.showPicker();
+                                    return;
+                                } catch {
+                                    /* The browser already has the picker open. */
+                                }
+                            }
+                            field.focus();
+                        }}
+                    >
+                        <Calendar className="h-5 w-5" strokeWidth={2.25} />
+                    </button>
+                ) : null}
+            </div>
             {hint ? (
                 <p id={`${id}-hint`} className="mt-1 text-xs text-steel">
                     {hint}

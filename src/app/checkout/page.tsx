@@ -181,7 +181,7 @@ export default function CheckoutPage() {
                 window.location.href = data.url;
                 return;
             }
-            setError("Checkout is waiting on the shop Stripe account.");
+            setError("Could not place the order. Call the shop and we will take it.");
         } catch {
             setError("Could not start checkout.");
         } finally {
@@ -194,7 +194,7 @@ export default function CheckoutPage() {
             <form onSubmit={pay} className="space-y-4">
                 <div className="mb-2 flex items-center gap-3">
                     <img
-                        src="/brand/icon.png"
+                        src="/brand/icon.svg"
                         alt="U.S.A. Motorcycle Centre"
                         width={48}
                         height={48}
@@ -202,7 +202,7 @@ export default function CheckoutPage() {
                     />
                     <div>
                         <p className="label">Checkout</p>
-                        <h1 className="display text-4xl text-white">Your details</h1>
+                        <h1 className="display text-4xl text-[#000B58]">Your details</h1>
                     </div>
                 </div>
                 <input
@@ -239,7 +239,7 @@ export default function CheckoutPage() {
                 />
 
                 {fulfillment === "collect" && (
-                    <p className="text-sm text-steel">{collectLabel(tenant)}. No label.</p>
+                    <p className="text-sm text-[#3E5470]">{collectLabel(tenant)}. We will message you when it is on the counter.</p>
                 )}
 
                 {fulfillment === "ship" && (
@@ -311,7 +311,7 @@ export default function CheckoutPage() {
                                     required
                                     autoComplete="country"
                                     aria-label="Country"
-                                    placeholder="Country (ISO, e.g. NZ)"
+                                    placeholder="Country code, e.g. NZ"
                                     value={form.country}
                                     onChange={(e) => setForm({ ...form, country: e.target.value })}
                                 />
@@ -354,15 +354,15 @@ export default function CheckoutPage() {
                                     <input
                                         className="input"
                                         required
-                                        aria-label="HS code"
-                                        placeholder="HS code"
+                                        aria-label="Customs code"
+                                        placeholder="Customs code"
                                         value={form.hsCode}
                                         onChange={(e) => setForm({ ...form, hsCode: e.target.value })}
                                     />
                                 </div>
                                 {estimate && (
-                                    <div className="rounded-sm border border-white/15 p-4 text-sm text-chrome">
-                                        <p className="text-white">Before you pay</p>
+                                    <div className="rounded-sm border border-[#000B58]/15 p-4 text-sm text-chrome">
+                                        <p className="font-semibold text-[#000B58]">Before you pay</p>
                                         <p className="mt-2">GST estimate (10% of declared value): {money(estimate.gstAud)}</p>
                                         <p className="mt-1">{estimate.dutyNote}</p>
                                     </div>
@@ -379,10 +379,10 @@ export default function CheckoutPage() {
                 ))}
                 {error && <p className="text-sm text-flame" role="alert">{error}</p>}
                 <button className="btn-flame w-full" type="submit" disabled={busy} aria-busy={busy}>
-                    {busy ? "Working…" : `Pay ${money(total)}`}
+                    {busy ? "Working…" : `Place order · ${money(total)}`}
                 </button>
                 <p className="text-xs text-steel">
-                    Card numbers never touch this shop. Pay goes through Stripe on the server.
+                    No card is charged on this page. We confirm the order from the shop. Click and collect is ready at 8 Miall Way.
                 </p>
             </form>
             <aside className="card h-fit p-6">

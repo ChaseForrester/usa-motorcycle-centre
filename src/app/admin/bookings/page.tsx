@@ -53,7 +53,7 @@ export default function AdminBookings() {
                 Every booking from the site lands here. If a job is thrown off course, press that status —
                 the rider is emailed that we will be in touch.
             </p>
-            {msg && <p className="mt-3 rounded-md bg-orange-50 px-3 py-2 text-sm text-orange-900">{msg}</p>}
+            {msg && <p className="mt-3 rounded-md bg-red-50 px-3 py-2 text-sm text-red-900">{msg}</p>}
             <div className="mt-6 space-y-3">
                 {items.length === 0 && <p className="text-sm text-zinc-500">No bookings yet.</p>}
                 {items.map((b) => (

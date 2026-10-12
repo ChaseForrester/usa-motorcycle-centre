@@ -9,6 +9,8 @@ import { GiftCardMotion } from "@/components/GiftCardMotion";
 import { ProductCard } from "@/components/ProductCard";
 import { useCart } from "@/lib/cart";
 import { useCms } from "@/lib/cms-store";
+import { ShareBar } from "@/components/ShareBar";
+import { SITE_URL } from "@/lib/seo";
 import { cn, isRemoteProductSrc, money } from "@/lib/utils";
 
 export default function ProductView() {
@@ -25,11 +27,11 @@ export default function ProductView() {
     const related = useMemo(
         () =>
             products
-                .filter(
-                    (p) =>
-                        p.id !== product?.id &&
-                        (isGift ? p.category !== "Gift Cards" : p.category === product?.category)
-                )
+                .filter((p) => {
+                    if (p.id === product?.id) return false;
+                    if (isGift) return p.category === "Shirts" || p.category === "Jumpers";
+                    return p.category === "Shirts" || p.category === "Jumpers";
+                })
                 .slice(0, 4),
         [products, product, isGift]
     );
@@ -58,7 +60,7 @@ export default function ProductView() {
                     <div
                         className={cn(
                             "relative overflow-hidden rounded-sm bg-ash",
-                            isGift ? "aspect-[16/9]" : "aspect-[4/5]"
+                            isGift ? "aspect-[16/9] bg-ash" : "aspect-[4/5] bg-[#ECECEC]"
                         )}
                     >
                         {isGift ? (
@@ -68,7 +70,7 @@ export default function ProductView() {
                                 src={product.images[img] ?? product.images[0] ?? "/brand/icon.png"}
                                 alt={product.name}
                                 fill
-                                className="object-cover"
+                                className="object-contain"
                                 priority
                                 unoptimized={isRemoteProductSrc(
                                     product.images[img] ?? product.images[0] ?? ""
@@ -83,15 +85,15 @@ export default function ProductView() {
                                     key={src}
                                     onClick={() => setImg(i)}
                                     className={cn(
-                                        "relative aspect-square overflow-hidden rounded-sm border",
-                                        img === i ? "border-flame" : "border-white/10"
+                                        "relative aspect-square overflow-hidden rounded-sm border bg-[#ECECEC]",
+                                        img === i ? "border-[#C40000]" : "border-[#000B58]/20"
                                     )}
                                 >
                                     <Image
                                         src={src}
                                         alt=""
                                         fill
-                                        className={isGift ? "object-contain" : "object-cover"}
+                                        className="object-contain"
                                         unoptimized={isRemoteProductSrc(src)}
                                     />
                                 </button>
@@ -101,7 +103,7 @@ export default function ProductView() {
                 </div>
                 <div>
                     <p className="label">{product.brand || product.category}</p>
-                    <h1 className="display mt-2 text-4xl text-white sm:text-5xl">{product.name}</h1>
+                    <h1 className="display mt-2 text-4xl text-[#000B58] sm:text-5xl">{product.name}</h1>
                     {product.subtitle && <p className="mt-2 text-steel">{product.subtitle}</p>}
                     <p className="mt-6 leading-relaxed text-chrome">{product.description}</p>
 
@@ -109,7 +111,7 @@ export default function ProductView() {
                         <GiftAmountPicker product={product} />
                     ) : (
                         <>
-                            <p className="mt-5 font-display text-3xl text-flame">{money(product.price)}</p>
+                            <p className="mt-5 font-display text-3xl text-[#C40000]">{money(product.price)}</p>
                             <p className="mt-1 text-xs text-steel">AUD · GST included</p>
                             {product.variants && product.variants.length > 0 && (
                                 <div className="mt-8">
@@ -123,10 +125,10 @@ export default function ProductView() {
                                                     onClick={() => setVariant(v.id)}
                                                     disabled={soldOut}
                                                     className={cn(
-                                                        "min-w-12 rounded-sm border px-3 py-2 text-sm",
+                                                        "min-h-11 min-w-12 rounded-sm border px-3 py-2 text-sm",
                                                         variant === v.id
-                                                            ? "border-flame bg-flame text-ink"
-                                                            : "border-white/15 text-chrome",
+                                                            ? "border-[#C40000] bg-[#C40000] !text-white"
+                                                            : "border-[#000B58]/30 text-[#000B58]",
                                                         soldOut && "cursor-not-allowed opacity-40"
                                                     )}
                                                 >
@@ -152,8 +154,13 @@ export default function ProductView() {
                                 Add to cart
                             </button>
                             <p className="mt-4 text-sm text-steel">
-                                Click & collect at 8 Miall Way, Albion Park Rail — or Australia Post.
+                                Click and collect at 8 Miall Way, Albion Park Rail, or Australia Post.
                             </p>
+                            <ShareBar
+                                url={`${SITE_URL}/shop/${product.slug}`}
+                                title={product.name}
+                                description={product.description.slice(0, 160)}
+                            />
                         </>
                     )}
                     {product.details && (
@@ -167,7 +174,7 @@ export default function ProductView() {
             </div>
             {related.length > 0 && (
                 <div className="mt-20">
-                    <h2 className="display text-3xl text-white">You might also throw on</h2>
+                    <h2 className="display text-3xl text-[#000B58]">Also on the rack</h2>
                     <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {related.map((p) => (
                             <ProductCard key={p.id} product={p} />

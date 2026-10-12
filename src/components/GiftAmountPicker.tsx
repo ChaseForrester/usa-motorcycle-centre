@@ -31,7 +31,7 @@ export function GiftAmountPicker({ product }: { product: Product }) {
 
     return (
         <div>
-            <p className="mt-5 font-display text-3xl text-flame">{money(amount)}</p>
+            <p className="mt-5 font-display text-3xl text-[#C40000]">{money(amount)}</p>
             <p className="mt-1 text-xs text-steel">AUD · GST included · {money(GIFT_MIN)} to {money(GIFT_MAX)}</p>
 
             <p className="mt-8 text-xs uppercase tracking-[0.2em] text-steel">Amount</p>
@@ -42,10 +42,10 @@ export function GiftAmountPicker({ product }: { product: Product }) {
                         type="button"
                         onClick={() => pick(n)}
                         className={cn(
-                            "rounded-sm border px-3 py-2 text-sm",
+                            "min-h-11 rounded-sm border px-3 py-2 text-sm",
                             amount === n
-                                ? "border-flame bg-flame text-ink"
-                                : "border-white/15 text-chrome hover:border-flame"
+                                ? "border-[#C40000] bg-[#C40000] text-white"
+                                : "border-[#000B58]/25 text-[#000B58] hover:border-[#C40000]"
                         )}
                     >
                         ${n.toLocaleString("en-AU")}

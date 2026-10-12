@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --flame: #ff6a00;
-  --ink: #0b0b0c;
+  --flame: #ff1414;
+  --ink: #000B58;
+  --glory-red: #ff1414;
+  --glory-blue: #000B58;
+  accent-color: #ff1414;
 }
 
 html {
@@ -17,15 +20,21 @@ html {
   }
 }
 
+#main,
+.site-footer {
+  overflow-x: clip;
+}
+
 body {
-  @apply bg-ink text-paper font-body antialiased;
-  background-image: radial-gradient(1200px 600px at 80% -10%, rgba(255, 106, 0, 0.08), transparent 50%),
-    radial-gradient(800px 400px at 0% 100%, rgba(255, 106, 0, 0.05), transparent 50%);
+  @apply bg-white font-body antialiased;
+  color: #000B58;
+  background-image: radial-gradient(900px 420px at 100% -10%, rgba(255, 20, 20, 0.07), transparent 55%),
+    radial-gradient(720px 380px at 0% 100%, rgba(0, 11, 88, 0.07), transparent 52%);
 }
 
 ::selection {
-  background: #ff6a00;
-  color: #0b0b0c;
+  background: #ff1414;
+  color: #fff;
 }
 
 @layer components {
@@ -44,12 +53,12 @@ body {
   .btn:focus-visible,
   a:focus-visible,
   summary:focus-visible {
-    outline: 2px solid #ff6a00;
+    outline: 2px solid #ff1414;
     outline-offset: 3px;
   }
 
   .btn-flame {
-    @apply btn bg-flame text-ink hover:bg-flame-hot shadow-flame;
+    @apply btn bg-flame-hot text-white hover:bg-[#8E0000] shadow-flame;
   }
 
   .btn:disabled {
@@ -58,7 +67,7 @@ body {
   }
 
   .btn-ghost {
-    @apply btn border border-white/20 text-paper hover:border-flame hover:text-flame;
+    @apply btn border-2 border-[#000B58] text-[#000B58] hover:border-flame hover:text-flame;
   }
 
   .btn-chrome {
@@ -66,20 +75,23 @@ body {
   }
 
   .label {
-    @apply text-[11px] uppercase tracking-[0.28em] text-flame;
+    @apply text-[11px] uppercase tracking-[0.28em];
+    color: #c40000;
   }
 
   .card {
-    @apply overflow-hidden rounded-sm border border-white/10 bg-coal/80;
+    @apply overflow-hidden rounded-sm border-2 border-[#ff1414] bg-[#000B58];
+    color: #fff;
   }
 
   .input {
-    @apply w-full min-h-11 rounded-sm border border-white/15 bg-ink px-4 py-3 text-paper outline-none transition placeholder:text-steel/70 focus:border-flame;
+    @apply w-full min-h-11 rounded-sm border-2 border-[#000B58] bg-white px-4 py-3 text-[#000B58] outline-none transition placeholder:text-[#000B58]/45 focus:border-flame;
   }
 
   .input:focus-visible {
-    outline: 2px solid #ff6a00;
+    outline: 2px solid #ff1414;
     outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(255, 20, 20, 0.22);
   }
 
   .input-light {
@@ -110,8 +122,8 @@ body {
   z-index: 80;
   transform: translateY(-140%);
   border-radius: 2px;
-  background: #ff6a00;
-  color: #0b0b0c;
+  background: #ff1414;
+  color: #fff;
   padding: 0.6rem 0.9rem;
   font-size: 0.75rem;
   font-weight: 700;
@@ -125,24 +137,31 @@ body {
 
 .contact-link {
   text-decoration: underline;
-  text-decoration-color: rgba(255, 106, 0, 0.75);
+  text-decoration-color: rgba(255, 20, 20, 0.85);
   text-underline-offset: 3px;
   transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
 
 .contact-link:hover {
-  color: #fff;
-  text-decoration-color: #ff6a00;
+  color: #ff1414;
+  text-decoration-color: #ff1414;
 }
 
 .contact-link-bar {
   text-decoration: underline;
-  text-decoration-color: rgba(11, 11, 12, 0.45);
+  text-decoration-color: rgba(255, 255, 255, 0.7);
   text-underline-offset: 3px;
 }
 
+.on-field .label,
+.card .label,
+.bg-ink .label,
+header .label {
+  color: #ff6262;
+}
+
 .contact-link-bar:hover {
-  text-decoration-color: #0b0b0c;
+  text-decoration-color: #fff;
 }
 
 .hero-photo {
@@ -155,20 +174,64 @@ body {
 .glass-panel {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background:
-    linear-gradient(155deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05) 42%, rgba(11, 11, 12, 0.28));
+  border: 0;
+  border-left: 8px solid #ff1414;
+  background: #000B58;
   box-shadow:
-    0 24px 70px rgba(0, 0, 0, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.38),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(22px) saturate(1.4);
-  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+    0 24px 70px rgba(0, 8, 40, 0.4),
+    inset 0 0 0 1px rgba(255, 20, 20, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-.glass-panel>* {
+.glass-panel> :not(.flag-wash) {
   position: relative;
   z-index: 1;
+}
+
+/* A real flag, held back so the headline stays the loudest thing. */
+.flag-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(to bottom,
+      rgba(255, 20, 20, 0.55) 0,
+      rgba(255, 20, 20, 0.55) 7.692%,
+      rgba(255, 255, 255, 0.18) 7.692%,
+      rgba(255, 255, 255, 0.18) 15.384%);
+}
+
+.flag-wash::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(42%, 240px);
+  height: min(46%, 168px);
+  background-color: rgba(0, 11, 88, 0.35);
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.95) 1.15px, transparent 1.5px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.95) 1.15px, transparent 1.5px);
+  background-size: 22px 20px, 22px 20px;
+  background-position: 9px 8px, 20px 18px;
+  opacity: 0.85;
+}
+
+.flag-wash-hero {
+  z-index: 1;
+  background-image: repeating-linear-gradient(to bottom,
+      rgba(255, 20, 20, 0.62) 0,
+      rgba(255, 20, 20, 0.62) 7.692%,
+      rgba(255, 255, 255, 0.16) 7.692%,
+      rgba(255, 255, 255, 0.16) 15.384%);
+}
+
+.flag-wash-hero::after {
+  width: min(34%, 460px);
+  height: 54%;
+  opacity: 0.9;
+  background-color: rgba(0, 11, 88, 0.28);
 }
 
 .glass-panel::after {
@@ -338,6 +401,13 @@ header nav a.text-flame {
   background-size: 100% 1px;
 }
 
+header nav a[aria-current="page"],
+header nav a[aria-current="page"]:hover {
+  background-image: linear-gradient(#ff1414, #ff1414);
+  background-size: 100% 2px;
+  color: #fff;
+}
+
 .btn {
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
@@ -385,8 +455,8 @@ nav[aria-label="Primary"] .text-flame svg {
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .card:hover {
     transform: translateY(-6px);
-    border-color: rgba(255, 106, 0, 0.45);
-    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.32);
+    border-color: #ffffff;
+    box-shadow: 0 22px 50px rgba(0, 11, 88, 0.28);
   }
 
   .card:not(:has(video)):hover img:not(.source-mark),
@@ -399,36 +469,58 @@ nav[aria-label="Primary"] .text-flame svg {
   }
 }
 
-/* Entrances replay from whichever edge the block crosses. `translate` stays off
+/* Left and right entrances. Opacity runs 0% to 100%. `translate` stays off
    `transform` so card hover lift still works once the block is on screen. */
 @media (prefers-reduced-motion: no-preference) {
-  .reveal-watch:not(.in-view) {
+  .reveal-word {
+    display: inline-block;
+  }
+
+  html.reveal-ready .reveal-watch:not(.in-view),
+  html.reveal-ready .reveal-words:not(.in-view) .reveal-word {
     opacity: 0;
-    translate: 0 44px;
   }
 
-  .reveal-watch[data-from="up"]:not(.in-view) {
-    translate: 0 -36px;
+  html.reveal-ready .reveal-watch[data-from="left"]:not(.in-view),
+  html.reveal-ready .reveal-words:not(.in-view) .reveal-word[data-from="left"] {
+    translate: -52px 0;
   }
 
-  .reveal-watch:focus-within {
+  html.reveal-ready .reveal-watch[data-from="right"]:not(.in-view),
+  html.reveal-ready .reveal-words:not(.in-view) .reveal-word[data-from="right"] {
+    translate: 52px 0;
+  }
+
+  html.reveal-ready .reveal-watch[data-kind="text"]:not(.in-view) {
+    filter: blur(7px);
+  }
+
+  html.reveal-ready .reveal-watch:focus,
+  html.reveal-ready .reveal-watch:focus-within,
+  html.reveal-ready .reveal-words:focus-within .reveal-word {
     opacity: 1;
     translate: none;
+    filter: none;
   }
 
-  html.reveal-ready .reveal-watch {
+  html.reveal-ready .reveal-watch,
+  html.reveal-ready .reveal-word {
     transition:
-      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-      translate 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+      translate 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--reveal-i, 0) * 55ms);
   }
 }
 
 @media (max-width: 1023px) {
 
   /* Phone snap panels move as one piece. Inner cards stay put so the panel does not clip them. */
-  .m-panel .reveal-watch {
+  .m-panel .reveal-watch,
+  .m-panel .reveal-word {
     opacity: 1 !important;
     translate: none !important;
+    filter: none !important;
     transition: none !important;
   }
 }
@@ -526,5 +618,285 @@ nav[aria-label="Primary"] .text-flame svg {
 }
 
 .admin-input {
-  @apply min-h-11 w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20;
+  @apply min-h-11 w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-[#FF1414] focus:ring-2 focus:ring-[#FF1414]/20;
+}
+
+svg.text-flame,
+.text-flame svg {
+  filter: drop-shadow(0 0 6px rgba(255, 20, 20, 0.45));
+}
+
+input[type="date"].input {
+  color-scheme: light;
+  color: #000B58;
+}
+
+.admin-input[type="date"] {
+  color-scheme: light;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/* White page, flag-blue fields, flag-red action. Light type stays on blue, photos, and cards. */
+.text-white {
+  color: #000B58;
+}
+
+[class*="bg-ink"],
+[class*="bg-coal"],
+.on-field,
+header {
+  color: #fff;
+}
+
+.text-chrome {
+  color: #000B58;
+}
+
+.text-steel {
+  color: #000B58;
+}
+
+.card .text-white,
+.card .text-chrome,
+.card .text-paper,
+.on-field .text-white,
+.on-field .text-chrome,
+.on-field .text-paper,
+[class*="bg-ink"] .text-white,
+[class*="bg-ink"] .text-chrome,
+[class*="bg-ink"] .text-paper,
+[class*="bg-coal"] .text-white,
+[class*="bg-coal"] .text-chrome,
+[class*="bg-coal"] .text-paper,
+header .text-white,
+header .text-chrome,
+.announce-bar,
+.announce-bar .text-white,
+.btn-flame {
+  color: #fff;
+}
+
+.announce-bar {
+  background: #c40000;
+}
+
+.card .text-steel,
+.on-field .text-steel,
+[class*="bg-ink"] .text-steel,
+[class*="bg-coal"] .text-steel,
+header .text-steel {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.on-field .btn-ghost,
+[class*="bg-ink"] .btn-ghost,
+[class*="bg-coal"] .btn-ghost,
+.card .btn-ghost {
+  border-color: #fff;
+  color: #fff;
+}
+
+.on-field .btn-ghost:hover,
+[class*="bg-ink"] .btn-ghost:hover,
+[class*="bg-coal"] .btn-ghost:hover,
+.card .btn-ghost:hover {
+  border-color: #ff1414;
+  color: #fff;
+  background: #ff1414;
+}
+
+[class*="bg-ink"] .contact-link:hover,
+[class*="bg-coal"] .contact-link:hover,
+.on-field .contact-link:hover,
+header .contact-link:hover {
+  color: #fff;
+}
+
+header {
+  color: #fff;
+}
+
+.flag-wave,
+.flag-still {
+  object-position: center center;
+}
+
+.flag-still {
+  display: none;
+}
+
+.flag-scrim {
+  background: linear-gradient(90deg,
+      rgba(0, 11, 88, 0.78) 0%,
+      rgba(0, 11, 88, 0.55) 42%,
+      rgba(0, 11, 88, 0.28) 100%);
+}
+
+@media (min-width: 1024px) {
+  .flag-scrim {
+    background: linear-gradient(90deg,
+        rgba(0, 11, 88, 0.84) 0%,
+        rgba(0, 11, 88, 0.58) 36%,
+        rgba(0, 11, 88, 0.22) 68%,
+        rgba(0, 11, 88, 0.12) 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flag-wave {
+    display: none;
+  }
+
+  .flag-still {
+    display: block;
+  }
+}
+
+.site-footer {
+  color: #000B58;
+  background: #fff;
+}
+
+.site-footer button,
+.site-footer .footer-dot {
+  color: #fff;
+  background: #FF1414;
+}
+
+.site-footer button:hover {
+  background: #C40000;
+}
+
+.site-footer .footer-dot:hover {
+  color: #fff;
+  background: #C40000;
+}
+
+.site-footer .contact-link:hover {
+  color: #00139E;
+}
+
+.site-footer .footer-legal {
+  background: #000B58;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.site-footer .footer-legal a {
+  color: #fff;
+}
+
+.site-footer .footer-legal a:hover {
+  color: #FF6262;
+}
+
+.site-footer .footer-note {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+[class~="bg-flame"],
+.admin-root .text-white,
+.platform-root .text-white {
+  color: #fff;
+}
+
+.card,
+[class*="bg-ink"],
+[class*="bg-coal"] {
+  color: #fff;
+}
+
+/* Official flag red fails on navy. Keep #FF1414 for fills and for type on white. */
+.card .text-flame,
+.on-field .text-flame,
+[class*="bg-ink"] .text-flame,
+[class*="bg-coal"] .text-flame,
+header .text-flame {
+  color: #ff6262;
+}
+
+/* About "On the wall". Marks are authored for a dark bar: Avon and Kuryakyn are
+   near-white, Arlen Ness is light, Accel is inverted in BrandMark. Below 1024px
+   they sit in one scrolling row so the wide wordmarks stay readable. From
+   1024px they sit in an even 3×3 with no leftover cell. */
+.brand-wall {
+  display: flex;
+  width: auto;
+  min-width: 0;
+  margin-top: 2rem;
+  margin-right: -1rem;
+  gap: 2.25rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-right: 1rem;
+  padding-bottom: 0.25rem;
+}
+
+.brand-wall::-webkit-scrollbar {
+  display: none;
+}
+
+.brand-wall li {
+  display: flex;
+  height: 4.5rem;
+  width: max-content;
+  flex: 0 0 auto;
+  align-items: center;
+  scroll-snap-align: start;
+}
+
+.brand-wall img {
+  display: block;
+  width: auto;
+  max-width: none;
+  height: 2.25rem;
+  object-fit: contain;
+  object-position: center;
+}
+
+.brand-wall img.is-tall {
+  height: 3.5rem;
+}
+
+@media (min-width: 640px) {
+  .brand-wall {
+    margin-right: -1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .brand-wall {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    margin-right: 0;
+    gap: 1.25rem 2rem;
+    overflow: visible;
+    scroll-snap-type: none;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+
+  .brand-wall li {
+    height: 8rem;
+    width: auto;
+    min-width: 0;
+    justify-content: center;
+    padding-inline: 0.5rem;
+  }
+
+  .brand-wall img {
+    height: 3.25rem;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .brand-wall img.is-tall {
+    height: 6.25rem;
+  }
 }

@@ -9,7 +9,7 @@ export default function SpecialsPage() {
     return (
         <div className="container-page py-12">
             <p className="label">Specials</p>
-            <h1 className="display mt-2 text-5xl text-white">On the rack this month.</h1>
+            <h1 className="display mt-2 text-5xl text-[#000B58]">On the rack this month.</h1>
             {discounts.length > 0 && (
                 <div className="mt-6 rounded-sm border border-flame/40 bg-flame/10 p-5">
                     {discounts.map((d) => (

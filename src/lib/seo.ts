@@ -26,11 +26,10 @@ export const SITE = {
     lng: 150.7929,
 };
 
-export const TITLE =
-    "Harley Mechanic Wollongong to Nowra | U.S.A. Motorcycle Centre";
+export const TITLE = "Harley Shirts and Jumpers | U.S.A. Motorcycle Centre";
 
 export const DESCRIPTION =
-    "Independent Harley® specialist workshop at 8 Miall Way, Albion Park Rail NSW. Service, smash repairs, tyres and parts for riders from Wollongong, Shellharbour and Kiama through to Nowra. Est. 1992. Call (02) 4257 2333.";
+    "Harley shirts and jumpers from U.S.A. Motorcycle Centre. The flame hoodie and crews, printed with the EST 1992 shop crest. Click and collect at 8 Miall Way, Albion Park Rail, or ship. Est. 1992.";
 
 export const KEYWORDS = [
     "Harley mechanic Wollongong",
@@ -114,8 +113,17 @@ export function absUrl(path = "/"): string {
     return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
-export function pageMeta(title: string, description: string, path: string): Metadata {
+export function shareCard(title: string, description: string): string {
+    const query = new URLSearchParams({
+        title: title.slice(0, 90),
+        description: description.slice(0, 180),
+    });
+    return absUrl(`/api/og?${query.toString()}`);
+}
+
+export function pageMeta(title: string, description: string, path: string, image?: string): Metadata {
     const url = absUrl(path);
+    const card = image || shareCard(title, description);
     return {
         title,
         description,
@@ -127,11 +135,13 @@ export function pageMeta(title: string, description: string, path: string): Meta
             type: "website",
             locale: "en_AU",
             siteName: SITE.name,
+            images: [{ url: card, width: 1200, height: 630, alt: title }],
         },
         twitter: {
             card: "summary_large_image",
             title: `${title} | ${SITE.name}`,
             description,
+            images: [card],
         },
     };
 }

@@ -17,11 +17,11 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
         if (claims?.role !== "platform") router.replace("/platform/login");
     }, [claims, pathname, router]);
 
-    if (pathname === "/platform/login") return <>{children}</>;
-    if (claims?.role !== "platform") return <div className="min-h-screen bg-zinc-950" />;
+    if (pathname === "/platform/login") return <div className="platform-root">{children}</div>;
+    if (claims?.role !== "platform") return <div className="platform-root min-h-screen bg-zinc-950" />;
 
     return (
-        <div className="min-h-screen bg-zinc-950 text-zinc-100">
+        <div className="platform-root min-h-screen bg-zinc-950 text-zinc-100">
             <header className="flex items-center justify-between border-b border-white/10 px-6 py-4">
                 <div className="flex items-center gap-4">
                     <TechAidBadge />

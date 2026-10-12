@@ -55,7 +55,7 @@ export default function AdminProducts() {
                     <p className="mt-1 text-sm text-zinc-500">Shirts on the rack. Photos show here and in the shop.</p>
                 </div>
                 <button
-                    className="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold text-zinc-950"
+                    className="rounded-md bg-[#BF0A30] px-4 py-2 text-sm font-semibold text-white"
                     onClick={() => setEdit(empty())}
                 >
                     Add product
@@ -82,7 +82,7 @@ export default function AdminProducts() {
                             </p>
                             <p className="mt-1 text-xs text-zinc-400">{p.images.length} photo{p.images.length === 1 ? "" : "s"}</p>
                             <div className="mt-3 flex gap-3 text-sm">
-                                <button className="text-orange-600" onClick={() => setEdit(p)}>
+                                <button className="text-[#002868]" onClick={() => setEdit(p)}>
                                     Edit
                                 </button>
                                 <button className="text-zinc-400" onClick={() => deleteProduct(p.id)}>
@@ -215,7 +215,7 @@ export default function AdminProducts() {
                             <button type="button" className="px-4 py-2 text-sm" onClick={() => setEdit(null)}>
                                 Cancel
                             </button>
-                            <button className="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold">
+                            <button className="rounded-md bg-[#BF0A30] text-white px-4 py-2 text-sm font-semibold">
                                 Save
                             </button>
                         </div>

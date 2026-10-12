@@ -22,7 +22,7 @@ export default function ContactPage() {
         <div className="container-page grid gap-12 py-12 lg:grid-cols-2">
             <div>
                 <p className="label">Contact</p>
-                <h1 className="display mt-2 text-5xl text-white">Roll in, ring, or write.</h1>
+                <h1 className="display mt-2 text-5xl text-[#000B58]">Roll in, ring, or write.</h1>
                 <div className="mt-6 grid grid-cols-2 gap-2">
                     <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
                         <Image
@@ -42,7 +42,7 @@ export default function ContactPage() {
                     </div>
                 </div>
                 <div className="mt-8 space-y-4 text-chrome">
-                    <a href={settings.contact.mapsUrl} className="flex gap-3 hover:text-white" target="_blank" rel="noreferrer">
+                    <a href={settings.contact.mapsUrl} className="flex gap-3 hover:text-flame" target="_blank" rel="noreferrer">
                         <MapPin className="h-5 w-5 text-flame" />
                         {fullAddress(settings)}
                     </a>
@@ -80,7 +80,7 @@ export default function ContactPage() {
                         </li>
                     ))}
                 </ul>
-                <div className="mt-8 overflow-hidden rounded-sm border border-white/10">
+                <div className="mt-8 overflow-hidden rounded-sm border border-[#000B58]/15">
                     <iframe
                         title="Map"
                         className="h-64 w-full grayscale"

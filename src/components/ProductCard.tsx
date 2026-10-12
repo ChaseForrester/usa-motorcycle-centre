@@ -19,7 +19,7 @@ export function ProductCard({ product }: { product: Product }) {
                 className={
                     isGift
                         ? "relative aspect-[16/10] overflow-hidden bg-ash"
-                        : "relative aspect-[4/5] overflow-hidden bg-ash"
+                        : "relative aspect-[4/5] overflow-hidden bg-[#ECECEC]"
                 }
             >
                 {isGift ? (
@@ -29,15 +29,10 @@ export function ProductCard({ product }: { product: Product }) {
                         src={src}
                         alt={product.name}
                         fill
-                        className="object-cover transition duration-500 group-hover:scale-105"
+                        className="object-contain transition duration-500 group-hover:scale-[1.03]"
                         sizes="(min-width: 1024px) 25vw, 50vw"
                         unoptimized={isRemoteProductSrc(src)}
                     />
-                )}
-                {product.featured && (
-                    <span className="absolute left-3 top-3 bg-flame px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-ink">
-                        Shop favourite
-                    </span>
                 )}
             </div>
             <div className="p-4">
@@ -45,7 +40,7 @@ export function ProductCard({ product }: { product: Product }) {
                 <h3 className="mt-1 font-display text-xl uppercase tracking-wide text-white">
                     {product.name}
                 </h3>
-                <p className="mt-2 text-sm text-flame">
+                <p className="mt-2 text-sm text-[#FF6262]">
                     {isGift ? `from ${money(from)}` : money(product.price)}
                 </p>
             </div>

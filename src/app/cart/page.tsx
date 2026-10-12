@@ -36,10 +36,10 @@ export default function CartPage() {
     if (items.length === 0) {
         return (
             <div className="container-page py-24 text-center">
-                <h1 className="display text-5xl text-white">Cart is empty.</h1>
+                <h1 className="display text-5xl text-[#000B58]">Cart is empty.</h1>
                 <p className="mt-4 text-chrome">The hoodie is still on the rack.</p>
                 <Link href="/shop" className="btn-flame mt-8 inline-flex">
-                    Shop the range
+                    Shop the rack
                 </Link>
             </div>
         );
@@ -48,17 +48,17 @@ export default function CartPage() {
     return (
         <div className="container-page grid gap-12 py-12 lg:grid-cols-[1.2fr_.8fr]">
             <div>
-                <h1 className="display text-4xl text-white">Cart ({cartCount(items)})</h1>
-                <ul className="mt-8 divide-y divide-white/10 border-y border-white/10">
+                <h1 className="display text-4xl text-[#000B58]">Cart ({cartCount(items)})</h1>
+                <ul className="mt-8 divide-y divide-[#000B58]/15 border-y border-[#000B58]/15">
                     {items.map((it) => (
                         <li key={cartKey(it)} className="flex gap-4 py-5">
-                            <div className="relative h-28 w-24 overflow-hidden rounded-sm bg-ash">
-                                <Image src={it.image} alt={it.name} fill className="object-cover" />
+                            <div className="relative h-28 w-24 overflow-hidden rounded-sm bg-[#ECECEC]">
+                                <Image src={it.image} alt={it.name} fill className="object-contain" />
                             </div>
                             <div className="flex flex-1 flex-col">
                                 <div className="flex justify-between gap-4">
                                     <div>
-                                        <Link href={`/shop/${it.slug}`} className="font-display text-xl uppercase text-white">
+                                        <Link href={`/shop/${it.slug}`} className="font-display text-xl uppercase text-[#000B58]">
                                             {it.name}
                                         </Link>
                                         {it.variantLabel && (
@@ -69,7 +69,7 @@ export default function CartPage() {
                                             </p>
                                         )}
                                     </div>
-                                    <p className="text-flame">{money(it.price * it.qty)}</p>
+                                    <p className="text-[#C40000]">{money(it.price * it.qty)}</p>
                                 </div>
                                 <div className="mt-auto flex items-center gap-3">
                                     <input
@@ -102,7 +102,7 @@ export default function CartPage() {
                         />
                         <span>
                             <span className="text-white">{collectLabel(tenant)}</span>
-                            <span className="block text-steel">Ready when we message you. No label.</span>
+                            <span className="block text-white/80">We will message you when it is on the counter.</span>
                         </span>
                     </label>
                     {settings.shipping.australiaPostEnabled && (
@@ -115,8 +115,8 @@ export default function CartPage() {
                             <span>
                                 <span className="text-white">Ship</span>
                                 <span className="block text-steel">
-                                    Australia. Rate comes from the shop shipping settings. International is a
-                                    separate step at checkout.
+                                    Australia Post. {money(settings.shipping.flatRate)} flat, free over{" "}
+                                    {money(settings.shipping.freeShippingThreshold)}.
                                 </span>
                             </span>
                         </label>
@@ -134,7 +134,7 @@ export default function CartPage() {
                         className="input mt-2"
                         value={discountCode}
                         onChange={(e) => setDiscountCode(e.target.value)}
-                        placeholder="ILLAWARRA10"
+                        placeholder="Code"
                     />
                     {discount && (
                         <p className="mt-2 text-xs text-flame">
@@ -164,10 +164,10 @@ export default function CartPage() {
                     </div>
                 </dl>
                 <Link href="/checkout" className="btn-flame mt-6 w-full">
-                    Continue to payment
+                    Checkout
                 </Link>
                 <p className="mt-3 text-center text-xs text-steel">
-                    Stripe checkout · AUD · GST included
+                    AUD · GST included
                 </p>
             </aside>
         </div>

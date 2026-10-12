@@ -12,7 +12,7 @@ export default function AboutPage() {
             <section className="relative h-[42vh] min-h-[280px]">
                 <Image src="/workshop/chopper-build.jpg" alt="Custom Harley in the workshop" fill className="object-cover object-[center_65%]" />
                 <div className="absolute inset-0 bg-ink/60" />
-                <div className="container-page relative flex h-full flex-col justify-end pb-10">
+                <div className="on-field container-page relative flex h-full flex-col justify-end pb-10">
                     <p className="label">Est. {settings.brand.established}</p>
                     <h1 className="display mt-2 text-5xl text-white sm:text-6xl">
                         {settings.brand.slogan}
@@ -57,15 +57,17 @@ export default function AboutPage() {
                     </div>
                 ))}
             </section>
-            <section className="container-page py-16">
-                <p className="label">On the wall</p>
-                <ul className="mt-6 flex flex-wrap items-center gap-x-10 gap-y-6">
-                    {brands.map((brand) => (
-                        <li key={brand.name} className="flex h-16 items-center">
-                            <BrandMark brand={brand} className={brand.tall ? "h-14" : "h-8"} />
-                        </li>
-                    ))}
-                </ul>
+            <section className="bg-ink">
+                <div className="container-page py-14 sm:py-16">
+                    <p className="label">On the wall</p>
+                    <ul className="brand-wall">
+                        {brands.map((brand) => (
+                            <li key={brand.name}>
+                                <BrandMark brand={brand} />
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </section>
         </div>
     );

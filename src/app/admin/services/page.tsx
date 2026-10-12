@@ -16,7 +16,7 @@ export default function AdminServices() {
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-semibold">Workshop services</h1>
                 <button
-                    className="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold"
+                    className="rounded-md bg-[#BF0A30] text-white px-4 py-2 text-sm font-semibold"
                     onClick={() =>
                         setEdit({
                             id: uid("s"),
@@ -40,7 +40,7 @@ export default function AdminServices() {
                             <p className="text-sm text-zinc-500">{s.summary}</p>
                         </div>
                         <div>
-                            <button className="text-orange-600" onClick={() => setEdit(s)}>
+                            <button className="text-[#002868]" onClick={() => setEdit(s)}>
                                 Edit
                             </button>
                             <button className="ml-3 text-zinc-400" onClick={() => deleteService(s.id)}>
@@ -96,7 +96,7 @@ export default function AdminServices() {
                             <button type="button" onClick={() => setEdit(null)}>
                                 Cancel
                             </button>
-                            <button className="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold">
+                            <button className="rounded-md bg-[#BF0A30] text-white px-4 py-2 text-sm font-semibold">
                                 Save
                             </button>
                         </div>
